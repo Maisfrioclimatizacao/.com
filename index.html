@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Mais Frio Climatização</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+font-family:'Poppins',sans-serif;
+margin:0;
+background:#f5f7fb;
+color:#333;
+}
+
+/* HEADER */
+
+header{
+background:white;
+padding:15px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.logo img{
+height:70px;
+}
+
+.header-buttons{
+display:flex;
+gap:10px;
+}
+
+.nav-btn{
+background:#0d2a57;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:8px;
+font-weight:600;
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding:80px 20px;
+background:linear-gradient(120deg,#e8f1ff,#f7fbff);
+}
+
+.hero img{
+width:420px;
+}
+
+/* SERVICES */
+
+.services{
+padding:60px 40px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:30px;
+}
+
+.product{
+background:white;
+padding:30px;
+border-radius:12px;
+text-align:center;
+box-shadow:0 8px 20px rgba(0,0,0,0.08);
+transition:.35s;
+}
+
+.product:hover{
+transform:translateY(-10px);
+box-shadow:0 15px 30px rgba(0,0,0,0.15);
+}
+
+.product p{
+font-weight:600;
+color:#0d2a57;
+}
+
+.product button{
+margin-top:12px;
+padding:10px 18px;
+border:none;
+border-radius:6px;
+background:#0d2a57;
+color:white;
+cursor:pointer;
+font-weight:600;
+}
+
+/* CART */
+
+.cart-preview{
+position:fixed;
+right:-360px;
+top:0;
+width:360px;
+height:100%;
+background:white;
+box-shadow:-6px 0 25px rgba(0,0,0,0.2);
+padding:25px;
+transition:.4s;
+overflow:auto;
+}
+
+.cart-preview.open{
+right:0;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+margin-bottom:12px;
+padding-bottom:8px;
+border-bottom:1px solid #eee;
+}
+
+.qty-btn{
+padding:4px 10px;
+border:none;
+background:#0d2a57;
+color:white;
+border-radius:4px;
+cursor:pointer;
+}
+
+.total{
+margin-top:15px;
+font-weight:600;
+}
+
+.purchase-btn{
+margin-top:15px;
+width:100%;
+padding:12px;
+background:#25D366;
+border:none;
+color:white;
+font-weight:600;
+border-radius:6px;
+cursor:pointer;
+}
+
+.close-btn{
+background:red;
+color:white;
+border:none;
+padding:6px 10px;
+cursor:pointer;
+border-radius:4px;
+margin-bottom:10px;
+}
+
+.address-input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+/* FOOTER */
+
+footer{
+background:#0d2a57;
+color:white;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+<img src="logo.png">
+</div>
+
+<div class="header-buttons">
+
+<button class="nav-btn" onclick="scrollToSection('services')">
+Serviços
+</button>
+
+<button class="nav-btn" onclick="scrollToSection('pecas')">
+Peças
+</button>
+
+<button class="nav-btn" onclick="toggleCart()">
+🛒 Carrinho
+</button>
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<img src="logo2.png">
+
+</section>
+
+<!-- SERVIÇOS -->
+
+<section id="services" class="services">
+
+<div class="product">
+<h3>Instalação Ar Novo</h3>
+<p>R$400</p>
+<button onclick="addToCart('Instalação Ar Novo',400)">Adicionar</button>
+</div>
+
+<div class="product">
+<h3>Instalação Ar Usado</h3>
+<p>R$250</p>
+<button onclick="addToCart('Instalação Ar Usado',250)">Adicionar</button>
+</div>
+
+<div class="product">
+<h3>Manutenção</h3>
+<p>R$150</p>
+<button onclick="addToCart('Manutenção',150)">Adicionar</button>
+</div>
+
+</section>
+
+<!-- PECAS -->
+
+<section id="pecas" class="services">
+
+<div class="product">
+<h3>Controle Ar Condicionado</h3>
+<p>R$80</p>
+<button onclick="addToCart('Controle Ar Condicionado',80)">Adicionar</button>
+</div>
+
+<div class="product">
+<h3>Suporte Ar Condicionado</h3>
+<p>R$120</p>
+<button onclick="addToCart('Suporte Ar Condicionado',120)">Adicionar</button>
+</div>
+
+<div class="product">
+<h3>Tubulação de Cobre</h3>
+<p>R$90</p>
+<button onclick="addToCart('Tubulação de Cobre',90)">Adicionar</button>
+</div>
+
+<div class="product">
+<h3>Gás Refrigerante</h3>
+<p>R$200</p>
+<button onclick="addToCart('Gás Refrigerante',200)">Adicionar</button>
+</div>
+
+</section>
+
+<div id="cartPreview" class="cart-preview">
+
+<button class="close-btn" onclick="toggleCart()">Fechar</button>
+
+<h3>Carrinho</h3>
+
+<div id="cartItems"></div>
+
+<div class="total" id="total"></div>
+
+<h4>Endereço para atendimento</h4>
+
+<input id="address" class="address-input" placeholder="Digite seu endereço completo">
+
+<button class="purchase-btn" onclick="sendWhatsAppOrder()">
+Finalizar Compra
+</button>
+
+</div>
+
+<footer>
+
+Mais Frio Climatização • Atendimento via WhatsApp
+
+</footer>
+
+<script>
+
+let cart=[]
+
+function scrollToSection(id){
+document.getElementById(id).scrollIntoView({behavior:"smooth"})
+}
+
+function toggleCart(){
+document.getElementById("cartPreview").classList.toggle("open")
+}
+
+function addToCart(name,price){
+
+let item=cart.find(p=>p.name===name)
+
+if(item){
+item.qty++
+}else{
+cart.push({name,price,qty:1})
+}
+
+renderCart()
+document.getElementById("cartPreview").classList.add("open")
+
+}
+
+function changeQty(name,amount){
+
+let item=cart.find(p=>p.name===name)
+
+if(!item) return
+
+item.qty+=amount
+
+if(item.qty<=0){
+cart=cart.filter(p=>p.name!==name)
+}
+
+renderCart()
+
+}
+
+function renderCart(){
+
+let cartDiv=document.getElementById("cartItems")
+cartDiv.innerHTML=""
+
+let total=0
+
+cart.forEach(item=>{
+
+total+=item.price*item.qty
+
+cartDiv.innerHTML+=`
+
+<div class="cart-item">
+
+<div>
+${item.name}<br>
+R$${item.price} x ${item.qty}
+</div>
+
+<div>
+<button class="qty-btn" onclick="changeQty('${item.name}',1)">+</button>
+<button class="qty-btn" onclick="changeQty('${item.name}',-1)">-</button>
+</div>
+
+</div>
+
+`
+
+})
+
+document.getElementById("total").innerText="Total: R$ "+total
+
+}
+
+function sendWhatsAppOrder(){
+
+let address=document.getElementById("address").value
+
+if(cart.length===0){
+alert("Seu carrinho está vazio")
+return
+}
+
+if(address.trim()===""){
+alert("Por favor digite seu endereço")
+return
+}
+
+let message="Pedido - Mais Frio Climatização ❄️\n\n"
+
+let total=0
+
+cart.forEach(item=>{
+message+=`• ${item.name} x${item.qty}\n`
+total+=item.price*item.qty
+})
+
+message+=`\nTotal: R$${total}\n\n`
+message+=`Endereço:\n${address}\n\n`
+message+=`Para confirmar o serviço realize o pagamento via PIX.\n`
+message+=`Chave PIX: 59874260220\n`
+message+=`Após o pagamento envie o comprovante.`
+
+let phone="556993060469"
+
+let url=`https://wa.me/${phone}?text=${encodeURIComponent(message)}`
+
+window.open(url,"_blank")
+
+}
+
+</script>
+
+</body>
+</html>
