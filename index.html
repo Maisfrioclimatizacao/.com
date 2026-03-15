@@ -1,12 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Mais Frio Climatização</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
+*{
+box-sizing:border-box;
+}
 
 body{
 font-family:'Poppins',sans-serif;
@@ -19,28 +26,29 @@ color:#333;
 
 header{
 background:white;
-padding:15px 40px;
+padding:15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-box-shadow:0 4px 15px rgba(0,0,0,0.08);
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
 }
 
 .logo img{
-height:70px;
+height:50px;
 }
 
 .header-buttons{
 display:flex;
-gap:10px;
+gap:8px;
 }
 
 .nav-btn{
 background:#0d2a57;
 color:white;
 border:none;
-padding:10px 16px;
+padding:10px 14px;
 border-radius:8px;
+font-size:14px;
 font-weight:600;
 cursor:pointer;
 }
@@ -49,66 +57,80 @@ cursor:pointer;
 
 .hero{
 text-align:center;
-padding:80px 20px;
+padding:40px 15px;
 background:linear-gradient(120deg,#e8f1ff,#f7fbff);
 }
 
 .hero img{
-width:420px;
+width:80%;
+max-width:350px;
 }
 
-/* SERVICES */
+/* SECTIONS */
+
+.section-title{
+text-align:center;
+font-size:22px;
+margin-top:30px;
+margin-bottom:10px;
+color:#0d2a57;
+}
+
+/* PRODUCTS */
 
 .services{
-padding:60px 40px;
+padding:20px;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-gap:30px;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
 }
 
 .product{
 background:white;
-padding:30px;
-border-radius:12px;
+padding:18px;
+border-radius:10px;
 text-align:center;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
-transition:.35s;
+box-shadow:0 6px 15px rgba(0,0,0,0.08);
 }
 
-.product:hover{
-transform:translateY(-10px);
-box-shadow:0 15px 30px rgba(0,0,0,0.15);
+.product h3{
+font-size:16px;
+margin:5px 0;
 }
 
 .product p{
 font-weight:600;
 color:#0d2a57;
+margin:5px 0;
 }
 
 .product button{
-margin-top:12px;
-padding:10px 18px;
+margin-top:8px;
+padding:10px;
+width:100%;
 border:none;
 border-radius:6px;
 background:#0d2a57;
 color:white;
-cursor:pointer;
 font-weight:600;
+cursor:pointer;
 }
 
 /* CART */
 
 .cart-preview{
 position:fixed;
-right:-360px;
+right:-100%;
 top:0;
-width:360px;
+width:100%;
+max-width:380px;
 height:100%;
 background:white;
 box-shadow:-6px 0 25px rgba(0,0,0,0.2);
-padding:25px;
-transition:.4s;
+padding:20px;
+transition:.3s;
 overflow:auto;
+z-index:1000;
 }
 
 .cart-preview.open{
@@ -119,8 +141,8 @@ right:0;
 display:flex;
 justify-content:space-between;
 margin-bottom:12px;
-padding-bottom:8px;
 border-bottom:1px solid #eee;
+padding-bottom:8px;
 }
 
 .qty-btn{
@@ -133,19 +155,20 @@ cursor:pointer;
 }
 
 .total{
-margin-top:15px;
+margin-top:10px;
 font-weight:600;
 }
 
 .purchase-btn{
 margin-top:15px;
 width:100%;
-padding:12px;
+padding:14px;
 background:#25D366;
 border:none;
 color:white;
 font-weight:600;
 border-radius:6px;
+font-size:16px;
 cursor:pointer;
 }
 
@@ -161,7 +184,7 @@ margin-bottom:10px;
 
 .address-input{
 width:100%;
-padding:10px;
+padding:12px;
 margin-top:10px;
 border-radius:6px;
 border:1px solid #ccc;
@@ -173,8 +196,9 @@ footer{
 background:#0d2a57;
 color:white;
 text-align:center;
-padding:20px;
+padding:15px;
 margin-top:40px;
+font-size:14px;
 }
 
 </style>
@@ -200,7 +224,7 @@ Peças
 </button>
 
 <button class="nav-btn" onclick="toggleCart()">
-🛒 Carrinho
+🛒
 </button>
 
 </div>
@@ -213,7 +237,7 @@ Peças
 
 </section>
 
-<!-- SERVIÇOS -->
+<h2 class="section-title">Serviços</h2>
 
 <section id="services" class="services">
 
@@ -237,24 +261,24 @@ Peças
 
 </section>
 
-<!-- PECAS -->
+<h2 class="section-title">Peças</h2>
 
 <section id="pecas" class="services">
 
 <div class="product">
-<h3>Controle Ar Condicionado</h3>
+<h3>Controle Ar</h3>
 <p>R$80</p>
 <button onclick="addToCart('Controle Ar Condicionado',80)">Adicionar</button>
 </div>
 
 <div class="product">
-<h3>Suporte Ar Condicionado</h3>
+<h3>Suporte Ar</h3>
 <p>R$120</p>
 <button onclick="addToCart('Suporte Ar Condicionado',120)">Adicionar</button>
 </div>
 
 <div class="product">
-<h3>Tubulação de Cobre</h3>
+<h3>Tubo de Cobre</h3>
 <p>R$90</p>
 <button onclick="addToCart('Tubulação de Cobre',90)">Adicionar</button>
 </div>
@@ -277,12 +301,12 @@ Peças
 
 <div class="total" id="total"></div>
 
-<h4>Endereço para atendimento</h4>
+<h4>Endereço</h4>
 
 <input id="address" class="address-input" placeholder="Digite seu endereço completo">
 
 <button class="purchase-btn" onclick="sendWhatsAppOrder()">
-Finalizar Compra
+Finalizar no WhatsApp
 </button>
 
 </div>
@@ -381,7 +405,7 @@ return
 }
 
 if(address.trim()===""){
-alert("Por favor digite seu endereço")
+alert("Digite seu endereço")
 return
 }
 
