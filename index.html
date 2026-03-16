@@ -23,10 +23,9 @@
             font-family: 'Poppins', sans-serif;
             background: var(--bg-light);
             color: var(--text-dark);
-            padding-bottom: 80px; /* Espaço para o rodapé */
+            padding-bottom: 80px;
         }
 
-        /* HEADER FIXO */
         header {
             background: white;
             padding: 15px 5%;
@@ -55,7 +54,6 @@
             gap: 8px;
         }
 
-        /* HERO COM BUSCA INTEGRADA */
         .hero {
             background: var(--primary);
             color: white;
@@ -91,7 +89,6 @@
 
         .search-box i { color: #999; }
 
-        /* FILTROS RÁPIDOS */
         .filters {
             display: flex;
             justify-content: center;
@@ -118,7 +115,6 @@
             border-color: var(--secondary);
         }
 
-        /* GRID DE PRODUTOS */
         .container { padding: 30px 5%; max-width: 1200px; margin: auto; }
         
         .grid {
@@ -160,7 +156,6 @@
 
         .add-btn:hover { background: var(--secondary); color: white; }
 
-        /* CARRINHO (DRAWER) */
         .cart-panel {
             position: fixed;
             right: -100%;
@@ -248,16 +243,21 @@
 
 <script>
     const inventory = [
+        // SERVIÇOS
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
+        { name: "Carga de Gás", price: 200, cat: "serviço" }, // Movidodo para serviços e renomeado
+        
+        // PEÇAS
         { name: "Controle Ar Universal", price: 80, cat: "peça" },
         { name: "Suporte L Condensadora 47cm", price: 27, cat: "peça" },
         { name: "Tubulação de Cobre (kg)", price: 165, cat: "peça" },
-        { name: "Carga de Gás R410", price: 200, cat: "peça" },
         { name: "Gás R-22 Lata 1kg", price: 130, cat: "peça" },
         { name: "Sensor Degelo AC 05k", price: 10, cat: "peça" },
         { name: "Fita De PVC", price: 3.99, cat: "peça" },
+        
+        // CAPACITORES
         { name: "Capacitor Duplo 25+2.5UF/440V", price: 30, cat: "capacitor" },
         { name: "Capacitor Duplo 40UF/440V", price: 36, cat: "capacitor" },
         { name: "Capacitor Duplo 35UF/440V", price: 36, cat: "capacitor" },
@@ -297,7 +297,6 @@
 
     function setFilter(cat) {
         currentCategory = cat;
-        // Estilo dos botões
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.remove('active');
             if(btn.innerText.toLowerCase().includes(cat) || (cat==='' && btn.innerText==='Tudo')) {
