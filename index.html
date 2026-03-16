@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mais Frio Climatização | Loja Virtual</title>
+    <title>Mais Frio Climatização | Catálogo</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -13,9 +13,8 @@
             --primary: #0d2a57;
             --secondary: #3498db;
             --accent: #25D366;
-            --bg-light: #f8fafd;
+            --bg-light: #f4f7f6;
             --text-dark: #2c3e50;
-            --shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,10 +23,10 @@
             font-family: 'Poppins', sans-serif;
             background: var(--bg-light);
             color: var(--text-dark);
-            line-height: 1.6;
+            padding-bottom: 80px; /* Espaço para o rodapé */
         }
 
-        /* HEADER */
+        /* HEADER FIXO */
         header {
             background: white;
             padding: 15px 5%;
@@ -37,110 +36,131 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .logo { font-weight: 700; font-size: 1.2rem; color: var(--primary); }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
         .logo span { color: var(--secondary); }
 
         .cart-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* HERO */
+        /* HERO COM BUSCA INTEGRADA */
         .hero {
-            padding: 60px 5% 100px;
-            text-align: center;
-            background: linear-gradient(135deg, #0d2a57 0%, #1a4a8e 100%);
+            background: var(--primary);
             color: white;
-            clip-path: ellipse(150% 100% at 50% 0%);
+            padding: 40px 5% 60px;
+            text-align: center;
         }
 
-        /* SEARCH & FILTER AREA */
-        .controls-container {
-            max-width: 800px;
-            margin: -40px auto 40px;
-            padding: 0 20px;
+        .hero h1 { font-size: 1.8rem; margin-bottom: 20px; }
+
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
         }
 
         .search-box {
             background: white;
-            padding: 10px 20px;
-            border-radius: 50px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            box-shadow: var(--shadow);
-            border: 1px solid #eee;
+            padding: 5px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         .search-box input {
             border: none;
-            outline: none;
+            padding: 12px;
             width: 100%;
-            padding: 10px;
+            outline: none;
             font-size: 1rem;
-            font-family: inherit;
+            border-radius: 12px;
         }
 
-        .search-box i { color: #ccc; }
+        .search-box i { color: #999; }
 
-        /* GRID & CARDS */
-        .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
+        /* FILTROS RÁPIDOS */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .filter-btn {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 50px;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        /* GRID DE PRODUTOS */
+        .container { padding: 30px 5%; max-width: 1200px; margin: auto; }
         
-        .section-title { 
-            text-align: center; 
-            margin-bottom: 30px; 
-            color: var(--primary);
-        }
-
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
         }
 
         .card {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #eee;
-            transition: 0.3s;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            border: 1px solid #eee;
         }
 
-        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-
-        .card h3 { font-size: 1rem; margin-bottom: 8px; color: var(--text-dark); height: 3rem; overflow: hidden; }
+        .card h3 { font-size: 0.9rem; margin-bottom: 10px; color: var(--primary); min-height: 40px; }
         
         .card .price { 
-            font-size: 1.2rem; 
-            color: var(--primary); 
+            font-size: 1.1rem; 
             font-weight: 700; 
+            color: var(--text-dark);
             margin-bottom: 15px; 
         }
 
         .add-btn {
-            background: var(--bg-light);
+            background: #f0f4f8;
             color: var(--primary);
-            border: 1px solid var(--primary);
+            border: none;
             padding: 10px;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
         }
 
-        .add-btn:hover { background: var(--primary); color: white; }
+        .add-btn:hover { background: var(--secondary); color: white; }
 
-        /* CART PANEL (DRAWER) */
+        /* CARRINHO (DRAWER) */
         .cart-panel {
             position: fixed;
             right: -100%;
@@ -150,24 +170,16 @@
             height: 100%;
             background: white;
             z-index: 2000;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
             transition: 0.4s;
             display: flex;
             flex-direction: column;
         }
 
         .cart-panel.open { right: 0; }
-        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
         .cart-content { padding: 20px; flex-grow: 1; overflow-y: auto; }
-        .cart-footer { padding: 20px; border-top: 1px solid #eee; background: #fafafa; }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #f0f0f0;
-        }
+        .cart-footer { padding: 20px; background: #f9f9f9; }
 
         .checkout-btn {
             width: 100%;
@@ -175,12 +187,16 @@
             background: var(--accent);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 700;
+            font-size: 1rem;
             cursor: pointer;
         }
 
-        footer { background: var(--primary); color: white; padding: 40px; text-align: center; margin-top: 50px; }
+        @media (max-width: 480px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 1.4rem; }
+        }
     </style>
 </head>
 <body>
@@ -193,55 +209,52 @@
 </header>
 
 <section class="hero">
-    <h1>Peças e Serviços</h1>
-    <p>Tudo para climatização em um só lugar.</p>
+    <h1>O que você precisa hoje?</h1>
+    
+    <div class="search-container">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Pesquise: Capacitor, Gás, Instalação..." onkeyup="filterItems()">
+        </div>
+    </div>
+
+    <div class="filters">
+        <button class="filter-btn active" onclick="setFilter('')">Tudo</button>
+        <button class="filter-btn" onclick="setFilter('capacitor')">Capacitores</button>
+        <button class="filter-btn" onclick="setFilter('peça')">Peças</button>
+        <button class="filter-btn" onclick="setFilter('serviço')">Serviços</button>
+    </div>
 </section>
 
-<div class="controls-container">
-    <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" placeholder="O que você está procurando? (ex: capacitor, gás...)" onkeyup="filterItems()">
-    </div>
-</div>
-
 <main class="container">
-    <h2 class="section-title">Nossos Itens</h2>
-    <div class="grid" id="main-grid">
-        </div>
+    <div class="grid" id="main-grid"></div>
 </main>
 
 <div id="cartPreview" class="cart-panel">
     <div class="cart-header">
         <h3>Seu Pedido</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer">&times;</button>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.8rem;">&times;</button>
     </div>
     <div class="cart-content" id="cartItems"></div>
     <div class="cart-footer">
-        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700;">
             <span>Total:</span>
             <span id="total-price">R$ 0,00</span>
         </div>
-        <input type="text" id="address" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ddd;" placeholder="Endereço de entrega">
+        <input type="text" id="address" style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;" placeholder="Endereço Completo">
         <button class="checkout-btn" onclick="sendWhatsAppOrder()">Finalizar no WhatsApp</button>
     </div>
 </div>
 
-<footer>
-    <p>&copy; 2024 Mais Frio Climatização</p>
-</footer>
-
 <script>
     const inventory = [
-        // SERVIÇOS
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
-        // PEÇAS ORIGINAIS
         { name: "Controle Ar Universal", price: 80, cat: "peça" },
         { name: "Suporte L Condensadora 47cm", price: 27, cat: "peça" },
         { name: "Tubulação de Cobre (kg)", price: 165, cat: "peça" },
         { name: "Carga de Gás R410", price: 200, cat: "peça" },
-        // NOVAS PEÇAS
         { name: "Gás R-22 Lata 1kg", price: 130, cat: "peça" },
         { name: "Sensor Degelo AC 05k", price: 10, cat: "peça" },
         { name: "Fita De PVC", price: 3.99, cat: "peça" },
@@ -255,25 +268,22 @@
     ];
 
     let cart = [];
+    let currentCategory = "";
 
-    function renderItems(filter = "") {
+    function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
         
-        const filtered = inventory.filter(item => 
-            item.name.toLowerCase().includes(filter.toLowerCase())
-        );
-
-        if(filtered.length === 0) {
-            grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center;'>Nenhum item encontrado.</p>";
-            return;
-        }
+        const filtered = inventory.filter(item => {
+            const matchesSearch = item.name.toLowerCase().includes(term.toLowerCase());
+            const matchesCat = currentCategory === "" || item.cat === currentCategory;
+            return matchesSearch && matchesCat;
+        });
 
         filtered.forEach(item => {
             grid.innerHTML += `
                 <div class="card">
                     <div>
-                        <small style="color:#aaa; text-transform: uppercase;">${item.cat}</small>
                         <h3>${item.name}</h3>
                         <div class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
                     </div>
@@ -285,9 +295,20 @@
         });
     }
 
+    function setFilter(cat) {
+        currentCategory = cat;
+        // Estilo dos botões
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.innerText.toLowerCase().includes(cat) || (cat==='' && btn.innerText==='Tudo')) {
+                btn.classList.add('active');
+            }
+        });
+        renderItems(document.getElementById('searchInput').value);
+    }
+
     function filterItems() {
-        const term = document.getElementById('searchInput').value;
-        renderItems(term);
+        renderItems(document.getElementById('searchInput').value);
     }
 
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
@@ -304,14 +325,18 @@
         const totalSpan = document.getElementById("total-price");
         let total = 0, count = 0;
 
-        cartDiv.innerHTML = cart.length === 0 ? '<p>Vazio</p>' : '';
+        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#999; margin-top:20px;">Nenhum item selecionado.</p>' : '';
+        
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
             cartDiv.innerHTML += `
-                <div class="cart-item">
-                    <span>${item.name} (x${item.qty})</span>
-                    <span>R$ ${(item.price * item.qty).toFixed(2)}</span>
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
+                    <div style="font-size:0.9rem;"><strong>${item.name}</strong><br>R$ ${item.price} x ${item.qty}</div>
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="changeQty('${item.name}', -1)" style="padding:5px 10px; border:1px solid #ddd; background:none; border-radius:4px;">-</button>
+                        <button onclick="changeQty('${item.name}', 1)" style="padding:5px 10px; background:var(--primary); color:white; border:none; border-radius:4px;">+</button>
+                    </div>
                 </div>
             `;
         });
@@ -320,18 +345,27 @@
         totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
     }
 
+    function changeQty(name, amt) {
+        let item = cart.find(p => p.name === name);
+        if(item) {
+            item.qty += amt;
+            if(item.qty <= 0) cart = cart.filter(p => p.name !== name);
+            renderCart();
+        }
+    }
+
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
-        if (cart.length === 0 || !addr) return alert("Verifique o carrinho e o endereço!");
+        if (cart.length === 0) return alert("Carrinho vazio!");
+        if (!addr.trim()) return alert("Informe seu endereço!");
         
-        let msg = "*PEDIDO MAIS FRIO*\n\n";
+        let msg = "*SOLICITAÇÃO DE PEDIDO - MAIS FRIO* ❄️\n\n";
         cart.forEach(i => msg += `• ${i.name} (x${i.qty})\n`);
-        msg += `\n*Endereço:* ${addr}\n*PIX:* 59874260220`;
+        msg += `\n📍 *Endereço:* ${addr}\n💳 *PIX:* 59874260220`;
         
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
     }
 
-    // Inicializa
     renderItems();
 </script>
 
