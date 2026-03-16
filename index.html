@@ -41,6 +41,7 @@
         .logo { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
         .logo span { color: var(--secondary); }
 
+        /* BOTÃO CARRINHO COM ANIMAÇÃO */
         .cart-btn {
             background: var(--primary);
             color: white;
@@ -52,6 +53,14 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: 0.3s;
+        }
+
+        .bump { animation: bump 0.3s ease-out; }
+        @keyframes bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); background: var(--secondary); }
+            100% { transform: scale(1); }
         }
 
         .hero {
@@ -85,6 +94,7 @@
             outline: none;
             font-size: 1rem;
             border-radius: 12px;
+            color: #333;
         }
 
         .search-box i { color: #999; }
@@ -154,7 +164,27 @@
             transition: 0.2s;
         }
 
-        .add-btn:hover { background: var(--secondary); color: white; }
+        .add-btn:active { transform: scale(0.95); }
+
+        /* NOTIFICAÇÃO TOAST */
+        #toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-dark);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            z-index: 3000;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            display: none;
+            animation: fadeIn 0.3s, fadeOut 0.3s 2.2s;
+        }
+
+        @keyframes fadeIn { from { bottom: 0; opacity: 0; } to { bottom: 20px; opacity: 1; } }
+        @keyframes fadeOut { from { bottom: 20px; opacity: 1; } to { bottom: 0; opacity: 0; } }
 
         /* CARRINHO */
         .cart-panel {
@@ -184,7 +214,6 @@
             border-radius: 8px;
             border: 1px solid #ddd;
             font-family: inherit;
-            background: white;
         }
 
         .checkout-btn {
@@ -207,9 +236,11 @@
 </head>
 <body>
 
+<div id="toast">Item adicionado ao carrinho! 🛒</div>
+
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
-    <button class="cart-btn" onclick="toggleCart()">
+    <button class="cart-btn" id="header-cart-btn" onclick="toggleCart()">
         <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
     </button>
 </header>
@@ -254,7 +285,7 @@
             <option value="" disabled selected>Forma de Pagamento</option>
             <option value="PIX">PIX</option>
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
+            <option value="Cartão">Cartão de Crédito/Débito</option>
         </select>
 
         <button class="checkout-btn" onclick="sendWhatsAppOrder()">Finalizar no WhatsApp</button>
@@ -305,6 +336,20 @@
         });
     }
 
+    // NOVA FUNÇÃO DE FEEDBACK
+    function showFeedback() {
+        const toast = document.getElementById('toast');
+        const cartBtn = document.getElementById('header-cart-btn');
+        
+        // Mostra o aviso
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        
+        // Faz o carrinho pulsar
+        cartBtn.classList.add('bump');
+        setTimeout(() => { cartBtn.classList.remove('bump'); }, 300);
+    }
+
     function setFilter(cat) {
         currentCategory = cat;
         document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -322,6 +367,7 @@
         let item = cart.find(p => p.name === name);
         if (item) { item.qty++; } else { cart.push({ name, price, qty: 1 }); }
         renderCart();
+        showFeedback(); // Chama o feedback visual
     }
 
     function renderCart() {
