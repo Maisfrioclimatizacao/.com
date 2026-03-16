@@ -88,6 +88,7 @@
             width: 100%;
             outline: none;
             font-size: 1rem;
+            color: #333;
         }
 
         .filters {
@@ -145,7 +146,6 @@
             transition: 0.2s;
         }
 
-        /* CARRINHO */
         .cart-panel {
             position: fixed;
             right: -100%;
@@ -238,7 +238,7 @@
     <h1>O que você precisa hoje?</h1>
     <div class="search-box">
         <i class="fas fa-search" style="color:#999; margin-right:10px;"></i>
-        <input type="text" id="searchInput" placeholder="Pesquisar produto ou serviço..." onkeyup="filterItems()">
+        <input type="text" id="searchInput" placeholder="Pesquisar (ex: gas, instalacao...)" onkeyup="filterItems()">
     </div>
 
     <div class="filters">
@@ -314,13 +314,24 @@
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
     let currentCategory = "";
 
+    // FUNÇÃO PARA REMOVER ACENTOS E NORMALIZAR BUSCA
+    function normalizeStr(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
+        
+        const normalizedTerm = normalizeStr(term);
+
         const filtered = inventory.filter(item => {
-            return item.name.toLowerCase().includes(term.toLowerCase()) && 
-                   (currentCategory === "" || item.cat === currentCategory);
+            const normalizedName = normalizeStr(item.name);
+            const matchesSearch = normalizedName.includes(normalizedTerm);
+            const matchesCat = currentCategory === "" || item.cat === currentCategory;
+            return matchesSearch && matchesCat;
         });
+
         filtered.forEach(item => {
             grid.innerHTML += `
                 <div class="card">
@@ -394,7 +405,7 @@
         
         if (cart.length === 0) return alert("Carrinho vazio!");
         if (!addr.trim()) return alert("Informe seu endereço!");
-        if (schedVisible && !date) return alert("Selecione uma data para o serviço!");
+        if (schedVisible && !date) return alert("Selecione uma data!");
         if (!pay) return alert("Selecione o pagamento!");
         
         let msg = "*PEDIDO - MAIS FRIO CLIMATIZAÇÃO* ❄️\n\n";
