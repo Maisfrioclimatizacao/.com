@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mais Frio Climatização | Catálogo</title>
+    <title>Mais Frio Climatização | Catálogo Profissional</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -15,6 +15,7 @@
             --accent: #25D366;
             --bg-light: #f4f7f6;
             --text-dark: #2c3e50;
+            --white: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,8 +27,9 @@
             padding-bottom: 80px;
         }
 
+        /* HEADER */
         header {
-            background: white;
+            background: var(--white);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
@@ -38,10 +40,9 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        .logo { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.1rem; text-transform: uppercase; }
         .logo span { color: var(--secondary); }
 
-        /* BOTÃO CARRINHO COM ANIMAÇÃO */
         .cart-btn {
             background: var(--primary);
             color: white;
@@ -59,10 +60,11 @@
         .bump { animation: bump 0.3s ease-out; }
         @keyframes bump {
             0% { transform: scale(1); }
-            50% { transform: scale(1.2); background: var(--secondary); }
+            50% { transform: scale(1.1); background: var(--secondary); }
             100% { transform: scale(1); }
         }
 
+        /* HERO & FILTERS */
         .hero {
             background: var(--primary);
             color: white;
@@ -72,18 +74,14 @@
 
         .hero h1 { font-size: 1.8rem; margin-bottom: 20px; }
 
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-        }
-
         .search-box {
             background: white;
             border-radius: 12px;
             display: flex;
             align-items: center;
             padding: 5px 15px;
+            max-width: 600px;
+            margin: 0 auto;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
@@ -93,17 +91,14 @@
             width: 100%;
             outline: none;
             font-size: 1rem;
-            border-radius: 12px;
             color: #333;
         }
-
-        .search-box i { color: #999; }
 
         .filters {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 25px;
             overflow-x: auto;
             padding-bottom: 10px;
         }
@@ -112,19 +107,16 @@
             background: rgba(255,255,255,0.1);
             color: white;
             border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 16px;
+            padding: 8px 20px;
             border-radius: 50px;
             white-space: nowrap;
             cursor: pointer;
-            font-size: 0.9rem;
             transition: 0.3s;
         }
 
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--secondary);
-            border-color: var(--secondary);
-        }
+        .filter-btn.active { background: var(--secondary); border-color: var(--secondary); }
 
+        /* GRID & CARDS */
         .container { padding: 30px 5%; max-width: 1200px; margin: auto; }
         
         .grid {
@@ -142,16 +134,11 @@
             flex-direction: column;
             justify-content: space-between;
             border: 1px solid #eee;
+            transition: 0.3s;
         }
 
         .card h3 { font-size: 0.9rem; margin-bottom: 10px; color: var(--primary); min-height: 40px; }
-        
-        .card .price { 
-            font-size: 1.1rem; 
-            font-weight: 700; 
-            color: var(--text-dark);
-            margin-bottom: 15px; 
-        }
+        .card .price { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; }
 
         .add-btn {
             background: #f0f4f8;
@@ -164,29 +151,29 @@
             transition: 0.2s;
         }
 
-        .add-btn:active { transform: scale(0.95); }
+        .add-btn:hover { background: var(--secondary); color: white; }
 
-        /* NOTIFICAÇÃO TOAST */
-        #toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--text-dark);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            z-index: 3000;
-            font-weight: 600;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            display: none;
-            animation: fadeIn 0.3s, fadeOut 0.3s 2.2s;
+        /* BTU CALCULATOR */
+        .btu-box {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px dashed var(--secondary);
+            text-align: center;
         }
 
-        @keyframes fadeIn { from { bottom: 0; opacity: 0; } to { bottom: 20px; opacity: 1; } }
-        @keyframes fadeOut { from { bottom: 20px; opacity: 1; } to { bottom: 0; opacity: 0; } }
+        .btu-input {
+            width: 100px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin: 10px;
+            outline: none;
+        }
 
-        /* CARRINHO */
+        /* CARRINHO PANEL */
         .cart-panel {
             position: fixed;
             right: -100%;
@@ -197,7 +184,7 @@
             background: white;
             z-index: 2000;
             box-shadow: -5px 0 25px rgba(0,0,0,0.1);
-            transition: 0.4s;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
         }
@@ -205,15 +192,16 @@
         .cart-panel.open { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
         .cart-content { padding: 20px; flex-grow: 1; overflow-y: auto; }
-        .cart-footer { padding: 20px; background: #f9f9f9; }
+        .cart-footer { padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; }
 
         .form-select {
             width: 100%;
             padding: 12px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             border-radius: 8px;
             border: 1px solid #ddd;
             font-family: inherit;
+            font-size: 0.9rem;
         }
 
         .checkout-btn {
@@ -226,6 +214,40 @@
             font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+
+        /* WHATSAPP FLOAT */
+        .fab-whatsapp {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1500;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-dark);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            z-index: 3000;
+            display: none;
         }
 
         @media (max-width: 480px) {
@@ -236,7 +258,7 @@
 </head>
 <body>
 
-<div id="toast">Item adicionado ao carrinho! 🛒</div>
+<div id="toast">Item adicionado! 🛒</div>
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
@@ -246,13 +268,10 @@
 </header>
 
 <section class="hero">
-    <h1>O que você precisa hoje?</h1>
-    
-    <div class="search-container">
-        <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Pesquise: Capacitor, Gás, Instalação..." onkeyup="filterItems()">
-        </div>
+    <h1>Soluções em Climatização</h1>
+    <div class="search-box">
+        <i class="fas fa-search" style="color:#999"></i>
+        <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="filterItems()">
     </div>
 
     <div class="filters">
@@ -273,24 +292,54 @@
         <button onclick="toggleCart()" style="border:none; background:none; font-size:1.8rem;">&times;</button>
     </div>
     <div class="cart-content" id="cartItems"></div>
+    
     <div class="cart-footer">
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700; color:var(--primary); font-size: 1.1rem;">
-            <span>Total:</span>
-            <span id="total-price">R$ 0,00</span>
+        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <span style="color:#666">Subtotal:</span>
+            <span id="subtotal-price">R$ 0,00</span>
         </div>
-        
-        <input type="text" id="address" class="form-select" placeholder="Endereço Completo">
-        
+
+        <select id="neighborhood" class="form-select" onchange="updateDeliveryFee()">
+            <option value="0" disabled selected>Selecione seu bairro (Entrega)</option>
+            <option value="15">Centro / Caiari / Olaria (R$ 15)</option>
+            <option value="20">Agenor / Embratel (R$ 20)</option>
+            <option value="25">Zona Leste / JK (R$ 25)</option>
+            <option value="30">Zona Sul / Jatuarana (R$ 30)</option>
+            <option value="0">Outros / Retirada (A combinar)</option>
+        </select>
+
+        <input type="text" id="address" class="form-select" placeholder="Endereço (Rua, Nº, Ref)">
+
+        <div id="service-scheduling" style="display:none; background:#eef2f7; padding:10px; border-radius:8px; margin-bottom:12px;">
+            <p style="font-size:0.75rem; font-weight:700; margin-bottom:5px;">AGENDE O SERVIÇO:</p>
+            <div style="display:flex; gap:5px;">
+                <input type="date" id="serviceDate" class="form-select" style="margin-bottom:0; flex:2;">
+                <select id="serviceTime" class="form-select" style="margin-bottom:0; flex:1;">
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
+                </select>
+            </div>
+        </div>
+
         <select id="paymentMethod" class="form-select">
             <option value="" disabled selected>Forma de Pagamento</option>
-            <option value="PIX">PIX</option>
+            <option value="PIX">PIX (Chave CPF)</option>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão">Cartão de Crédito/Débito</option>
         </select>
 
-        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Finalizar no WhatsApp</button>
+        <div style="display:flex; justify-content:space-between; margin: 15px 0; font-weight:700; color:var(--primary); font-size:1.2rem;">
+            <span>TOTAL:</span>
+            <span id="total-price">R$ 0,00</span>
+        </div>
+
+        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Finalizar via WhatsApp</button>
     </div>
 </div>
+
+<a href="https://wa.me/556993060469?text=Olá! Gostaria de tirar uma dúvida." class="fab-whatsapp" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
 
 <script>
     const inventory = [
@@ -304,26 +353,36 @@
         { name: "Gás R-22 Lata 1kg", price: 130, cat: "peça" },
         { name: "Sensor Degelo AC 05k", price: 10, cat: "peça" },
         { name: "Fita De PVC", price: 3.99, cat: "peça" },
-        { name: "Capacitor Duplo 25+2.5UF/440V", price: 30, cat: "capacitor" },
-        { name: "Capacitor Duplo 40UF/440V", price: 36, cat: "capacitor" },
-        { name: "Capacitor Duplo 35UF/440V", price: 36, cat: "capacitor" },
-        { name: "Capacitor Duplo 30UF/440V", price: 36, cat: "capacitor" },
-        { name: "Capacitor Duplo 25+1.5UF/440V", price: 30, cat: "capacitor" },
-        { name: "Capacitor Duplo 20UF/440V", price: 36, cat: "capacitor" },
-        { name: "Capacitor Duplo 17,5UF/440V", price: 18, cat: "capacitor" }
+        { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "capacitor" },
+        { name: "Capacitor Duplo 40UF", price: 36, cat: "capacitor" },
+        { name: "Capacitor Duplo 35UF", price: 36, cat: "capacitor" },
+        { name: "Capacitor Duplo 30UF", price: 36, cat: "capacitor" }
     ];
 
-    let cart = [];
+    let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
     let currentCategory = "";
+    let deliveryFee = 0;
 
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
+        
+        // BTU CALCULATOR NO TOPO QUANDO FILTRA SERVIÇO
+        if (currentCategory === "serviço" || currentCategory === "") {
+            grid.innerHTML += `
+            <div class="btu-box">
+                <i class="fas fa-snowflake" style="color:var(--secondary)"></i> <strong>Calculadora de BTUs</strong><br>
+                <input type="number" id="m2Input" class="btu-input" placeholder="m²">
+                <button class="add-btn" onclick="calcBTU()">Calcular</button>
+                <div id="btuResult" style="margin-top:10px; font-weight:700; color:var(--secondary)"></div>
+            </div>`;
+        }
+
         const filtered = inventory.filter(item => {
-            const matchesSearch = item.name.toLowerCase().includes(term.toLowerCase());
-            const matchesCat = currentCategory === "" || item.cat === currentCategory;
-            return matchesSearch && matchesCat;
+            return item.name.toLowerCase().includes(term.toLowerCase()) && 
+                   (currentCategory === "" || item.cat === currentCategory);
         });
+
         filtered.forEach(item => {
             grid.innerHTML += `
                 <div class="card">
@@ -336,60 +395,67 @@
         });
     }
 
-    // NOVA FUNÇÃO DE FEEDBACK
-    function showFeedback() {
-        const toast = document.getElementById('toast');
-        const cartBtn = document.getElementById('header-cart-btn');
-        
-        // Mostra o aviso
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 2500);
-        
-        // Faz o carrinho pulsar
-        cartBtn.classList.add('bump');
-        setTimeout(() => { cartBtn.classList.remove('bump'); }, 300);
+    function calcBTU() {
+        const m = document.getElementById('m2Input').value;
+        const res = document.getElementById('btuResult');
+        if(!m) return res.innerText = "Insira os m²";
+        const btu = m * 600;
+        let power = "9.000 BTU";
+        if(btu > 9000) power = "12.000 BTU";
+        if(btu > 12000) power = "18.000 BTU";
+        if(btu > 18000) power = "24.000+ BTU";
+        res.innerHTML = `Sugerido: ${power}`;
     }
-
-    function setFilter(cat) {
-        currentCategory = cat;
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if(btn.innerText.toLowerCase().includes(cat) || (cat==='' && btn.innerText==='Tudo')) btn.classList.add('active');
-        });
-        renderItems(document.getElementById('searchInput').value);
-    }
-
-    function filterItems() { renderItems(document.getElementById('searchInput').value); }
-
-    function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
 
     function addToCart(name, price) {
         let item = cart.find(p => p.name === name);
-        if (item) { item.qty++; } else { cart.push({ name, price, qty: 1 }); }
+        if (item) item.qty++; else cart.push({ name, price, qty: 1 });
+        saveAndRender();
+        showFeedback();
+    }
+
+    function saveAndRender() {
+        localStorage.setItem('maisFrioCart', JSON.stringify(cart));
         renderCart();
-        showFeedback(); // Chama o feedback visual
+    }
+
+    function updateDeliveryFee() {
+        deliveryFee = parseFloat(document.getElementById('neighborhood').value) || 0;
+        renderCart();
     }
 
     function renderCart() {
         const cartDiv = document.getElementById("cartItems");
         const countSpan = document.getElementById("cart-count");
+        const subtotalSpan = document.getElementById("subtotal-price");
         const totalSpan = document.getElementById("total-price");
-        let total = 0, count = 0;
-        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#999; margin-top:20px;">Vazio</p>' : '';
+        const sched = document.getElementById("service-scheduling");
+        
+        let subtotal = 0, count = 0, hasService = false;
+        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#999;">Vazio</p>' : '';
+        
         cart.forEach(item => {
-            total += item.price * item.qty;
+            subtotal += item.price * item.qty;
             count += item.qty;
+            if(inventory.find(i => i.name === item.name && i.cat === 'serviço')) hasService = true;
             cartDiv.innerHTML += `
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
-                    <div style="font-size:0.9rem;"><strong>${item.name}</strong><br>R$ ${item.price.toFixed(2)} x ${item.qty}</div>
-                    <div style="display:flex; gap:5px;">
-                        <button onclick="changeQty('${item.name}', -1)" style="padding:5px 10px; border:1px solid #ddd; background:none; border-radius:4px;">-</button>
-                        <button onclick="changeQty('${item.name}', 1)" style="padding:5px 10px; background:var(--primary); color:white; border:none; border-radius:4px;">+</button>
+                <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                    <div style="font-size:0.85rem;"><strong>${item.name}</strong><br>${item.qty}x R$ ${item.price.toFixed(2)}</div>
+                    <div style="display:flex; gap:5px; align-items:center;">
+                        <button onclick="changeQty('${item.name}', -1)" style="padding:2px 8px; border:1px solid #ddd; background:none;">-</button>
+                        <button onclick="changeQty('${item.name}', 1)" style="padding:2px 8px; background:var(--primary); color:white; border:none;">+</button>
                     </div>
                 </div>`;
         });
+
+        sched.style.display = hasService ? "block" : "none";
         countSpan.innerText = count;
-        totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        subtotalSpan.innerText = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+        totalSpan.innerText = `R$ ${(subtotal + deliveryFee).toFixed(2).replace('.', ',')}`;
+        
+        // Data mínima = hoje
+        const dateInput = document.getElementById('serviceDate');
+        if(dateInput) dateInput.min = new Date().toISOString().split("T")[0];
     }
 
     function changeQty(name, amt) {
@@ -397,39 +463,58 @@
         if(item) {
             item.qty += amt;
             if(item.qty <= 0) cart = cart.filter(p => p.name !== name);
-            renderCart();
+            saveAndRender();
         }
     }
 
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
-        const payment = document.getElementById("paymentMethod").value;
+        const neigh = document.getElementById("neighborhood");
+        const pay = document.getElementById("paymentMethod").value;
+        const sDate = document.getElementById("serviceDate").value;
+        const sTime = document.getElementById("serviceTime").value;
         
         if (cart.length === 0) return alert("Carrinho vazio!");
-        if (!addr.trim()) return alert("Informe seu endereço!");
-        if (!payment) return alert("Selecione a forma de pagamento!");
-        
+        if (neigh.value === "0" && cart.some(i => inventory.find(inv => inv.name === i.name && inv.cat === 'peça'))) return alert("Selecione o bairro para entrega!");
+        if (!addr.trim()) return alert("Informe seu endereço completo!");
+        if (!pay) return alert("Escolha o pagamento!");
+
         let msg = "*SOLICITAÇÃO DE PEDIDO - MAIS FRIO* ❄️\n\n";
-        let total = 0;
-        
-        cart.forEach(item => {
-            const subtotal = item.price * item.qty;
-            msg += `• ${item.name} (x${item.qty}) - R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
-            total += subtotal;
+        let subtotal = 0;
+        cart.forEach(i => {
+            msg += `• ${i.name} (${i.qty}x) - R$ ${(i.price * i.qty).toFixed(2)}\n`;
+            subtotal += i.price * i.qty;
         });
-        
-        msg += `\n💰 *VALOR TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
-        msg += `\n\n📍 *Endereço:* ${addr}`;
-        msg += `\n💳 *Pagamento:* ${payment}`;
-        
-        if(payment === "PIX") {
-            msg += `\n🔑 *Chave PIX:* 59874260220`;
-        }
-        
+
+        if(sDate) msg += `\n📅 *AGENDAMENTO:* ${sDate.split('-').reverse().join('/')} (${sTime})`;
+        msg += `\n\n🚚 *Bairro:* ${neigh.options[neigh.selectedIndex].text}`;
+        msg += `\n📍 *Endereço:* ${addr}`;
+        msg += `\n💳 *Pagamento:* ${pay}`;
+        msg += `\n💰 *TOTAL FINAL: R$ ${(subtotal + deliveryFee).toFixed(2).replace('.', ',')}*`;
+
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
+        localStorage.removeItem('maisFrioCart');
+        cart = [];
+        saveAndRender();
+    }
+
+    function filterItems() { renderItems(document.getElementById('searchInput').value); }
+    function setFilter(c) { 
+        currentCategory = c; 
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase().includes(c) || (c==='' && b.innerText==='Tudo')));
+        renderItems(); 
+    }
+    function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
+    function showFeedback() {
+        const t = document.getElementById('toast');
+        t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 2000);
+        document.getElementById('header-cart-btn').classList.add('bump');
+        setTimeout(() => document.getElementById('header-cart-btn').classList.remove('bump'), 300);
     }
 
     renderItems();
+    renderCart();
 </script>
 
 </body>
