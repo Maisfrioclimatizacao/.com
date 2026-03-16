@@ -156,6 +156,7 @@
 
         .add-btn:hover { background: var(--secondary); color: white; }
 
+        /* CARRINHO */
         .cart-panel {
             position: fixed;
             right: -100%;
@@ -175,6 +176,16 @@
         .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
         .cart-content { padding: 20px; flex-grow: 1; overflow-y: auto; }
         .cart-footer { padding: 20px; background: #f9f9f9; }
+
+        .form-select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-family: inherit;
+            background: white;
+        }
 
         .checkout-btn {
             width: 100%;
@@ -232,32 +243,36 @@
     </div>
     <div class="cart-content" id="cartItems"></div>
     <div class="cart-footer">
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700; color:var(--primary); font-size: 1.1rem;">
             <span>Total:</span>
             <span id="total-price">R$ 0,00</span>
         </div>
-        <input type="text" id="address" style="width:100%; padding:12px; margin-bottom:15px; border-radius:8px; border:1px solid #ddd;" placeholder="Endereço Completo">
+        
+        <input type="text" id="address" class="form-select" placeholder="Endereço Completo">
+        
+        <select id="paymentMethod" class="form-select">
+            <option value="" disabled selected>Forma de Pagamento</option>
+            <option value="PIX">PIX</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
+        </select>
+
         <button class="checkout-btn" onclick="sendWhatsAppOrder()">Finalizar no WhatsApp</button>
     </div>
 </div>
 
 <script>
     const inventory = [
-        // SERVIÇOS
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
-        { name: "Carga de Gás", price: 200, cat: "serviço" }, // Movidodo para serviços e renomeado
-        
-        // PEÇAS
+        { name: "Carga de Gás", price: 200, cat: "serviço" },
         { name: "Controle Ar Universal", price: 80, cat: "peça" },
         { name: "Suporte L Condensadora 47cm", price: 27, cat: "peça" },
         { name: "Tubulação de Cobre (kg)", price: 165, cat: "peça" },
         { name: "Gás R-22 Lata 1kg", price: 130, cat: "peça" },
         { name: "Sensor Degelo AC 05k", price: 10, cat: "peça" },
         { name: "Fita De PVC", price: 3.99, cat: "peça" },
-        
-        // CAPACITORES
         { name: "Capacitor Duplo 25+2.5UF/440V", price: 30, cat: "capacitor" },
         { name: "Capacitor Duplo 40UF/440V", price: 36, cat: "capacitor" },
         { name: "Capacitor Duplo 35UF/440V", price: 36, cat: "capacitor" },
@@ -273,13 +288,11 @@
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        
         const filtered = inventory.filter(item => {
             const matchesSearch = item.name.toLowerCase().includes(term.toLowerCase());
             const matchesCat = currentCategory === "" || item.cat === currentCategory;
             return matchesSearch && matchesCat;
         });
-
         filtered.forEach(item => {
             grid.innerHTML += `
                 <div class="card">
@@ -287,11 +300,8 @@
                         <h3>${item.name}</h3>
                         <div class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
                     </div>
-                    <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">
-                        Adicionar
-                    </button>
-                </div>
-            `;
+                    <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">Adicionar</button>
+                </div>`;
         });
     }
 
@@ -299,16 +309,12 @@
         currentCategory = cat;
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.classList.remove('active');
-            if(btn.innerText.toLowerCase().includes(cat) || (cat==='' && btn.innerText==='Tudo')) {
-                btn.classList.add('active');
-            }
+            if(btn.innerText.toLowerCase().includes(cat) || (cat==='' && btn.innerText==='Tudo')) btn.classList.add('active');
         });
         renderItems(document.getElementById('searchInput').value);
     }
 
-    function filterItems() {
-        renderItems(document.getElementById('searchInput').value);
-    }
+    function filterItems() { renderItems(document.getElementById('searchInput').value); }
 
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
 
@@ -323,23 +329,19 @@
         const countSpan = document.getElementById("cart-count");
         const totalSpan = document.getElementById("total-price");
         let total = 0, count = 0;
-
-        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#999; margin-top:20px;">Nenhum item selecionado.</p>' : '';
-        
+        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#999; margin-top:20px;">Vazio</p>' : '';
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
             cartDiv.innerHTML += `
                 <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
-                    <div style="font-size:0.9rem;"><strong>${item.name}</strong><br>R$ ${item.price} x ${item.qty}</div>
+                    <div style="font-size:0.9rem;"><strong>${item.name}</strong><br>R$ ${item.price.toFixed(2)} x ${item.qty}</div>
                     <div style="display:flex; gap:5px;">
                         <button onclick="changeQty('${item.name}', -1)" style="padding:5px 10px; border:1px solid #ddd; background:none; border-radius:4px;">-</button>
                         <button onclick="changeQty('${item.name}', 1)" style="padding:5px 10px; background:var(--primary); color:white; border:none; border-radius:4px;">+</button>
                     </div>
-                </div>
-            `;
+                </div>`;
         });
-
         countSpan.innerText = count;
         totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
     }
@@ -355,12 +357,28 @@
 
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
+        const payment = document.getElementById("paymentMethod").value;
+        
         if (cart.length === 0) return alert("Carrinho vazio!");
         if (!addr.trim()) return alert("Informe seu endereço!");
+        if (!payment) return alert("Selecione a forma de pagamento!");
         
         let msg = "*SOLICITAÇÃO DE PEDIDO - MAIS FRIO* ❄️\n\n";
-        cart.forEach(i => msg += `• ${i.name} (x${i.qty})\n`);
-        msg += `\n📍 *Endereço:* ${addr}\n💳 *PIX:* 59874260220`;
+        let total = 0;
+        
+        cart.forEach(item => {
+            const subtotal = item.price * item.qty;
+            msg += `• ${item.name} (x${item.qty}) - R$ ${subtotal.toFixed(2).replace('.', ',')}\n`;
+            total += subtotal;
+        });
+        
+        msg += `\n💰 *VALOR TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+        msg += `\n\n📍 *Endereço:* ${addr}`;
+        msg += `\n💳 *Pagamento:* ${payment}`;
+        
+        if(payment === "PIX") {
+            msg += `\n🔑 *Chave PIX:* 59874260220`;
+        }
         
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
     }
