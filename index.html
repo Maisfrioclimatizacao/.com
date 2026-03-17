@@ -22,7 +22,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
 
-        /* NOTIFICAÇÃO TOAST */
+        /* TOAST NOTIFICATION */
         #toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             background: var(--primary); color: white; padding: 12px 25px;
@@ -55,24 +55,26 @@
 
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
-        .card { background: var(--white); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); opacity: 0; }
+        .card { background: var(--white); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); opacity: 0; }
         .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
-        .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; transition: 0.5s; background-color: #f1f5f9; }
+        .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; background-color: #f1f5f9; }
 
         .btn-add { width: 100%; padding: 10px; border-radius: 8px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; transition: 0.2s; }
         .btn-add:hover { background: var(--primary); color: white; }
 
-        /* INFORMAÇÕES */
         .info-section { background: white; padding: 60px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .schedule-table td { padding: 10px 0; border-bottom: 1px solid #eee; }
-        .schedule-table td:last-child { text-align: right; font-weight: 600; color: var(--primary); }
 
         /* CARRINHO */
         .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
         .cart-panel.open { right: 0; }
         .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #f1f5f9; }
-        .qty-controls button { width: 25px; height: 25px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; }
+        .qty-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-controls button { width: 28px; height: 28px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; font-weight: bold; }
+
+        .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid #eee; }
+        .cart-input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
 
         @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
     </style>
@@ -96,8 +98,8 @@
 </header>
 
 <section class="hero">
-    <h1 class="reveal">Peças e Serviços em Presidente Médici</h1>
-    <div class="search-box reveal" style="animation-delay: 0.2s;">
+    <h1>Peças e Serviços em Presidente Médici</h1>
+    <div class="search-box">
         <input type="text" id="searchInput" placeholder="Buscar peça ou serviço..." onkeyup="filterItems()">
     </div>
 </section>
@@ -110,31 +112,43 @@
     <div>
         <h2 style="color: var(--primary);"><i class="far fa-clock"></i> Horário de Atendimento</h2>
         <table class="schedule-table">
-            <tr><td>Segunda a Sexta</td><td>08:00 – 18:00</td></tr>
-            <tr><td>Sábado</td><td>08:00 – 12:00</td></tr>
-            <tr><td>Domingo</td><td><span style="color: #ef4444;">Fechado</span></td></tr>
+            <tr><td>Segunda a Sexta</td><td style="text-align:right;">08:00 – 18:00</td></tr>
+            <tr><td>Sábado</td><td style="text-align:right;">08:00 – 12:00</td></tr>
+            <tr><td>Domingo</td><td style="text-align:right; color: #ef4444;">Fechado</td></tr>
         </table>
     </div>
     <div>
-        <h2 style="color: var(--primary);"><i class="fas fa-map-marker-alt"></i> Região de Atendimento</h2>
-        <p style="margin-top:15px;">Atendemos em toda a cidade de <b>Presidente Médici - RO</b> e região rural próxima.</p>
-        <p style="margin-top:10px;">Entregamos peças e realizamos serviços técnicos em residências e comércios.</p>
+        <h2 style="color: var(--primary);"><i class="fas fa-map-marker-alt"></i> Onde Atendemos</h2>
+        <p style="margin-top:15px;">Presidente Médici - RO e região.</p>
         <div style="margin-top: 20px; font-weight: 700; color: var(--accent);"><i class="fas fa-check-circle"></i> Garantia em todos os serviços</div>
     </div>
 </section>
 
 <div id="cartPreview" class="cart-panel">
-    <div style="padding:25px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+    <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
         <h3>Seu Pedido</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:2rem; cursor:pointer;">&times;</button>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
     </div>
+    
     <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
-    <div style="padding:25px; background:#f8fafc; border-top:1px solid #eee;">
-        <input type="text" id="address" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;" placeholder="Endereço de entrega">
-        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
+    
+    <div class="cart-footer">
+        <input type="text" id="address" class="cart-input" placeholder="Seu endereço completo">
+        
+        <label style="font-size: 0.8rem; font-weight: 600; color: var(--primary);">Forma de Pagamento:</label>
+        <select id="paymentMethod" class="cart-input">
+            <option value="Pix">Pix</option>
+            <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+        </select>
+
+        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px; font-size:1.1rem;">
             <span>Total:</span> <span id="total-price">R$ 0,00</span>
         </div>
-        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:12px; font-weight:700; cursor:pointer;">Finalizar no WhatsApp</button>
+        
+        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer; font-size:1rem;">
+            <i class="fab fa-whatsapp"></i> Finalizar no WhatsApp
+        </button>
     </div>
 </div>
 
@@ -268,7 +282,7 @@
                 </div>
                 <div class="qty-controls">
                     <button onclick="changeQty('${i.name}', -1)">-</button>
-                    <span style="margin:0 10px;">${i.qty}</span>
+                    <span>${i.qty}</span>
                     <button onclick="changeQty('${i.name}', 1)">+</button>
                 </div>
             </div>`;
@@ -286,10 +300,22 @@
 
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
+
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
-        if (!addr) return alert("Por favor, informe seu endereço em Médici.");
-        window.open(`https://wa.me/556993060469?text=${encodeURIComponent("*PEDIDO MAIS FRIO*\n" + cart.map(i => `${i.name} x${i.qty}`).join("\n") + "\n\nEndereço: " + addr)}`);
+        const pay = document.getElementById("paymentMethod").value;
+        
+        if (!addr) return alert("Por favor, informe seu endereço!");
+        if (cart.length === 0) return alert("Seu carrinho está vazio!");
+
+        const total = document.getElementById("total-price").innerText;
+        let message = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
+        message += cart.map(i => `• ${i.name} (x${i.qty}) - R$ ${(i.price*i.qty).toFixed(2)}`).join("\n");
+        message += `\n\n*Total:* ${total}`;
+        message += `\n*Endereço:* ${addr}`;
+        message += `\n*Pagamento:* ${pay}`;
+
+        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(message)}`);
     }
 
     updateBusinessStatus(); renderItems(); renderCart();
