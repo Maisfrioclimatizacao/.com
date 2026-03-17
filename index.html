@@ -23,16 +23,7 @@
         body { background: var(--bg); color: var(--primary); }
 
         /* --- STATUS BAR (HORÁRIO) --- */
-        .status-bar { 
-            background: var(--primary); 
-            color: white; 
-            padding: 10px; 
-            text-align: center; 
-            font-size: 0.75rem; 
-            font-weight: 700; 
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
+        .status-bar { background: var(--primary); color: white; padding: 10px; text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
         .status-bar i { color: var(--accent); margin-right: 5px; }
         
         header { 
@@ -63,10 +54,10 @@
             width: 100%; max-width: 500px; display: flex; align-items: center; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.3); margin-bottom: 30px;
         }
-        .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; }
+        .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: #333; }
 
         .tabs { display: flex; gap: 10px; justify-content: center; width: 100%; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .tab { padding: 12px 20px; background: rgba(255,255,255,0.1); border-radius: 50px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .tab { padding: 12px 20px; background: rgba(255,255,255,0.1); border-radius: 50px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: 0.3s; }
         .tab.active { background: white; color: var(--primary); }
 
         /* --- GRID --- */
@@ -83,33 +74,46 @@
         .badge.servico { background: var(--accent); }
 
         .card-body { padding: 15px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card h3 { font-size: 0.9rem; font-weight: 700; height: 35px; overflow: hidden; margin-bottom: 10px; }
+        .card h3 { font-size: 0.9rem; font-weight: 700; height: 35px; overflow: hidden; margin-bottom: 10px; color: var(--primary); }
         .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
-        .btn-add { width: 100%; background: #f2f2f7; padding: 12px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; }
+        .btn-add { width: 100%; background: #f2f2f7; padding: 12px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-add:hover { background: var(--primary); color: white; }
 
-        /* --- CARRINHO --- */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1900; display: none; backdrop-filter: blur(8px); }
+        /* --- NOVO CARRINHO (CLEAN WHITE) --- */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1900; display: none; backdrop-filter: blur(8px); }
         .overlay.active { display: block; }
 
-        #sideCart { position: fixed; right: -100%; top: 0; width: 90%; max-width: 400px; height: 100%; background: #0a192f; color: white; z-index: 2000; transition: 0.4s var(--spring); display: flex; flex-direction: column; }
+        #sideCart { 
+            position: fixed; right: -100%; top: 0; width: 90%; max-width: 420px; height: 100%; 
+            background: #ffffff; color: var(--primary); z-index: 2000; 
+            transition: 0.4s var(--spring); display: flex; flex-direction: column; 
+            box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+        }
         #sideCart.open { right: 0; }
-        .cart-header { padding: 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
         
-        .cart-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .qty-btn { background: var(--secondary); border: none; color: white; width: 25px; height: 25px; border-radius: 5px; cursor: pointer; font-weight: 800; }
+        .cart-header { padding: 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; background: #fff; }
+        
+        .cart-item { 
+            background: #f8f9fa; padding: 15px; border-radius: 18px; margin-bottom: 12px; 
+            display: flex; justify-content: space-between; align-items: center;
+            border: 1px solid #eee;
+        }
+        .qty-btn { background: #e2e8f0; border: none; color: #333; width: 28px; height: 28px; border-radius: 8px; cursor: pointer; font-weight: 800; }
 
-        .cart-footer { padding: 25px; background: #0e223d; border-radius: 30px 30px 0 0; }
-        .premium-input { width: 100%; padding: 12px; border-radius: 10px; border: none; margin-bottom: 10px; font-weight: 600; }
+        .cart-footer { padding: 25px; background: #ffffff; border-top: 1px solid #f0f0f0; }
+        .premium-input { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #e2e8f0; margin-bottom: 10px; font-weight: 600; background: #f8fafc; font-size: 0.9rem; }
+        
+        #pix-info { background: #f0fff4; color: #1e7e34; padding: 12px; border-radius: 12px; margin-bottom: 12px; text-align: center; border: 1px dashed #c3e6cb; font-size: 0.85rem; }
 
-        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent); color: white; padding: 15px 30px; border-radius: 50px; z-index: 3000; transition: 0.4s; font-weight: 800; }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent); color: white; padding: 15px 30px; border-radius: 50px; z-index: 3000; transition: 0.4s; font-weight: 800; box-shadow: 0 10px 20px rgba(40,205,65,0.3); }
         #toast.active { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
 <div class="status-bar">
-    <i class="fas fa-clock"></i> Segunda a Sábado: 08:00 às 18:00
+    <i class="fas fa-clock"></i> SEGUNDA A SÁBADO: 08:00 ÀS 18:00
 </div>
 
 <header>
@@ -140,32 +144,36 @@
 
 <div id="sideCart">
     <div class="cart-header">
-        <h2 style="font-weight: 800;">Meu Pedido</h2>
-        <i class="fas fa-times" onclick="toggleCart()" style="cursor:pointer; font-size: 1.5rem;"></i>
+        <h2 style="font-weight: 800; font-size: 1.2rem;">Meu Carrinho</h2>
+        <i class="fas fa-times" onclick="toggleCart()" style="cursor:pointer; font-size: 1.5rem; opacity: 0.3;"></i>
     </div>
     <div class="cart-items" id="cart-list"></div>
     <div class="cart-footer">
-        <input type="text" id="userAddr" class="premium-input" placeholder="Seu Endereço Completo">
+        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega">
         <select id="userPay" class="premium-input" onchange="checkPix()">
             <option value="Pix">Pagamento via Pix</option>
             <option value="Cartão">Cartão na Entrega</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
-        <div id="pix-info" style="display:none; background:rgba(40,205,65,0.1); padding:10px; border-radius:10px; margin-bottom:10px; text-align:center; border: 1px dashed var(--accent);">
+        
+        <div id="pix-info" style="display:none;">
             <small>Chave CNPJ:</small><br><strong>59874260220</strong>
         </div>
+
         <div style="display: flex; justify-content: space-between; margin: 15px 0;">
-            <span style="opacity:0.7">Total:</span>
-            <span id="cart-total" style="font-weight:800; font-size:1.4rem">R$ 0,00</span>
+            <span style="font-weight: 600; opacity: 0.6;">Total do Pedido:</span>
+            <span id="cart-total" style="font-weight: 800; font-size: 1.4rem; color: var(--primary);">R$ 0,00</span>
         </div>
-        <button onclick="sendOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:15px; font-weight:800; cursor:pointer;">ENVIAR PEDIDO</button>
+        
+        <button onclick="sendOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:18px; font-weight: 800; cursor:pointer; font-size: 1rem; box-shadow: 0 10px 20px rgba(40,205,65,0.2);">
+            <i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP
+        </button>
     </div>
 </div>
 
-<div id="toast">✅ Adicionado!</div>
+<div id="toast">✅ Adicionado com sucesso!</div>
 
 <script>
-    // Inventário mantido conforme solicitado
     const inventory = [
         { name: "Instalação Ar Novo", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
         { name: "Instalação Ar Usado", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
@@ -240,13 +248,11 @@
     function add(n, p) {
         let x = cart.find(i => i.n === n);
         if(x) x.q++; else cart.push({n, p, q:1});
-        saveAndUpdate();
-        const t = document.getElementById('toast');
-        t.classList.add('active');
-        setTimeout(() => t.classList.remove('active'), 2000);
+        save();
+        showToast();
     }
 
-    function saveAndUpdate() {
+    function save() {
         localStorage.setItem('cart_maisfrio', JSON.stringify(cart));
         updateUI();
     }
@@ -260,12 +266,12 @@
             list.innerHTML += `
                 <div class="cart-item">
                     <div>
-                        <div style="font-weight:700; font-size:0.8rem">${item.n}</div>
-                        <div style="color:var(--secondary); font-weight:800">R$ ${(item.p * item.q).toFixed(2)}</div>
+                        <div style="font-weight:700; font-size:0.85rem; color: #1a1a1a;">${item.n}</div>
+                        <div style="color:var(--secondary); font-weight:800; font-size: 0.9rem; margin-top: 4px;">R$ ${(item.p * item.q).toFixed(2).replace('.',',')}</div>
                     </div>
-                    <div style="display:flex; align-items:center; gap:10px">
+                    <div style="display:flex; align-items:center; gap:12px">
                         <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
-                        <span style="font-weight:800">${item.q}</span>
+                        <span style="font-weight:800; font-size: 0.9rem;">${item.q}</span>
                         <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
                     </div>
                 </div>`;
@@ -277,13 +283,19 @@
     function changeQty(idx, val) {
         cart[idx].q += val;
         if(cart[idx].q <= 0) cart.splice(idx, 1);
-        saveAndUpdate();
+        save();
     }
 
     function toggleCart() {
         document.getElementById('sideCart').classList.toggle('open');
         document.getElementById('cartOverlay').classList.toggle('active');
         document.body.classList.toggle('modal-open');
+    }
+
+    function showToast() {
+        const t = document.getElementById('toast');
+        t.classList.add('active');
+        setTimeout(() => t.classList.remove('active'), 2000);
     }
 
     function checkPix() {
@@ -294,18 +306,14 @@
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
         const pay = document.getElementById('userPay').value;
-        if(!ad || cart.length === 0) return alert("Adicione itens e seu endereço!");
+        if(!ad || cart.length === 0) return alert("Por favor, adicione itens e seu endereço!");
         let m = `*PEDIDO MAIS FRIO CLIMATIZAÇÃO*\n\n`;
         cart.forEach(i => m += `✅ ${i.n} (x${i.q})\n`);
         m += `\n*Pagamento:* ${pay}\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
 
-    window.onload = () => { 
-        render(); 
-        updateUI();
-        checkPix(); 
-    };
+    window.onload = () => { render(); updateUI(); checkPix(); };
 </script>
 </body>
 </html>
