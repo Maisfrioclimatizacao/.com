@@ -22,7 +22,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--primary); }
 
-        /* --- STATUS BAR & HEADER --- */
+        /* --- HEADER & STATUS --- */
         .status-bar { background: var(--primary); color: white; padding: 10px; text-align: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; }
         
         header { 
@@ -30,94 +30,75 @@
             padding: 18px 6%; display: flex; justify-content: space-between; align-items: center; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.5px; }
+        .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; text-transform: uppercase; }
         .logo span { color: var(--secondary); }
         
         .btn-cart-top { 
-            background: var(--primary); color: white; padding: 12px 22px; border-radius: 50px; 
+            background: var(--primary); color: white; padding: 10px 20px; border-radius: 50px; 
             cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700; 
-            box-shadow: 0 8px 20px rgba(10, 25, 47, 0.2); transition: 0.3s var(--spring);
+            box-shadow: 0 8px 20px rgba(10, 25, 47, 0.2); transition: 0.3s;
         }
 
         /* --- HERO CENTRALIZADO --- */
         .hero { 
             background: linear-gradient(135deg, #0a192f 0%, #061121 100%); 
-            color: white; padding: 60px 6% 60px; text-align: center; /* Centralizado aqui */
+            color: white; padding: 60px 6%; text-align: center;
             border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; /* Garante centralização dos filhos */
+            display: flex; flex-direction: column; align-items: center;
         }
-        .hero::after { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: var(--secondary); filter: blur(120px); opacity: 0.2; }
-
-        .hero h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 25px; max-width: 800px; }
+        .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 25px; max-width: 600px; line-height: 1.2; }
         
         .search-area { 
-            background: rgba(255,255,255,1); border-radius: 20px; padding: 6px 20px; 
-            width: 100%; max-width: 550px; display: flex; align-items: center; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3); margin-bottom: 35px;
+            background: white; border-radius: 20px; padding: 5px 20px; 
+            width: 100%; max-width: 500px; display: flex; align-items: center; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); margin-bottom: 30px;
         }
-        .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: #333; }
+        .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; }
 
-        /* --- CATEGORIAS CENTRALIZADAS --- */
-        .tabs { display: flex; gap: 12px; justify-content: center; width: 100%; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .tabs::-webkit-scrollbar { display: none; }
-        .tab { 
-            padding: 12px 25px; background: rgba(255,255,255,0.1); border-radius: 50px; 
-            font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.3s; 
-            white-space: nowrap; border: 1px solid rgba(255,255,255,0.05);
-        }
-        .tab.active { background: white; color: var(--primary); transform: scale(1.05); }
+        .tabs { display: flex; gap: 10px; justify-content: center; width: 100%; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .tab { padding: 12px 20px; background: rgba(255,255,255,0.1); border-radius: 50px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .tab.active { background: white; color: var(--primary); }
 
-        /* --- GRID DE PRODUTOS --- */
+        /* --- GRID --- */
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); } }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); } }
 
-        .card { 
-            background: var(--card-bg); border-radius: 30px; overflow: hidden; 
-            display: flex; flex-direction: column; transition: 0.4s var(--spring); 
-            border: 1px solid rgba(0,0,0,0.02); opacity: 0; transform: translateY(30px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
+        .card { background: white; border-radius: 25px; overflow: hidden; display: flex; flex-direction: column; transition: 0.4s var(--spring); opacity: 0; transform: translateY(20px); }
         .card.active { opacity: 1; transform: translateY(0); }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-
-        .img-box { width: 100%; height: 220px; overflow: hidden; position: relative; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s var(--spring); }
-        
-        .badge { 
-            position: absolute; top: 15px; left: 15px; padding: 6px 14px; 
-            border-radius: 50px; font-size: 0.65rem; font-weight: 800; 
-            text-transform: uppercase; z-index: 2; color: white;
-        }
+        .img-box { width: 100%; height: 180px; position: relative; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .badge { position: absolute; top: 10px; left: 10px; padding: 5px 10px; border-radius: 50px; font-size: 0.6rem; font-weight: 800; color: white; text-transform: uppercase; }
         .badge.peca { background: var(--secondary); }
         .badge.servico { background: var(--accent); }
 
-        .card-body { padding: 22px; text-align: center; }
-        .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; color: #1d1d1f; height: 45px; overflow: hidden; }
-        .price { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
-        
-        .btn-add { 
-            width: 100%; background: #f2f2f7; padding: 15px; border-radius: 20px; 
-            border: none; font-weight: 800; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .btn-add:hover { background: var(--primary); color: white; }
+        .card-body { padding: 15px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card h3 { font-size: 0.9rem; font-weight: 700; height: 35px; overflow: hidden; margin-bottom: 10px; }
+        .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
+        .btn-add { width: 100%; background: #f2f2f7; padding: 12px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; }
 
         /* --- CARRINHO --- */
-        #sideCart { position: fixed; right: -100%; top: 0; width: 95%; max-width: 450px; height: 100%; background: #0a192f; color: white; z-index: 2000; transition: 0.5s var(--spring); display: flex; flex-direction: column; }
-        #sideCart.open { right: 0; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1900; display: none; backdrop-filter: blur(12px); }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1900; display: none; backdrop-filter: blur(8px); }
         .overlay.active { display: block; }
-        #toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--accent); color: white; padding: 18px 35px; border-radius: 50px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 800; }
+
+        #sideCart { position: fixed; right: -100%; top: 0; width: 90%; max-width: 400px; height: 100%; background: #0a192f; color: white; z-index: 2000; transition: 0.4s var(--spring); display: flex; flex-direction: column; }
+        #sideCart.open { right: 0; }
+        .cart-header { padding: 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+        
+        .cart-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .qty-btn { background: var(--secondary); border: none; color: white; width: 25px; height: 25px; border-radius: 5px; cursor: pointer; font-weight: 800; }
+
+        .cart-footer { padding: 25px; background: #0e223d; border-radius: 30px 30px 0 0; }
+        .premium-input { width: 100%; padding: 12px; border-radius: 10px; border: none; margin-bottom: 10px; font-weight: 600; }
+
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent); color: white; padding: 15px 30px; border-radius: 50px; z-index: 3000; transition: 0.4s; font-weight: 800; }
         #toast.active { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
-<div class="status-bar">
-    <i class="fas fa-certificate"></i> ESPECIALISTA EM INVERTER E VRF
-</div>
+<div class="status-bar">ESPECIALISTA EM INVERTER E VRF</div>
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
@@ -129,13 +110,13 @@
 <section class="hero">
     <h1>Peças originais &<br>Serviços certificados.</h1>
     <div class="search-area">
-        <i class="fas fa-search" style="color: #666; font-size: 1.1rem;"></i>
-        <input type="text" id="searchInput" placeholder="O que você procura hoje?" onkeyup="render()">
+        <i class="fas fa-search" style="color:#999"></i>
+        <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="render()">
     </div>
     <div class="tabs">
-        <div class="tab active" id="tab-all" onclick="filter('all')">Todos os Itens</div>
-        <div class="tab" id="tab-servico" onclick="filter('servico')">Serviços Profissionais</div>
-        <div class="tab" id="tab-peca" onclick="filter('peca')">Peças e Reposição</div>
+        <div class="tab active" id="tab-all" onclick="filter('all')">Todos</div>
+        <div class="tab" id="tab-servico" onclick="filter('servico')">Serviços</div>
+        <div class="tab" id="tab-peca" onclick="filter('peca')">Peças</div>
     </div>
 </section>
 
@@ -146,32 +127,32 @@
 <div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
 
 <div id="sideCart">
-    <div class="cart-header" style="padding: 30px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="font-weight: 800;">Meu Pedido</h2>
-            <i class="fas fa-times-circle" onclick="toggleCart()" style="font-size: 2rem; cursor: pointer; opacity: 0.3;"></i>
-        </div>
+    <div class="cart-header">
+        <h2 style="font-weight: 800;">Meu Pedido</h2>
+        <i class="fas fa-times" onclick="toggleCart()" style="cursor:pointer; font-size: 1.5rem;"></i>
     </div>
-    <div class="cart-items" id="cart-list" style="flex:1; overflow-y:auto; padding:20px;"></div>
-    <div class="cart-footer" style="padding: 30px; background: #0e223d; border-radius: 40px 40px 0 0;">
-        <input type="text" id="userAddr" style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:10px;" placeholder="Endereço">
-        <select id="userPay" style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:15px;">
-            <option value="Pix">Pix</option>
-            <option value="Cartão">Cartão</option>
+    <div class="cart-items" id="cart-list"></div>
+    <div class="cart-footer">
+        <input type="text" id="userAddr" class="premium-input" placeholder="Seu Endereço Completo">
+        <select id="userPay" class="premium-input" onchange="checkPix()">
+            <option value="Pix">Pagamento via Pix</option>
+            <option value="Cartão">Cartão na Entrega</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
-        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
-            <span>Total</span>
-            <span id="cart-total" style="font-weight: 800; font-size: 1.5rem;">R$ 0,00</span>
+        <div id="pix-info" style="display:none; background:rgba(40,205,65,0.1); padding:10px; border-radius:10px; margin-bottom:10px; text-align:center; border: 1px dashed var(--accent);">
+            <small>Chave CNPJ:</small><br><strong>59874260220</strong>
         </div>
-        <button onclick="sendOrder()" style="width: 100%; padding: 20px; background: var(--accent); color: white; border-radius: 20px; border: none; font-weight: 800;">FINALIZAR NO WHATSAPP</button>
+        <div style="display: flex; justify-content: space-between; margin: 15px 0;">
+            <span style="opacity:0.7">Total:</span>
+            <span id="cart-total" style="font-weight:800; font-size:1.4rem">R$ 0,00</span>
+        </div>
+        <button onclick="sendOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:15px; font-weight:800; cursor:pointer;">ENVIAR PEDIDO</button>
     </div>
 </div>
 
-<div id="toast">✅ Adicionado com sucesso!</div>
+<div id="toast">✅ Adicionado!</div>
 
 <script>
-    // Inventário completo (35 itens)
     const inventory = [
         { name: "Instalação Ar Novo", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
         { name: "Instalação Ar Usado", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
@@ -217,30 +198,22 @@
         const grid = document.getElementById('grid');
         const term = document.getElementById('searchInput').value.toLowerCase();
         grid.innerHTML = "";
-        
-        const filtered = inventory.filter(i => 
-            i.name.toLowerCase().includes(term) && 
-            (currentFilter === 'all' || i.cat === currentFilter)
-        );
-
+        const filtered = inventory.filter(i => i.name.toLowerCase().includes(term) && (currentFilter === 'all' || i.cat === currentFilter));
         filtered.forEach((item, idx) => {
             const card = document.createElement('div');
             card.className = "card";
             card.innerHTML = `
                 <div class="img-box">
-                    <div class="badge ${item.cat}">${item.cat === 'peca' ? 'Peça' : 'Serviço'}</div>
+                    <div class="badge ${item.cat}">${item.cat}</div>
                     <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
                 </div>
                 <div class="card-body">
                     <h3>${item.name}</h3>
                     <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
-                    <button class="btn-add" onclick="add('${item.name}', ${item.price})">
-                        <i class="fas fa-plus"></i> ADICIONAR
-                    </button>
-                </div>
-            `;
+                    <button class="btn-add" onclick="add('${item.name}', ${item.price})">ADICIONAR</button>
+                </div>`;
             grid.appendChild(card);
-            setTimeout(() => card.classList.add('active'), idx * 40);
+            setTimeout(() => card.classList.add('active'), idx * 30);
         });
     }
 
@@ -251,41 +224,66 @@
         render();
     }
 
+    function add(n, p) {
+        let x = cart.find(i => i.n === n);
+        if(x) x.q++; else cart.push({n, p, q:1});
+        update(); // Chama a atualização aqui!
+        const t = document.getElementById('toast');
+        t.classList.add('active');
+        setTimeout(() => t.classList.remove('active'), 2000);
+    }
+
+    function update() {
+        const list = document.getElementById('cart-list');
+        let tot = 0;
+        list.innerHTML = "";
+        cart.forEach((item, idx) => {
+            tot += item.p * item.q;
+            list.innerHTML += `
+                <div class="cart-item">
+                    <div>
+                        <div style="font-weight:700; font-size:0.8rem">${item.n}</div>
+                        <div style="color:var(--secondary); font-weight:800">R$ ${(item.p * item.q).toFixed(2)}</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:10px">
+                        <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
+                        <span style="font-weight:800">${item.q}</span>
+                        <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+                    </div>
+                </div>`;
+        });
+        document.getElementById('cart-total').innerText = "R$ " + tot.toFixed(2).replace('.',',');
+        document.getElementById('cart-count').innerText = cart.reduce((a, b) => a + b.q, 0);
+    }
+
+    function changeQty(idx, val) {
+        cart[idx].q += val;
+        if(cart[idx].q <= 0) cart.splice(idx, 1);
+        update();
+    }
+
     function toggleCart() {
         document.getElementById('sideCart').classList.toggle('open');
         document.getElementById('cartOverlay').classList.toggle('active');
         document.body.classList.toggle('modal-open');
     }
 
-    function add(n, p) {
-        let x = cart.find(i => i.n === n);
-        if(x) x.q++; else cart.push({n, p, q:1});
-        document.getElementById('cart-count').innerText = cart.reduce((a,b)=>a+b.q, 0);
-        const t = document.getElementById('toast');
-        t.classList.add('active');
-        setTimeout(() => t.classList.remove('active'), 2500);
-    }
-
-    function update() {
-        let tot = 0;
-        document.getElementById('cart-list').innerHTML = cart.map((i, idx) => {
-            tot += i.p * i.q;
-            return `<div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:10px;">
-                ${i.n} (x${i.q}) - R$ ${(i.p*i.q).toFixed(2)}
-            </div>`;
-        }).join('');
-        document.getElementById('cart-total').innerText = "R$ " + tot.toFixed(2).replace('.',',');
+    function checkPix() {
+        const pay = document.getElementById('userPay').value;
+        document.getElementById('pix-info').style.display = (pay === 'Pix') ? 'block' : 'none';
     }
 
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
-        if(!ad || cart.length === 0) return alert("Preencha os dados");
-        let m = `*PEDIDO MAIS FRIO*\n\n`;
+        const pay = document.getElementById('userPay').value;
+        if(!ad || cart.length === 0) return alert("Adicione itens e seu endereço!");
+        let m = `*PEDIDO MAIS FRIO CLIMATIZAÇÃO*\n\n`;
         cart.forEach(i => m += `✅ ${i.n} (x${i.q})\n`);
+        m += `\n*Pagamento:* ${pay}\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
 
-    window.onload = render;
+    window.onload = () => { render(); checkPix(); };
 </script>
 </body>
 </html>
