@@ -20,9 +20,8 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* ANIMAÇÃO DE ENTRADA */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -30,18 +29,12 @@
 
         .reveal { animation: fadeInUp 0.8s var(--transition) forwards; }
 
-        /* BARRA DE STATUS */
-        .top-bar {
-            background: #061731; color: white; font-size: 0.75rem; padding: 10px 5%;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-
+        /* HEADER & NAV */
         header {
             background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between;
             align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        /* BOTÃO WHATSAPP FLUTUANTE */
         .whatsapp-float {
             position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px;
             background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
@@ -49,7 +42,7 @@
             display: flex; align-items: center; justify-content: center; text-decoration: none;
             transition: var(--transition);
         }
-        .whatsapp-float:hover { transform: scale(1.15) rotate(10deg); }
+        .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); }
 
         /* HERO */
         .hero { 
@@ -57,56 +50,41 @@
             color: white; padding: 80px 5% 60px; text-align: center;
         }
 
-        /* CARDS COM EFEITO ELEVATION */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 30px; }
-        
+        /* GRID DE PRODUTOS */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; padding: 40px 0; }
         .card { 
-            background: var(--white); border-radius: 24px; overflow: hidden; 
-            transition: var(--transition); border: 1px solid rgba(0,0,0,0.03);
-            position: relative; opacity: 0; /* Começa invisível para a animação */
+            background: var(--white); border-radius: 20px; overflow: hidden; 
+            transition: var(--transition); border: 1px solid rgba(0,0,0,0.05);
         }
-        
-        .card:hover { 
-            transform: translateY(-12px); 
-            box-shadow: 0 20px 40px rgba(13, 42, 87, 0.12);
-        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; background-color: #eee; }
 
-        .card-img { 
-            width: 100%; height: 200px; background-size: cover; background-position: center;
-            transition: transform 0.6s var(--transition);
-        }
-        
-        .card:hover .card-img { transform: scale(1.08); }
+        /* SEÇÃO DEPOIMENTOS */
+        .testimonials { padding: 80px 5%; background: white; text-align: center; }
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .testi-card { background: var(--bg-light); padding: 30px; border-radius: 20px; text-align: left; transition: 0.3s; }
+        .stars { color: #f59e0b; margin-bottom: 10px; }
 
-        /* BOTÕES PROFISSIONAIS */
-        .add-btn { 
-            width: 100%; background: var(--primary); color: white; border: none; 
-            padding: 12px; border-radius: 14px; font-weight: 600; cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .add-btn:active { transform: scale(0.95); }
-        .add-btn:hover { background: var(--secondary); }
+        /* FAQ */
+        .faq-section { padding: 80px 5%; background: #f1f5f9; }
+        .faq-item { background: white; margin-bottom: 15px; border-radius: 15px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .faq-question { padding: 20px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; }
+        .faq-answer { padding: 0 20px 20px; display: none; color: #64748b; }
 
-        /* TABELA DE HORÁRIOS */
-        .info-section { 
-            background: white; padding: 80px 5%; display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 50px;
-        }
-
-        .schedule-table td { padding: 15px 0; border-bottom: 1px solid #f0f4f8; }
+        /* INFO & HORÁRIOS */
+        .info-section { padding: 80px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; background: white; }
+        .schedule-table { width: 100%; border-collapse: collapse; }
+        .schedule-table td { padding: 12px 0; border-bottom: 1px solid #eee; }
 
         /* CARRINHO */
         .cart-panel { 
-            position: fixed; right: -100%; top: 0; width: 100%; max-width: 450px; 
+            position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; 
             height: 100%; background: white; z-index: 2000; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.1); display: flex; flex-direction: column;
         }
         .cart-panel.open { right: 0; }
 
-        @media (max-width: 480px) {
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .card-img { height: 150px; }
-        }
+        @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
     </style>
 </head>
 <body>
@@ -115,162 +93,119 @@
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<div class="top-bar">
-    <div id="business-status"></div>
-    <div><i class="fas fa-phone-alt"></i> (69) 9306-0469</div>
-</div>
-
 <header>
-    <div class="logo" style="font-size: 1.4rem;">MAIS <b>FRIO</b></div>
-    <button onclick="toggleCart()" style="background:var(--primary); color:white; border:none; padding:12px 25px; border-radius:50px; cursor:pointer; font-weight:600; display:flex; gap:10px; align-items:center;">
+    <div class="logo" style="font-weight:700; color:var(--primary);">MAIS <b>FRIO</b></div>
+    <button onclick="toggleCart()" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:50px; cursor:pointer; font-weight:600;">
         <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
     </button>
 </header>
 
 <section class="hero">
-    <h1 class="reveal">Climatização de Alta Performance</h1>
-    <p class="reveal" style="opacity: 0.9; margin-top: 10px;">Excelência técnica em Presidente Médici - RO</p>
-    <div class="search-box reveal" style="background:white; border-radius:20px; padding:5px 20px; max-width:600px; margin:30px auto; display:flex;">
-        <input type="text" id="searchInput" placeholder="O que você procura hoje?" onkeyup="filterItems()" style="border:none; width:100%; padding:15px; outline:none; font-size:1rem;">
+    <h1 class="reveal">Climatização Profissional</h1>
+    <p class="reveal">Presidente Médici - RO</p>
+    <div class="reveal" style="max-width:600px; margin:20px auto; background:white; border-radius:15px; padding:5px 20px;">
+        <input type="text" id="searchInput" placeholder="Buscar peça ou serviço..." onkeyup="filterItems()" style="border:none; width:100%; padding:15px; outline:none; font-size:1rem;">
     </div>
 </section>
 
-<main class="container" style="padding: 60px 5%; max-width: 1200px; margin: auto;">
+<div class="container" style="padding: 20px 5%;">
     <div class="grid" id="main-grid"></div>
-</main>
+</div>
 
-<section class="info-section">
-    <div class="reveal">
-        <h2 style="color: var(--primary); margin-bottom: 20px; font-weight: 700;">Horário de Funcionamento</h2>
-        <table class="schedule-table" style="width: 100%;">
+<section class="testimonials reveal">
+    <h2 style="color:var(--primary); font-weight:700;">Quem confia, recomenda</h2>
+    <div class="testi-grid">
+        <div class="testi-card">
+            <div class="stars">★★★★★</div>
+            <p><i>"Melhor serviço de Médici. Instalação limpa e o técnico foi super pontual."</i></p>
+            <p style="margin-top:15px; font-weight:700;">- João Silva</p>
+        </div>
+        <div class="testi-card">
+            <div class="stars">★★★★★</div>
+            <p><i>"Sempre compro as peças aqui. Preço justo e entrega rápida no centro."</i></p>
+            <p style="margin-top:15px; font-weight:700;">- Maria Oliveira</p>
+        </div>
+    </div>
+</section>
+
+<section class="faq-section reveal">
+    <h2 style="text-align:center; margin-bottom:30px; color:var(--primary);">Dicas & Dúvidas</h2>
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">Quando devo limpar o filtro do meu ar? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer">O ideal é limpar os filtros a cada 15 ou 30 dias em uso constante para garantir a saúde.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">O que é a manutenção preventiva? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer">É uma higienização profunda que evita quebras e economiza energia.</div>
+    </div>
+</section>
+
+<section class="info-section reveal">
+    <div>
+        <h2 style="color: var(--primary); margin-bottom: 20px;">Horário de Atendimento</h2>
+        <table class="schedule-table">
             <tr><td>Segunda a Sexta</td><td style="text-align:right; font-weight:600;">08:00 – 18:00</td></tr>
             <tr><td>Sábado</td><td style="text-align:right; font-weight:600;">08:00 – 12:00</td></tr>
-            <tr><td>Domingo</td><td style="text-align:right; color:#ef4444;">Plantão Emergencial</td></tr>
+            <tr><td>Domingo</td><td style="text-align:right; color:#ef4444;">Fechado</td></tr>
         </table>
     </div>
-    <div class="reveal">
-        <h2 style="color: var(--primary); margin-bottom: 20px; font-weight: 700;">Atendimento Local</h2>
-        <p style="color: #64748b; margin-bottom: 20px;">Atendemos residências, comércios e indústrias em toda a região de Médici com agilidade e peças originais.</p>
-        <div style="background: #eef2ff; padding: 20px; border-radius: 15px; border-left: 5px solid var(--secondary);">
-            <i class="fas fa-shield-alt"></i> <b>Garantia Total:</b> 90 dias em todos os serviços.
-        </div>
+    <div style="background:var(--bg-light); padding:30px; border-radius:20px;">
+        <h3 style="margin-bottom:10px;">Garantia de Qualidade</h3>
+        <p>Todos os nossos serviços possuem garantia de 90 dias.</p>
+        <div style="margin-top:20px; font-size:1.2rem; font-weight:700; color:var(--primary);">(69) 9306-0469</div>
     </div>
 </section>
 
-<div id="cartPreview" class="cart-panel" style="box-shadow: -10px 0 40px rgba(0,0,0,0.1);">
-    <div style="padding:30px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
-        <h3 style="font-weight:700;">Seu Carrinho</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+<div id="cartPreview" class="cart-panel">
+    <div style="padding:25px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+        <h3>Seu Carrinho</h3>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:2rem; cursor:pointer;">&times;</button>
     </div>
-    <div id="cartItems" style="padding:30px; flex-grow:1; overflow-y:auto;"></div>
-    <div style="padding:30px; background:#f8fafc; border-top:1px solid #eee;">
-        <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.2rem; margin-bottom:20px;">
+    <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
+    <div style="padding:25px; background:#f8fafc; border-top:1px solid #eee;">
+        <input type="text" id="address" style="width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid #ddd;" placeholder="Endereço">
+        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
             <span>Total:</span> <span id="total-price">R$ 0,00</span>
         </div>
-        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:20px; background:var(--accent); color:white; border:none; border-radius:15px; font-weight:700; cursor:pointer; font-size:1rem;">Finalizar Pedido</button>
+        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:15px; font-weight:700; cursor:pointer;">Pedir no WhatsApp</button>
     </div>
 </div>
 
 <script>
     const inventory = [
-        { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
-        { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
-        { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
-        { name: "Carga de Gás", price: 200, cat: "serviço" },
-        { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "elétrica" },
-        { name: "Capacitor Duplo 30UF", price: 36, cat: "elétrica" },
-        { name: "Capacitor Duplo 35UF", price: 36, cat: "elétrica" },
-        { name: "Capacitor Duplo 40UF", price: 36, cat: "elétrica" },
-        { name: "Capacitor Ventilador 1.0UF", price: 8.50, cat: "elétrica" },
-        { name: "Capacitor Ventilador 1.5UF", price: 8.50, cat: "elétrica" },
-        { name: "Capacitor Ventilador 2.5UF", price: 8.50, cat: "elétrica" },
-        { name: "Capacitor Ventilador 3.0UF", price: 8.50, cat: "elétrica" },
-        { name: "Contactor 18A", price: 53.50, cat: "elétrica" },
-        { name: "Contactor 25A", price: 135.00, cat: "elétrica" },
-        { name: "Sensor Degelo AC 05k", price: 10, cat: "elétrica" },
-        { name: "Controle Ar Universal", price: 80, cat: "elétrica" },
-        { name: "Gás R32 (13kg)", price: 1150.00, cat: "instalação" },
-        { name: "Gás R-22 Lata 1kg", price: 130, cat: "instalação" },
-        { name: "Gás R-410A Lata 800g", price: 110, cat: "instalação" },
-        { name: "Tubulação de Cobre (kg)", price: 165, cat: "instalação" },
-        { name: "Suporte L Condensadora 47cm", price: 27, cat: "instalação" },
-        { name: "Válvula de Serviço 1/4", price: 36.50, cat: "instalação" },
-        { name: "Válvula de Serviço 3/8", price: 55.99, cat: "instalação" },
-        { name: "Válvula de Serviço 1/2", price: 62.99, cat: "instalação" },
-        { name: "Polipex 1/4", price: 3.99, cat: "instalação" },
-        { name: "Polipex 3/8", price: 4.90, cat: "instalação" },
-        { name: "Polipex 1/2", price: 5.90, cat: "instalação" },
-        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, cat: "instalação" },
-        { name: "Fita Isolante 18mm x 10m", price: 6.90, cat: "instalação" },
-        { name: "Fita De PVC", price: 3.99, cat: "instalação" },
-        { name: "Bucha Plástica 0,8 C", price: 0.20, cat: "fixação" },
-        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" },
-        { name: "Bucha Plástica 0,12 C", price: 0.60, cat: "fixação" },
-        { name: "Parafuso Cônico", price: 0.35, cat: "fixação" },
-        { name: "Parafuso Sextavado", price: 1.50, cat: "fixação" }
+        { name: "Instalação Ar Novo", price: 400 },
+        { name: "Instalação Ar Usado", price: 250 },
+        { name: "Manutenção Preventiva", price: 150 },
+        { name: "Carga de Gás", price: 200 },
+        { name: "Capacitor Duplo 25+2.5UF", price: 30 },
+        { name: "Capacitor Duplo 30UF", price: 36 },
+        { name: "Capacitor Duplo 35UF", price: 36 },
+        { name: "Capacitor Duplo 40UF", price: 36 },
+        { name: "Gás R-22 Lata 1kg", price: 130 },
+        { name: "Gás R-410A Lata 800g", price: 110 }
     ];
 
     const itemPhotos = {
         "Instalação Ar Novo": "Seção%20de%20Serviços.png",
-        "Instalação Ar Usado": "Seção%20de%20Serviços.png",
         "Manutenção Preventiva": "ManutencaoPreventiva.png",
         "Carga de Gás": "CargadeGas.png",
-        "Capacitor Duplo 25+2.5UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 30UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 35UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 40UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Ventilador 1.0UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 1.5UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 2.5UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 3.0UF": "capacitordeventilador.png",
-        "Contactor 18A": "Contactor18A.png",
-        "Contactor 25A": "Contactor25A.png",
-        "Sensor Degelo AC 05k": "SensorDegeloAC05k.png",
-        "Controle Ar Universal": "ControlArUniversal.png",
-        "Gás R32 (13kg)": "gasr3213kg.png",
-        "Gás R-22 Lata 1kg": "GasR-22Lata1kg.png",
-        "Gás R-410A Lata 800g": "GásR-410ALata800g.png",
-        "Tubulação de Cobre (kg)": "TubulaçãodeCobre(kg).png",
-        "Suporte L Condensadora 47cm": "SuporteLCondensadora47cm.png",
-        "Válvula de Serviço 1/4": "valvuladeservicio.png",
-        "Válvula de Serviço 3/8": "valvuladeservicio.png",
-        "Válvula de Serviço 1/2": "valvuladeservicio.png",
-        "Polipex 1/4": "Polipex.png",
-        "Polipex 3/8": "Polipex.png",
-        "Polipex 1/2": "Polipex.png",
-        "Fita Isolante 10mm x 0,5m": "FitaIsolante18mmx10m.png",
-        "Fita Isolante 18mm x 10m": "FitaIsolante18mmx10m.png",
-        "Fita De PVC": "FitaDePVC.png",
-        "Bucha Plástica 0,8 C": "BuchaPlástica0,8C.png",
-        "Bucha Plástica 0,10 C": "BuchaPlástica0,10C.png",
-        "Bucha Plástica 0,12 C": "BuchaPlástic0,12C.png",
-        "Parafuso Cônico": "ParafusoCônico.png",
-        "Parafuso Sextavado": "ParafusoSextavado.png"
+        "Gás R-22 Lata 1kg": "GasR-22Lata1kg.png"
     };
 
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
 
-    function updateBusinessStatus() {
-        const d = new Date(), h = d.getHours(), day = d.getDay();
-        const el = document.getElementById('business-status');
-        let open = (day >= 1 && day <= 5 && h >= 8 && h < 18) || (day == 6 && h >= 8 && h < 12);
-        el.innerHTML = open ? `<span style="color:#25d366">●</span> Aberto Agora` : `<span style="color:#ef4444">●</span> Fechado`;
-    }
-
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        const filtered = inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()));
-        
-        filtered.forEach((item, index) => {
-            const delay = (index % 4) * 0.1; // Delay cascata para os cards
+        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()))
+        .forEach((item, index) => {
             grid.innerHTML += `
-                <div class="card reveal" style="animation-delay: ${delay}s">
+                <div class="card reveal" style="animation-delay:${index*0.05}s">
                     <div class="card-img" style="background-image: url('${itemPhotos[item.name] || ''}')"></div>
-                    <div style="padding:20px;">
-                        <h3 style="font-size:0.95rem; min-height:45px; font-weight:600;">${item.name}</h3>
-                        <div style="font-weight:700; color:var(--primary); font-size:1.2rem; margin:15px 0;">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
-                        <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">Adicionar</button>
+                    <div style="padding:15px;">
+                        <h3 style="font-size:0.9rem; min-height:40px;">${item.name}</h3>
+                        <div style="font-weight:700; color:var(--primary); margin:10px 0;">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                        <button onclick="addToCart('${item.name}', ${item.price})" style="width:100%; padding:10px; border-radius:10px; border:none; background:var(--primary); color:white; font-weight:600; cursor:pointer;">Adicionar</button>
                     </div>
                 </div>`;
         });
@@ -287,25 +222,22 @@
         let total = 0, count = 0;
         document.getElementById("cartItems").innerHTML = cart.map(i => {
             total += i.price * i.qty; count += i.qty;
-            return `<div style="display:flex;justify-content:space-between;margin-bottom:15px; background:#f8fafc; padding:10px; border-radius:10px;">
-                <div><b>${i.name}</b><br><small>Qtd: ${i.qty}</small></div>
-                <div style="align-self:center; font-weight:700;">R$ ${(i.price*i.qty).toFixed(2).replace('.', ',')}</div>
-            </div>`;
+            return `<div style="display:flex;justify-content:space-between;margin-bottom:10px;">${i.name} (x${i.qty}) <span>R$ ${(i.price*i.qty).toFixed(2)}</span></div>`;
         }).join('');
         document.getElementById("total-price").innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         document.getElementById("cart-count").innerText = count;
     }
 
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
+    function toggleFaq(el) { el.nextElementSibling.style.display = el.nextElementSibling.style.display === "block" ? "none" : "block"; }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
-    
     function sendWhatsAppOrder() {
-        if(cart.length === 0) return alert("Seu carrinho está vazio!");
-        const msg = "*PEDIDO MAIS FRIO*\n\n" + cart.map(i => `• ${i.name} (x${i.qty})`).join("\n");
-        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
+        const addr = document.getElementById("address").value;
+        if (!addr) return alert("Informe seu endereço!");
+        window.open(`https://wa.me/556993060469?text=${encodeURIComponent("*PEDIDO MAIS FRIO*\n" + cart.map(i => `${i.name} x${i.qty}`).join("\n") + "\n\nEndereço: " + addr)}`);
     }
 
-    updateBusinessStatus(); renderItems(); renderCart();
+    renderItems(); renderCart();
 </script>
 </body>
 </html>
