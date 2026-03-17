@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mais Frio Climatização | Catálogo</title>
+    <title>Mais Frio Climatização | Excelência desde 2011</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -13,8 +13,10 @@
             --primary: #0d2a57;
             --secondary: #3498db;
             --accent: #25D366;
-            --bg-light: #f4f7f6;
-            --text-dark: #2c3e50;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --white: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,11 +25,12 @@
             font-family: 'Poppins', sans-serif;
             background: var(--bg-light);
             color: var(--text-dark);
-            padding-bottom: 80px;
+            line-height: 1.6;
         }
 
+        /* HEADER */
         header {
-            background: white;
+            background: var(--white);
             padding: 15px 5%;
             display: flex;
             justify-content: space-between;
@@ -35,210 +38,245 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
 
-        .logo { font-weight: 700; color: var(--primary); font-size: 1.1rem; }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; letter-spacing: -0.5px; }
         .logo span { color: var(--secondary); }
 
         .cart-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 18px;
+            padding: 10px 20px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             transition: 0.3s;
         }
+        .cart-btn:hover { background: var(--secondary); }
 
-        .bump { animation: bump 0.3s ease-out; }
-        @keyframes bump {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); background: var(--secondary); }
-            100% { transform: scale(1); }
-        }
-
+        /* HERO SECTION */
         .hero {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
             color: white;
-            padding: 40px 5% 60px;
+            padding: 60px 5% 80px;
             text-align: center;
         }
 
-        .hero h1 { font-size: 1.8rem; margin-bottom: 20px; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 15px; font-weight: 700; }
+        .hero p { opacity: 0.9; margin-bottom: 30px; font-weight: 300; }
 
         .search-box {
             background: white;
-            border-radius: 12px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
-            padding: 5px 15px;
+            padding: 5px 20px;
             max-width: 600px;
             margin: 0 auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .search-box input {
             border: none;
-            padding: 12px;
+            padding: 15px;
             width: 100%;
             outline: none;
             font-size: 1rem;
-            color: #333;
+            color: var(--text-dark);
         }
 
+        /* FILTERS */
         .filters {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 30px;
             overflow-x: auto;
             padding-bottom: 10px;
         }
 
         .filter-btn {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
             color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 22px;
             border-radius: 50px;
-            white-space: nowrap;
             cursor: pointer;
             transition: 0.3s;
+            backdrop-filter: blur(5px);
         }
 
-        .filter-btn.active { background: var(--secondary); border-color: var(--secondary); }
+        .filter-btn.active { background: var(--white); color: var(--primary); font-weight: 700; }
 
-        .container { padding: 30px 5%; max-width: 1200px; margin: auto; }
+        /* GRID & CARDS */
+        .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
         }
 
         .card {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: var(--white);
+            padding: 20px;
+            border-radius: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            border: 1px solid #eee;
+            border: 1px solid rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .card h3 { font-size: 0.9rem; margin-bottom: 10px; color: var(--primary); min-height: 40px; }
-        .card .price { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+            border-color: var(--secondary);
+        }
+
+        .card h3 { font-size: 1rem; margin-bottom: 12px; color: var(--primary); }
+        .card .price { font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; }
 
         .add-btn {
-            background: #f0f4f8;
+            background: #f1f5f9;
             color: var(--primary);
             border: none;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
         }
+        .add-btn:hover { background: var(--primary); color: white; }
 
+        /* SOBRE NÓS SECTION */
+        .about-section {
+            background: var(--white);
+            padding: 80px 5%;
+            margin-top: 40px;
+            text-align: center;
+            border-radius: 40px 40px 0 0;
+        }
+
+        .about-container { max-width: 800px; margin: auto; }
+        .about-section h2 { color: var(--primary); font-size: 2rem; margin-bottom: 20px; }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .stat-item b { display: block; font-size: 1.8rem; color: var(--secondary); }
+        .stat-item span { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* CARRINHO */
         .cart-panel {
             position: fixed;
             right: -100%;
             top: 0;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             height: 100%;
             background: white;
             z-index: 2000;
-            box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
             transition: 0.4s;
             display: flex;
             flex-direction: column;
         }
-
         .cart-panel.open { right: 0; }
-        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .cart-content { padding: 20px; flex-grow: 1; overflow-y: auto; }
-        .cart-footer { padding: 20px; background: #f9f9f9; border-top: 1px solid #eee; }
+        .cart-header { padding: 25px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
+        .cart-content { padding: 25px; flex-grow: 1; overflow-y: auto; }
+        .cart-footer { padding: 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; }
 
         .form-select {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
             font-family: inherit;
+            outline: none;
         }
+        .form-select:focus { border-color: var(--secondary); }
 
         .checkout-btn {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background: var(--accent);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.2);
         }
 
         .fab-whatsapp {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 30px;
+            right: 30px;
             background: #25D366;
             color: white;
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-size: 32px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             z-index: 1500;
             text-decoration: none;
+            transition: 0.3s;
         }
+        .fab-whatsapp:hover { transform: scale(1.1); }
 
         #toast {
             position: fixed;
-            bottom: 20px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: var(--text-dark);
+            background: var(--primary);
             color: white;
-            padding: 12px 25px;
+            padding: 15px 30px;
             border-radius: 50px;
             display: none;
             z-index: 3000;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         @media (max-width: 480px) {
-            .grid { grid-template-columns: repeat(2, 1fr); }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .hero h1 { font-size: 1.6rem; }
+            .stats { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-<div id="toast">Item adicionado! 🛒</div>
+<div id="toast">Item adicionado com sucesso! ❄️</div>
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
     <button class="cart-btn" id="header-cart-btn" onclick="toggleCart()">
-        <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
+        <i class="fas fa-shopping-basket"></i> <span id="cart-count">0</span>
     </button>
 </header>
 
 <section class="hero">
-    <h1>O que você precisa hoje?</h1>
+    <h1>Climatização Profissional</h1>
+    <p>Peças e serviços com garantia de quem entende do assunto.</p>
     <div class="search-box">
-        <i class="fas fa-search" style="color:#999; margin-right:10px;"></i>
-        <input type="text" id="searchInput" placeholder="Pesquisar (ex: gas, instalacao...)" onkeyup="filterItems()">
+        <i class="fas fa-search" style="color:#94a3b8; font-size: 1.2rem;"></i>
+        <input type="text" id="searchInput" placeholder="O que você precisa hoje?" onkeyup="filterItems()">
     </div>
 
     <div class="filters">
@@ -253,20 +291,33 @@
     <div class="grid" id="main-grid"></div>
 </main>
 
+<section class="about-section">
+    <div class="about-container">
+        <h2>Nossa História</h2>
+        <p>Atuando em Porto Velho e região desde <b>2011</b>, a Mais Frio Climatização combina técnica e compromisso. Com mais de <b>15 anos de experiência</b> no mercado, entregamos soluções precisas para manter seu ambiente sempre fresco e confortável.</p>
+        
+        <div class="stats">
+            <div class="stat-item"><b>15+</b><span>Anos de Experiência</span></div>
+            <div class="stat-item"><b>100%</b><span>Clientes Satisfeitos</span></div>
+            <div class="stat-item"><b>2011</b><span>No mercado</span></div>
+        </div>
+    </div>
+</section>
+
 <div id="cartPreview" class="cart-panel">
     <div class="cart-header">
         <h3>Seu Pedido</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.8rem;">&times;</button>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:2rem; cursor:pointer;">&times;</button>
     </div>
     <div class="cart-content" id="cartItems"></div>
     <div class="cart-footer">
-        <div id="service-scheduling" style="display:none; margin-bottom:15px; background:#fff; padding:10px; border-radius:8px; border:1px solid #eee;">
-            <p style="font-size:0.8rem; font-weight:600; margin-bottom:5px;">Agendar Serviço:</p>
+        <div id="service-scheduling" style="display:none; margin-bottom:15px; background:#fff; padding:15px; border-radius:12px; border:1px solid #e2e8f0;">
+            <p style="font-size:0.8rem; font-weight:700; margin-bottom:8px; color:var(--primary);">AGENDAR VISITA TÉCNICA:</p>
             <div style="display:flex; gap:10px;">
                 <input type="date" id="serviceDate" class="form-select" style="margin-bottom:0;">
                 <select id="serviceTime" class="form-select" style="margin-bottom:0;">
-                    <option value="Manhã">Manhã</option>
-                    <option value="Tarde">Tarde</option>
+                    <option value="Manhã (08h-12h)">Manhã</option>
+                    <option value="Tarde (13h-18h)">Tarde</option>
                 </select>
             </div>
         </div>
@@ -277,15 +328,15 @@
             <option value="" disabled selected>Forma de Pagamento</option>
             <option value="PIX">PIX</option>
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão">Cartão</option>
+            <option value="Cartão">Cartão de Crédito/Débito</option>
         </select>
 
-        <div style="display:flex; justify-content:space-between; margin-bottom:15px; font-weight:700; color:var(--primary); font-size: 1.1rem;">
+        <div style="display:flex; justify-content:space-between; margin:20px 0; font-weight:700; color:var(--primary); font-size: 1.3rem;">
             <span>Total:</span>
             <span id="total-price">R$ 0,00</span>
         </div>
 
-        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Finalizar no WhatsApp</button>
+        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Enviar Pedido ao WhatsApp</button>
     </div>
 </div>
 
@@ -314,7 +365,6 @@
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
     let currentCategory = "";
 
-    // FUNÇÃO PARA REMOVER ACENTOS E NORMALIZAR BUSCA
     function normalizeStr(str) {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
@@ -322,14 +372,11 @@
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        
-        const normalizedTerm = normalizeStr(term);
+        const normTerm = normalizeStr(term);
 
         const filtered = inventory.filter(item => {
-            const normalizedName = normalizeStr(item.name);
-            const matchesSearch = normalizedName.includes(normalizedTerm);
-            const matchesCat = currentCategory === "" || item.cat === currentCategory;
-            return matchesSearch && matchesCat;
+            return normalizeStr(item.name).includes(normTerm) && 
+                   (currentCategory === "" || item.cat === currentCategory);
         });
 
         filtered.forEach(item => {
@@ -363,18 +410,18 @@
         const sched = document.getElementById("service-scheduling");
         
         let total = 0, count = 0, hasService = false;
-        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#999; margin-top:20px;">Vazio</p>' : '';
+        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#94a3b8; margin-top:20px;">Seu carrinho está vazio.</p>' : '';
         
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
             if(inventory.find(i => i.name === item.name && i.cat === 'serviço')) hasService = true;
             cartDiv.innerHTML += `
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
-                    <div style="font-size:0.9rem;"><strong>${item.name}</strong><br>R$ ${item.price.toFixed(2)} x ${item.qty}</div>
-                    <div style="display:flex; gap:5px;">
-                        <button onclick="changeQty('${item.name}', -1)" style="padding:5px 10px; border:1px solid #ddd; background:none;">-</button>
-                        <button onclick="changeQty('${item.name}', 1)" style="padding:5px 10px; background:var(--primary); color:white; border:none;">+</button>
+                <div style="display:flex; justify-content:space-between; margin-bottom:18px; align-items:center;">
+                    <div style="font-size:0.9rem;"><strong>${item.name}</strong><br><span style="color:#64748b;">R$ ${item.price.toFixed(2)} x ${item.qty}</span></div>
+                    <div style="display:flex; gap:8px;">
+                        <button onclick="changeQty('${item.name}', -1)" style="padding:4px 10px; border:1px solid #e2e8f0; border-radius:6px; background:white;">-</button>
+                        <button onclick="changeQty('${item.name}', 1)" style="padding:4px 10px; background:var(--primary); color:white; border:none; border-radius:6px;">+</button>
                     </div>
                 </div>`;
         });
@@ -382,9 +429,7 @@
         sched.style.display = hasService ? "block" : "none";
         countSpan.innerText = count;
         totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        
-        const dateInput = document.getElementById('serviceDate');
-        if(dateInput) dateInput.min = new Date().toISOString().split("T")[0];
+        if(document.getElementById('serviceDate')) document.getElementById('serviceDate').min = new Date().toISOString().split("T")[0];
     }
 
     function changeQty(name, amt) {
@@ -403,25 +448,26 @@
         const time = document.getElementById("serviceTime").value;
         const schedVisible = document.getElementById("service-scheduling").style.display === "block";
         
-        if (cart.length === 0) return alert("Carrinho vazio!");
-        if (!addr.trim()) return alert("Informe seu endereço!");
-        if (schedVisible && !date) return alert("Selecione uma data!");
-        if (!pay) return alert("Selecione o pagamento!");
+        if (cart.length === 0) return alert("Adicione itens ao pedido!");
+        if (!addr.trim()) return alert("Por favor, informe o endereço de entrega/serviço.");
+        if (schedVisible && !date) return alert("Escolha uma data para o agendamento.");
+        if (!pay) return alert("Selecione a forma de pagamento.");
         
-        let msg = "*PEDIDO - MAIS FRIO CLIMATIZAÇÃO* ❄️\n\n";
+        let msg = "*NOVO PEDIDO - MAIS FRIO CLIMATIZAÇÃO* ❄️\n\n";
         let total = 0;
         cart.forEach(item => {
             msg += `• ${item.name} (x${item.qty}) - R$ ${(item.price * item.qty).toFixed(2)}\n`;
             total += item.price * item.qty;
         });
         
-        if(schedVisible) msg += `\n📅 *Agendamento:* ${date.split('-').reverse().join('/')} (${time})`;
-        msg += `\n📍 *Endereço:* ${addr}\n💳 *Pagamento:* ${pay}\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+        if(schedVisible) msg += `\n📅 *AGENDAMENTO:* ${date.split('-').reverse().join('/')} (${time})`;
+        msg += `\n📍 *ENDEREÇO:* ${addr}\n💳 *PAGAMENTO:* ${pay}\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
         
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
         localStorage.removeItem('maisFrioCart');
         cart = [];
         saveAndRender();
+        toggleCart();
     }
 
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
@@ -434,7 +480,7 @@
     function showFeedback() {
         const t = document.getElementById('toast');
         t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 2000);
+        setTimeout(() => t.style.display = 'none', 3000);
         document.getElementById('header-cart-btn').classList.add('bump');
         setTimeout(() => document.getElementById('header-cart-btn').classList.remove('bump'), 300);
     }
