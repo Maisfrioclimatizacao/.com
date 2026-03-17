@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mais Frio | Climatização</title>
+    <title>Mais Frio | Climatização Premium</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -13,199 +13,201 @@
             --primary: #0a192f;
             --secondary: #007aff;
             --accent: #28cd41;
-            --bg: #f2f2f7;
+            --bg: #f8f9fc;
             --card-bg: #ffffff;
             --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --transition: all 0.3s var(--spring);
+            --transition: all 0.4s var(--spring);
         }
 
-        body.modal-open { overflow: hidden; position: fixed; width: 100%; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--primary); overflow-x: hidden; }
+        body { background: var(--bg); color: var(--primary); overflow-x: hidden; line-height: 1.6; }
+        body.modal-open { overflow: hidden; }
 
-        /* --- STATUS BAR --- */
-        .status-bar { background: var(--primary); color: white; padding: 10px; text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-        .status-bar i { color: var(--accent); margin-right: 5px; }
-        
+        /* --- ANIMAÇÕES DE ENTRADA --- */
+        @keyframes reveal { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HEADER --- */
         header { 
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; text-transform: uppercase; }
+        .logo { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.8px; text-transform: uppercase; color: var(--primary); }
         .logo span { color: var(--secondary); }
         
-        .btn-cart-top { 
-            background: var(--primary); color: white; padding: 10px 22px; border-radius: 50px; 
-            cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700; 
-            box-shadow: 0 8px 15px rgba(10, 25, 47, 0.15); transition: var(--transition);
+        .cart-trigger { 
+            position: relative; background: var(--primary); color: white; padding: 12px 24px; border-radius: 50px; 
+            cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 0.9rem;
+            box-shadow: 0 10px 20px rgba(10, 25, 47, 0.15); transition: var(--transition);
         }
+        .cart-trigger:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(10, 25, 47, 0.25); }
+        .cart-count-badge { background: var(--secondary); color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; }
 
-        /* --- HERO --- */
+        /* --- HERO SECTION --- */
         .hero { 
-            background: linear-gradient(135deg, #0a192f 0%, #061121 100%); 
-            color: white; padding: 60px 6%; text-align: center;
-            border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
+            background: radial-gradient(circle at top right, #112240, #0a192f); 
+            color: white; padding: 80px 6% 100px; text-align: center;
+            border-bottom-left-radius: 60px; border-bottom-right-radius: 60px;
             display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-        .hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; max-width: 600px; line-height: 1.1; }
+        .hero span.tagline { background: rgba(0,122,255,0.2); color: #74b9ff; padding: 6px 16px; border-radius: 50px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 20px; line-height: 1.1; max-width: 700px; animation: reveal 0.8s forwards; }
         
-        .search-area { 
-            background: white; border-radius: 22px; padding: 5px 22px; 
-            width: 100%; max-width: 500px; display: flex; align-items: center; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25); margin-bottom: 35px;
+        /* --- SEARCH --- */
+        .search-container { 
+            background: white; border-radius: 25px; padding: 6px; 
+            width: 100%; max-width: 550px; display: flex; align-items: center; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2); margin-top: 10px;
+            transition: var(--transition);
         }
-        .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: #333; }
+        .search-container:focus-within { transform: scale(1.02); }
+        .search-container i { margin-left: 20px; color: #adb5bd; }
+        .search-container input { width: 100%; padding: 15px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: #333; }
 
-        .tabs { display: flex; gap: 12px; justify-content: center; width: 100%; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .tab { padding: 12px 25px; background: rgba(255,255,255,0.08); border-radius: 50px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: var(--transition); }
-        .tab.active { background: white; color: var(--primary); transform: scale(1.05); }
-
-        /* --- GRID & CARDS --- */
-        .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; } }
-
-        .card { 
-            background: white; border-radius: 28px; overflow: hidden; display: flex; 
-            flex-direction: column; transition: var(--transition); opacity: 0; 
-            transform: translateY(30px); border: 1px solid rgba(0,0,0,0.03);
+        /* --- TABS --- */
+        .category-tabs { display: flex; gap: 12px; justify-content: center; margin-top: 35px; width: 100%; overflow-x: auto; padding: 5px; scrollbar-width: none; }
+        .tab-item { 
+            padding: 14px 28px; background: rgba(255,255,255,0.05); color: white; 
+            border-radius: 50px; font-size: 0.85rem; font-weight: 700; cursor: pointer; 
+            white-space: nowrap; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);
         }
-        .card.active { opacity: 1; transform: translateY(0); }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 30px rgba(0,0,0,0.08); }
+        .tab-item.active { background: white; color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        .img-box { 
-            width: 100%; 
-            height: 180px; 
-            position: relative; 
-            overflow: hidden; 
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center; 
-            padding: 10px;
+        /* --- MAIN CONTENT --- */
+        .main-wrapper { padding: 50px 6%; max-width: 1300px; margin: auto; }
+        .section-header { margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; }
+        .section-header h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; }
+
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; } }
+
+        /* --- CARD --- */
+        .product-card { 
+            background: white; border-radius: 30px; overflow: hidden; display: flex; 
+            flex-direction: column; transition: var(--transition); border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
         }
-        .img-box img { 
-            max-width: 100%; 
-            max-height: 100%; 
-            object-fit: contain;
-            transition: 0.5s var(--spring);
+        .product-card:hover { transform: translateY(-12px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
+
+        .image-viewport { 
+            width: 100%; height: 200px; background: #fff; position: relative; 
+            display: flex; align-items: center; justify-content: center; padding: 20px;
         }
-        .card:hover .img-box img { transform: scale(1.1); }
+        .image-viewport img { max-width: 90%; max-height: 90%; object-fit: contain; transition: 0.6s var(--spring); }
+        .product-card:hover .image-viewport img { transform: scale(1.1); }
+
+        .category-badge { position: absolute; top: 15px; left: 15px; padding: 6px 14px; border-radius: 50px; font-size: 0.65rem; font-weight: 800; color: white; text-transform: uppercase; z-index: 2; }
+        .cat-peca { background: var(--secondary); }
+        .cat-servico { background: var(--accent); }
+
+        .info-pane { padding: 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
+        .info-pane h3 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; height: 45px; overflow: hidden; }
+        .info-pane .price-tag { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 20px; display: block; }
         
-        .badge { position: absolute; top: 12px; left: 12px; padding: 6px 12px; border-radius: 50px; font-size: 0.6rem; font-weight: 800; color: white; text-transform: uppercase; z-index: 5; }
-        .badge.peca { background: var(--secondary); }
-        .badge.servico { background: var(--accent); }
-
-        .card-body { padding: 18px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card h3 { font-size: 0.9rem; font-weight: 700; height: 38px; overflow: hidden; margin-bottom: 10px; color: var(--primary); line-height: 1.2; }
-        .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
-        
-        .btn-add { width: 100%; background: #f2f2f7; padding: 13px; border-radius: 18px; border: none; font-weight: 800; cursor: pointer; transition: var(--transition); color: var(--primary); }
-        .btn-add:hover { background: var(--primary); color: white; }
-
-        /* --- CARRINHO --- */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.4); z-index: 1900; display: none; backdrop-filter: blur(10px); }
-        .overlay.active { display: block; }
-
-        #sideCart { 
-            position: fixed; right: -100%; top: 0; width: 90%; max-width: 420px; height: 100%; 
-            background: #ffffff; color: var(--primary); z-index: 2000; 
-            transition: 0.5s var(--spring); display: flex; flex-direction: column; 
+        .add-to-cart-btn { 
+            margin-top: auto; width: 100%; background: #f0f2f5; color: var(--primary); 
+            padding: 16px; border: none; border-radius: 20px; font-weight: 800; 
+            cursor: pointer; transition: 0.3s; font-size: 0.9rem;
         }
-        #sideCart.open { right: 0; }
-        
-        .cart-header { padding: 30px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 20px; background: #fff; }
-        
-        .cart-item { 
-            background: #f8fafc; padding: 18px; border-radius: 20px; margin-bottom: 12px; 
-            display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid #f1f5f9;
+        .add-to-cart-btn:hover { background: var(--primary); color: white; }
+
+        /* --- SIDE CART & OVERLAY --- */
+        .cart-overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.4); backdrop-filter: blur(8px); z-index: 1900; display: none; }
+        .cart-overlay.show { display: block; animation: fadeIn 0.4s; }
+
+        #cartPanel { 
+            position: fixed; right: -100%; top: 0; width: 92%; max-width: 450px; height: 100%; 
+            background: #fff; z-index: 2000; transition: 0.5s var(--spring); 
+            display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(0,0,0,0.1);
         }
-        .qty-btn { background: #fff; border: 1px solid #e2e8f0; color: #333; width: 30px; height: 30px; border-radius: 10px; cursor: pointer; font-weight: 800; }
+        #cartPanel.visible { right: 0; }
 
-        .cart-footer { padding: 30px 25px; border-top: 1px solid #f0f0f0; }
-        .premium-input { width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; background: #f8fafc; }
-        
-        .copy-box { background: #f0fff4; color: #1e7e34; padding: 15px; border-radius: 15px; margin-bottom: 15px; text-align: center; border: 2px dashed #c3e6cb; cursor: pointer; position: relative; transition: 0.3s; }
-        .copy-badge { position: absolute; top: 5px; right: 10px; font-size: 0.6rem; background: #28cd41; color: white; padding: 2px 8px; border-radius: 10px; opacity: 0; transition: 0.3s; }
-        .copy-box.copied .copy-badge { opacity: 1; }
+        .cart-title { padding: 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
+        .cart-body { flex: 1; overflow-y: auto; padding: 25px; }
 
-        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 16px 35px; border-radius: 50px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 800; }
-        #toast.active { transform: translateX(-50%) translateY(0); }
+        /* --- PIX COPY BOX --- */
+        .copy-card { background: #f0fff4; border: 2px dashed #c3e6cb; border-radius: 20px; padding: 20px; cursor: pointer; text-align: center; transition: 0.3s; margin-bottom: 20px; }
+        .copy-card:hover { transform: scale(1.02); background: #e6ffed; }
+        .copy-card strong { font-size: 1.2rem; display: block; color: #1e7e34; margin-top: 5px; }
+
+        /* --- TOAST --- */
+        #notification { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 18px 40px; border-radius: 50px; z-index: 3000; font-weight: 700; box-shadow: 0 20px 40px rgba(0,0,0,0.2); transition: 0.5s var(--spring); }
+        #notification.active { transform: translateX(-50%) translateY(0); }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="status-bar">
-    <i class="fas fa-clock"></i> SEGUNDA A SÁBADO: 08:00 ÀS 18:00
-</div>
-
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
-    <div class="btn-cart-top" onclick="toggleCart()">
-        <i class="fas fa-shopping-bag"></i> <span id="cart-count">0</span>
+    <div class="cart-trigger" onclick="toggleCartPanel()">
+        <i class="fas fa-shopping-basket"></i>
+        <span>Carrinho</span>
+        <span class="cart-count-badge" id="badge-count">0</span>
     </div>
 </header>
 
 <section class="hero">
-    <h1>Peças originais &<br>Serviços certificados.</h1>
-    <div class="search-area">
-        <i class="fas fa-search" style="color:#999"></i>
-        <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="render()">
+    <span class="tagline">Soluções em Refrigeração</span>
+    <h1>Qualidade que você sente no ar.</h1>
+    <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input type="text" id="mainSearch" placeholder="Busque por peças ou serviços..." onkeyup="renderCatalog()">
     </div>
-    <div class="tabs">
-        <div class="tab active" id="tab-all" onclick="filter('all')">Todos</div>
-        <div class="tab" id="tab-servico" onclick="filter('servico')">Serviços</div>
-        <div class="tab" id="tab-peca" onclick="filter('peca')">Peças</div>
+    <div class="category-tabs">
+        <div class="tab-item active" id="filter-all" onclick="setFilter('all')">Todos</div>
+        <div class="tab-item" id="filter-servico" onclick="setFilter('servico')">Serviços</div>
+        <div class="tab-item" id="filter-peca" onclick="setFilter('peca')">Peças e Peças</div>
     </div>
 </section>
 
-<main class="container">
-    <div class="grid" id="grid"></div>
+<main class="main-wrapper">
+    <div class="section-header">
+        <h2 id="view-title">Todos os Itens</h2>
+    </div>
+    <div class="products-grid" id="catalog-grid"></div>
 </main>
 
-<div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-overlay" id="uiOverlay" onclick="toggleCartPanel()"></div>
 
-<div id="sideCart">
-    <div class="cart-header">
-        <h2 style="font-weight: 800; font-size: 1.2rem;">Meu Carrinho</h2>
-        <i class="fas fa-times-circle" onclick="toggleCart()" style="cursor:pointer; font-size: 1.8rem; opacity: 0.2;"></i>
+<div id="cartPanel">
+    <div class="cart-title">
+        <h2 style="font-weight: 800;">Meu Pedido</h2>
+        <i class="fas fa-times" onclick="toggleCartPanel()" style="cursor:pointer; font-size: 1.5rem; opacity: 0.3;"></i>
     </div>
-    <div class="cart-items" id="cart-list"></div>
-    <div class="cart-footer">
-        <input type="text" id="userAddr" class="premium-input" placeholder="Seu Endereço Completo">
-        
-        <select id="userPay" class="premium-input" onchange="checkPix()">
-            <option value="Pix">Pix (Copia e Cola)</option>
+    <div class="cart-body" id="cart-content"></div>
+    <div style="padding: 30px; border-top: 1px solid #f0f0f0;">
+        <input type="text" id="orderAddr" class="premium-input" placeholder="Endereço de Entrega" style="width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #f1f5f9; margin-bottom: 15px; font-weight: 600;">
+        <select id="orderPay" class="premium-input" onchange="togglePixUI()" style="width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #f1f5f9; margin-bottom: 15px; font-weight: 600;">
+            <option value="Pix">Pagar com Pix</option>
             <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
-        
-        <div id="pix-info" style="display:none;">
-            <div class="copy-box" onclick="copyCNPJ(this)">
-                <span class="copy-badge">COPIADO!</span>
-                <small><i class="fas fa-copy"></i> Clique para copiar o CNPJ:</small>
+
+        <div id="pix-area" style="display:none;">
+            <div class="copy-card" onclick="copyPixCNPJ()">
+                <small>Clique para copiar o CNPJ:</small>
                 <strong>59874260220</strong>
+                <span id="copy-status" style="font-size: 0.7rem; color: #28cd41; display: none;">COPIADO!</span>
             </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; margin: 15px 0;">
-            <span style="font-weight: 600; opacity: 0.5;">Total:</span>
-            <span id="cart-total" style="font-weight: 800; font-size: 1.4rem; color: var(--primary);">R$ 0,00</span>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <span style="font-weight: 600; opacity: 0.5;">Total Geral:</span>
+            <span id="order-total" style="font-weight: 800; font-size: 1.6rem;">R$ 0,00</span>
         </div>
-        
-        <button onclick="sendOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:20px; font-weight: 800; cursor:pointer;">
+        <button onclick="finalizeWhatsApp()" style="width: 100%; background: var(--accent); color: white; padding: 20px; border-radius: 20px; border: none; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px rgba(40,205,65,0.2);">
             FINALIZAR NO WHATSAPP
         </button>
     </div>
 </div>
 
-<div id="toast">✅ Adicionado ao carrinho!</div>
+<div id="notification">✅ Item adicionado!</div>
 
 <script>
-    const inventory = [
+    const db = [
         { name: "Instalação Ar Novo", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
         { name: "Instalação Ar Usado", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
         { name: "Manutenção Preventiva", price: 150.00, img: "ManutencaoPreventiva.png", cat: "servico" },
@@ -243,114 +245,120 @@
         { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('cart_maisfrio')) || [];
-    let currentFilter = 'all';
+    let cart = JSON.parse(localStorage.getItem('maisfrio_cart')) || [];
+    let activeFilter = 'all';
 
-    function render() {
-        const grid = document.getElementById('grid');
-        const term = document.getElementById('searchInput').value.toLowerCase();
+    function renderCatalog() {
+        const grid = document.getElementById('catalog-grid');
+        const search = document.getElementById('mainSearch').value.toLowerCase();
         grid.innerHTML = "";
-        const filtered = inventory.filter(i => i.name.toLowerCase().includes(term) && (currentFilter === 'all' || i.cat === currentFilter));
-        filtered.forEach((item, idx) => {
+        
+        const filtered = db.filter(item => 
+            item.name.toLowerCase().includes(search) && 
+            (activeFilter === 'all' || item.cat === activeFilter)
+        );
+
+        filtered.forEach((item, i) => {
             const card = document.createElement('div');
-            card.className = "card";
+            card.className = 'product-card';
             card.innerHTML = `
-                <div class="img-box">
-                    <div class="badge ${item.cat}">${item.cat}</div>
+                <div class="image-viewport">
+                    <span class="category-badge cat-${item.cat}">${item.cat}</span>
                     <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
                 </div>
-                <div class="card-body">
+                <div class="info-pane">
                     <h3>${item.name}</h3>
-                    <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
-                    <button class="btn-add" onclick="add('${item.name}', ${item.price})">ADICIONAR</button>
-                </div>`;
+                    <span class="price-tag">R$ ${item.price.toFixed(2).replace('.',',')}</span>
+                    <button class="add-to-cart-btn" onclick="addToCart('${item.name}', ${item.price})">Adicionar ao Carrinho</button>
+                </div>
+            `;
             grid.appendChild(card);
-            setTimeout(() => card.classList.add('active'), idx * 50);
+            setTimeout(() => card.style.animation = 'reveal 0.6s forwards', i * 30);
         });
     }
 
-    function filter(cat) {
-        currentFilter = cat;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById('tab-'+cat).classList.add('active');
-        render();
+    function setFilter(cat) {
+        activeFilter = cat;
+        document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+        document.getElementById('filter-'+cat).classList.add('active');
+        document.getElementById('view-title').innerText = cat === 'all' ? 'Todos os Itens' : cat.charAt(0).toUpperCase() + cat.slice(1) + 's';
+        renderCatalog();
     }
 
-    function add(n, p) {
-        let x = cart.find(i => i.n === n);
-        if(x) x.q++; else cart.push({n, p, q:1});
-        save();
+    function addToCart(n, p) {
+        let item = cart.find(i => i.n === n);
+        if(item) item.q++; else cart.push({n, p, q: 1});
+        syncCart();
         showToast();
     }
 
-    function save() {
-        localStorage.setItem('cart_maisfrio', JSON.stringify(cart));
-        updateUI();
-    }
-
-    function updateUI() {
-        const list = document.getElementById('cart-list');
-        let tot = 0;
+    function syncCart() {
+        localStorage.setItem('maisfrio_cart', JSON.stringify(cart));
+        const list = document.getElementById('cart-content');
+        let total = 0;
         list.innerHTML = "";
+        
         cart.forEach((item, idx) => {
-            tot += item.p * item.q;
+            total += item.p * item.q;
             list.innerHTML += `
-                <div class="cart-item">
+                <div style="background:#f8fafc; padding:15px; border-radius:15px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
                         <div style="font-weight:700; font-size:0.9rem;">${item.n}</div>
-                        <div style="color:var(--secondary); font-weight:800;">R$ ${(item.p * item.q).toFixed(2).replace('.',',')}</div>
+                        <div style="color:var(--secondary); font-weight:800;">R$ ${(item.p*item.q).toFixed(2).replace('.',',')}</div>
                     </div>
-                    <div style="display:flex; align-items:center; gap:12px">
-                        <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <button onclick="updateQty(${idx},-1)" style="width:30px; height:30px; border-radius:8px; border:1px solid #ddd; background:white;">-</button>
                         <span style="font-weight:800;">${item.q}</span>
-                        <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+                        <button onclick="updateQty(${idx},1)" style="width:30px; height:30px; border-radius:8px; border:1px solid #ddd; background:white;">+</button>
                     </div>
-                </div>`;
+                </div>
+            `;
         });
-        document.getElementById('cart-total').innerText = "R$ " + tot.toFixed(2).replace('.',',');
-        document.getElementById('cart-count').innerText = cart.reduce((a, b) => a + b.q, 0);
+        document.getElementById('order-total').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
+        document.getElementById('badge-count').innerText = cart.reduce((a,b) => a + b.q, 0);
+        togglePixUI();
     }
 
-    function changeQty(idx, val) {
-        cart[idx].q += val;
-        if(cart[idx].q <= 0) cart.splice(idx, 1);
-        save();
+    function updateQty(i, v) {
+        cart[i].q += v;
+        if(cart[i].q <= 0) cart.splice(i, 1);
+        syncCart();
     }
 
-    function toggleCart() {
-        document.getElementById('sideCart').classList.toggle('open');
-        document.getElementById('cartOverlay').classList.toggle('active');
+    function toggleCartPanel() {
+        document.getElementById('cartPanel').classList.toggle('visible');
+        document.getElementById('uiOverlay').classList.toggle('show');
         document.body.classList.toggle('modal-open');
     }
 
-    function showToast() {
-        const t = document.getElementById('toast');
-        t.classList.add('active');
-        setTimeout(() => t.classList.remove('active'), 2000);
+    function togglePixUI() {
+        const pay = document.getElementById('orderPay').value;
+        document.getElementById('pix-area').style.display = pay === 'Pix' ? 'block' : 'none';
     }
 
-    function checkPix() {
-        const pay = document.getElementById('userPay').value;
-        document.getElementById('pix-info').style.display = (pay === 'Pix') ? 'block' : 'none';
-    }
-
-    function copyCNPJ(el) {
+    function copyPixCNPJ() {
         navigator.clipboard.writeText("59874260220");
-        el.classList.add('copied');
-        setTimeout(() => el.classList.remove('copied'), 2000);
+        const status = document.getElementById('copy-status');
+        status.style.display = 'inline';
+        setTimeout(() => status.style.display = 'none', 2000);
     }
 
-    function sendOrder() {
-        const ad = document.getElementById('userAddr').value;
-        const pay = document.getElementById('userPay').value;
-        if(!ad || cart.length === 0) return alert("Preencha os dados!");
-        let m = `*PEDIDO MAIS FRIO*\n\n`;
-        cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
-        m += `\n*Pagamento:* ${pay}\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
-        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
+    function showToast() {
+        const t = document.getElementById('notification');
+        t.classList.add('active');
+        setTimeout(() => t.classList.remove('active'), 2500);
     }
 
-    window.onload = () => { render(); updateUI(); checkPix(); };
+    function finalizeWhatsApp() {
+        const addr = document.getElementById('orderAddr').value;
+        if(!addr || cart.length === 0) return alert("Por favor, preencha o endereço e adicione itens.");
+        let msg = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
+        cart.forEach(i => msg += `🔹 ${i.n} (x${i.q})\n`);
+        msg += `\n*Pagamento:* ${document.getElementById('orderPay').value}\n*Total:* ${document.getElementById('order-total').innerText}\n*Endereço:* ${addr}`;
+        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
+    }
+
+    window.onload = () => { renderCatalog(); syncCart(); };
 </script>
 </body>
 </html>
