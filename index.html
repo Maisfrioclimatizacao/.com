@@ -21,55 +21,51 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
 
-        /* HEADER & HERO */
+        /* ANIMAÇÕES */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal { animation: fadeInUp 0.6s ease forwards; opacity: 0; }
+
         header { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
         .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
+        
         .hero { background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%); color: white; padding: 40px 5%; text-align: center; }
         .search-box { background: white; border-radius: 15px; display: flex; align-items: center; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
-        .search-box input { border: none; padding: 12px; width: 100%; outline: none; font-size: 16px; }
+        .search-box input { border: none; padding: 12px; width: 100%; outline: none; font-size: 16px; width: 100%; }
 
-        /* GRID DE PRODUTOS */
         .container { padding: 30px 5%; max-width: 1200px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        
+        /* CARD PRODUTO */
         .card { background: var(--white); border-radius: 15px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .card-img { width: 100%; height: 160px; background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #fff; padding: 10px; }
-        .btn-add { width: 100%; padding: 10px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; border-radius: 8px; }
+        .btn-add { width: 100%; padding: 10px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; border-radius: 8px; transition: 0.2s; }
+        .btn-add:hover { background: var(--primary); color: white; }
 
-        /* SEÇÃO DE DICAS ESTILO PRINT */
-        .section-title { text-align: center; color: var(--primary); margin: 40px 0 20px; font-weight: 700; font-size: 1.5rem; }
+        /* SEÇÃO DE DICAS (ESTILO PRINT) */
+        .section-title { text-align: center; color: var(--primary); margin: 40px 0 20px; font-weight: 700; }
         .tips-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 50px; }
-        .tip-card { 
-            background: #ebf5ff; 
-            padding: 25px; 
-            border-radius: 15px; 
-            border-left: 6px solid var(--secondary);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-        .tip-card h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        .tip-card p { font-size: 0.9rem; line-height: 1.5; color: #475569; }
+        .tip-card { background: #ebf5ff; padding: 25px; border-radius: 15px; border-left: 6px solid var(--secondary); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
 
-        /* HORÁRIO DE ATENDIMENTO ESTILO PRINT */
-        .schedule-container { 
-            background: var(--white); 
-            max-width: 600px; 
-            margin: 0 auto 50px; 
-            padding: 30px; 
-            border-radius: 20px; 
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
+        /* HORÁRIO */
+        .schedule-container { background: var(--white); max-width: 600px; margin: 0 auto 50px; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0; }
         .schedule-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
-        .schedule-row:last-child { border-bottom: none; }
-        .day { font-weight: 600; color: var(--primary); }
-        .hours { color: var(--secondary); font-weight: 700; }
 
         /* CARRINHO */
-        .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s; display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.7, 0, 0.3, 1); display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
         .cart-panel.open { right: 0; }
         .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #f1f5f9; }
-        .qty-wrapper { display: flex; align-items: center; background: #f1f5f9; border-radius: 50px; padding: 5px 10px; gap: 15px; }
-        .btn-qty { width: 25px; height: 25px; border-radius: 50%; border: none; background: var(--primary); color: white; cursor: pointer; }
+        .qty-wrapper { display: flex; align-items: center; background: #f1f5f9; border-radius: 50px; padding: 5px 12px; gap: 15px; }
+        .btn-qty { width: 26px; height: 26px; border-radius: 50%; border: none; background: var(--primary); color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
         .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid #eee; }
+        .cart-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
+
+        #pix-area { background:#e8f5e9; padding:15px; border-radius:10px; margin-bottom:15px; border:1px solid var(--accent); display:none; text-align:center; }
+        .btn-copy { background:var(--secondary); color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; font-size: 0.8rem; margin-top:8px; font-weight:600; }
 
         @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
     </style>
@@ -83,18 +79,18 @@
     </button>
 </header>
 
-<section class="hero">
-    <h2>Peças e Serviços</h2>
+<section class="hero reveal">
+    <h2>Peças e Serviços em Médici</h2>
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="filterItems()">
+        <input type="text" id="searchInput" placeholder="O que você precisa?" onkeyup="filterItems()">
     </div>
 </section>
 
 <main class="container">
     <div class="grid" id="main-grid"></div>
 
-    <h2 class="section-title">Dicas do Especialista</h2>
-    <div class="tips-container">
+    <h2 class="section-title reveal">Dicas do Especialista</h2>
+    <div class="tips-container reveal">
         <div class="tip-card">
             <h3><i class="fas fa-bolt"></i> Economize Energia</h3>
             <p>Mantenha os filtros limpos! Filtro sujo faz o compressor trabalhar o dobro e aumenta sua conta de luz em até 30%.</p>
@@ -109,36 +105,43 @@
         </div>
     </div>
 
-    <h2 class="section-title">Horário de Atendimento</h2>
-    <div class="schedule-container">
-        <div class="schedule-row">
-            <span class="day">Segunda a Sexta</span>
-            <span class="hours">08:00 – 18:00</span>
-        </div>
-        <div class="schedule-row">
-            <span class="day">Sábado</span>
-            <span class="hours">08:00 – 12:00</span>
-        </div>
-        <div class="schedule-row">
-            <span class="day">Domingo</span>
-            <span class="hours" style="color: #ef4444;">Fechado</span>
-        </div>
+    <h2 class="section-title reveal">Horário de Atendimento</h2>
+    <div class="schedule-container reveal">
+        <div class="schedule-row"><span class="day">Segunda a Sexta</span><span class="hours">08:00 – 18:00</span></div>
+        <div class="schedule-row"><span class="day">Sábado</span><span class="hours">08:00 – 12:00</span></div>
+        <div class="schedule-row"><span class="day">Domingo</span><span class="hours" style="color:#ef4444;">Fechado</span></div>
     </div>
 </main>
 
 <div id="cartPreview" class="cart-panel">
-    <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;">
-        <h3>Seu Pedido</h3>
+    <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="color:var(--primary);">Meu Pedido</h3>
         <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
     </div>
-    <div id="cartItems" style="flex-grow:1; overflow-y:auto;"></div>
+    
+    <div id="cartItems" style="flex-grow:1; overflow-y:auto; padding:10px;"></div>
+    
     <div class="cart-footer">
-        <input type="text" id="address" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;" placeholder="Endereço de entrega">
-        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
+        <input type="text" id="address" class="cart-input" placeholder="Endereço de entrega">
+        
+        <select id="paymentMethod" class="cart-input" onchange="checkPix()">
+            <option value="Pix">Pagar com Pix</option>
+            <option value="Cartão">Cartão de Crédito/Débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+        </select>
+
+        <div id="pix-area">
+            <small style="color:#1b5e20; font-weight:700;">Chave Pix:</small>
+            <div id="pixKey" style="font-family:monospace; margin:5px 0; font-weight:700;">59874260220</div>
+            <button class="btn-copy" onclick="copyPix()"><i class="far fa-copy"></i> Copiar Chave</button>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px; font-size:1.1rem;">
             <span>Total:</span> <span id="total-price">R$ 0,00</span>
         </div>
+        
         <button onclick="sendWhatsAppOrder()" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer;">
-            FINALIZAR NO WHATSAPP
+            <i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP
         </button>
     </div>
 </div>
@@ -178,9 +181,9 @@
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase())).forEach(item => {
+        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase())).forEach((item, index) => {
             grid.innerHTML += `
-                <div class="card">
+                <div class="card reveal" style="animation-delay: ${index * 0.05}s">
                     <div class="card-img" style="background-image: url('${item.img}')"></div>
                     <div style="padding:15px;">
                         <div style="font-size:0.85rem; font-weight:600; min-height:40px;">${item.name}</div>
@@ -212,14 +215,14 @@
             total += i.price * i.qty; count += i.qty;
             return `
                 <div class="cart-item-row">
-                    <div>
-                        <div style="font-size:0.8rem; font-weight:600;">${i.name}</div>
-                        <div style="color:var(--secondary);">R$ ${(i.price * i.qty).toFixed(2).replace('.',',')}</div>
+                    <div style="flex:1">
+                        <div style="font-size:0.85rem; font-weight:600;">${i.name}</div>
+                        <div style="color:var(--secondary); font-weight:700;">R$ ${(i.price * i.qty).toFixed(2).replace('.',',')}</div>
                     </div>
                     <div class="qty-wrapper">
-                        <button class="btn-qty" onclick="changeQty('${i.name}', -1)">-</button>
-                        <span style="font-weight:700;">${i.qty}</span>
-                        <button class="btn-qty" onclick="changeQty('${i.name}', 1)">+</button>
+                        <button class="btn-qty" onclick="changeQty('${i.name}', -1)"><i class="fas fa-minus"></i></button>
+                        <span style="font-weight:700; min-width:20px; text-align:center;">${i.qty}</span>
+                        <button class="btn-qty" onclick="changeQty('${i.name}', 1)"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>`;
         }).join('');
@@ -229,18 +232,27 @@
 
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
+    function checkPix() { document.getElementById('pix-area').style.display = (document.getElementById('paymentMethod').value === 'Pix') ? 'block' : 'none'; }
+    function copyPix() { navigator.clipboard.writeText("59874260220"); alert("Chave Pix Copiada!"); }
 
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
-        if (!addr) return alert("Informe o endereço!");
+        const pay = document.getElementById("paymentMethod").value;
+        if (!addr) return alert("Informe seu endereço!");
         if (cart.length === 0) return alert("Carrinho vazio!");
+
         let msg = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
-        cart.forEach(i => msg += `• ${i.name} (x${i.qty})\n`);
-        msg += `\n*Total:* ${document.getElementById("total-price").innerText}\n*Endereço:* ${addr}`;
+        cart.forEach(i => msg += `• ${i.name} (x${i.qty}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`);
+        msg += `\n*Total:* ${document.getElementById("total-price").innerText}`;
+        msg += `\n*Endereço:* ${addr}`;
+        msg += `\n*Pagamento:* ${pay}`;
+        if (pay === "Pix") msg += `\n*Pix Chave:* 59874260220`;
+
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
     }
 
     renderItems();
+    checkPix();
 </script>
 </body>
 </html>
