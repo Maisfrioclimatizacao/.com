@@ -21,16 +21,12 @@
         * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: #2d3436; overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* ANIMAÇÕES PROFISSIONAIS */
         @keyframes slideUpFade {
             0% { opacity: 0; transform: translateY(30px) scale(0.98); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .reveal { 
-            opacity: 0; 
-            animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
-        }
+        .reveal { opacity: 0; animation: slideUpFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
         header { 
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px);
@@ -78,7 +74,7 @@
         .btn-add { width: 100%; padding: 12px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; border-radius: 12px; transition: 0.2s; }
         .btn-add:hover { background: var(--primary); color: white; }
 
-        /* CARRINHO REESTRUTURADO */
+        /* CARRINHO */
         .cart-panel { 
             position: fixed; right: -100%; top: 0; width: 100%; max-width: 450px; 
             height: 100%; background: white; z-index: 2000; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
@@ -91,7 +87,6 @@
         .cart-item-info { margin-bottom: 12px; }
         .cart-item-name { font-size: 0.95rem; font-weight: 600; color: var(--primary); display: block; margin-bottom: 8px; }
         
-        /* PREÇO E BOTÕES LADO A LADO */
         .cart-item-controls { display: flex; justify-content: space-between; align-items: center; }
         .cart-item-price { color: var(--secondary); font-weight: 700; font-size: 1.1rem; }
 
@@ -107,7 +102,7 @@
         }
 
         .pix-box { background: #f0fdf4; border: 2px dashed #bbf7d0; padding: 15px; border-radius: 18px; margin-bottom: 15px; text-align: center; }
-        .btn-copy { background: var(--accent); color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; }
+        .btn-copy { background: var(--accent); color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; margin-top: 10px; transition: 0.3s; }
 
         #toast {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
@@ -161,8 +156,8 @@
         </select>
 
         <div id="pix-area" class="pix-box" style="display:none;">
-            <p style="font-size: 0.75rem; color: #166534; font-weight: 700;">CHAVE PIX CNPJ:</p>
-            <strong style="color: var(--primary);">59.874.260/0001-22</strong>
+            <p style="font-size: 0.75rem; color: #166534; font-weight: 700;">CHAVE PIX:</p>
+            <strong style="color: var(--primary); font-size: 1.1rem;">59874260220</strong>
             <button class="btn-copy" id="copyBtn" onclick="copyPix()">COPIAR CHAVE</button>
         </div>
 
@@ -267,11 +262,17 @@
     function save() { localStorage.setItem('maisFrioCart', JSON.stringify(cart)); updateCart(); }
     
     function copyPix() {
-        navigator.clipboard.writeText("59874260000122");
-        const btn = document.getElementById('copyBtn');
-        btn.innerText = "COPIADO!";
-        btn.style.background = "#059669";
-        setTimeout(() => { btn.innerText = "COPIAR CHAVE"; btn.style.background = "var(--accent)"; }, 2000);
+        // CORREÇÃO: Chave Pix exata solicitada
+        const chavePix = "59874260220";
+        navigator.clipboard.writeText(chavePix).then(() => {
+            const btn = document.getElementById('copyBtn');
+            btn.innerText = "CHAVE COPIADA!";
+            btn.style.background = "#059669";
+            setTimeout(() => { 
+                btn.innerText = "COPIAR CHAVE"; 
+                btn.style.background = "var(--accent)"; 
+            }, 2000);
+        });
     }
 
     function filterByCategory(cat) {
