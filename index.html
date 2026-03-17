@@ -22,15 +22,12 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
 
-        /* --- ANIMAÇÕES --- */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         .reveal { animation: fadeInUp 0.6s ease forwards; }
 
-        /* BARRA DE STATUS */
         .top-bar {
             background: #061731; color: white; font-size: 0.75rem; padding: 8px 5%;
             display: flex; justify-content: space-between; align-items: center;
@@ -44,9 +41,7 @@
             align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
         .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-        .logo span { color: var(--secondary); }
 
-        /* BOTÃO WHATSAPP */
         .whatsapp-float {
             position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px;
             background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
@@ -54,34 +49,21 @@
             display: flex; align-items: center; justify-content: center; text-decoration: none; 
             transition: var(--transition);
         }
-        .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); }
+        .whatsapp-float:hover { transform: scale(1.1); }
 
-        /* HERO & FILTROS */
         .hero { background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%); color: white; padding: 60px 5%; text-align: center; }
-        .search-box { 
-            background: white; border-radius: 15px; display: flex; align-items: center; 
-            padding: 5px 20px; max-width: 600px; margin: 20px auto;
-            transition: var(--transition);
-            border: 2px solid transparent;
-        }
-        .search-box:focus-within { border-color: var(--secondary); box-shadow: 0 0 15px rgba(52, 152, 219, 0.3); }
-        .search-box input { border: none; padding: 15px; width: 100%; outline: none; font-size: 16px; }
+        .search-box { background: white; border-radius: 15px; display: flex; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
+        .search-box input { border: none; padding: 15px; width: 100%; outline: none; }
 
-        /* GRID */
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
         
         .card { 
             background: var(--white); border-radius: 20px; overflow: hidden; 
-            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); 
-            transition: var(--transition);
-            opacity: 0; /* Começa invisível para a animação */
+            border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); opacity: 0;
         }
         .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
-        .card-img { 
-            width: 100%; height: 180px; background-size: cover; background-position: center; 
-            transition: transform 0.5s ease;
-        }
+        .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; transition: 0.5s; }
         .card:hover .card-img { transform: scale(1.05); }
 
         .btn-add {
@@ -90,23 +72,11 @@
             cursor: pointer; transition: var(--transition);
         }
         .btn-add:hover { background: var(--primary); color: white; }
-        .btn-add:active { transform: scale(0.95); }
 
-        /* NOVA SEÇÃO: HORÁRIOS */
-        .info-section { background: white; padding: 60px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .schedule-table td { padding: 12px 0; border-bottom: 1px solid #eee; }
-        .schedule-table td:last-child { text-align: right; font-weight: 600; color: var(--primary); }
-
-        /* FOOTER */
-        footer { background: #061731; color: white; padding: 40px 5%; text-align: center; }
-
-        /* CARRINHO */
         .cart-panel { 
             position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; 
             height: 100%; background: white; z-index: 2000; 
-            transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); 
-            display: flex; flex-direction: column; box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+            transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); box-shadow: -5px 0 30px rgba(0,0,0,0.1);
         }
         .cart-panel.open { right: 0; }
 
@@ -115,9 +85,7 @@
 </head>
 <body>
 
-<a href="https://wa.me/556993060469" class="whatsapp-float" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-</a>
+<a href="https://wa.me/556993060469" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <div class="top-bar">
     <div id="business-status"></div>
@@ -126,7 +94,7 @@
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
-    <button onclick="toggleCart()" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:50px; cursor:pointer; transition: 0.3s;">
+    <button onclick="toggleCart()" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:50px; cursor:pointer;">
         <i class="fas fa-shopping-basket"></i> <span id="cart-count">0</span>
     </button>
 </header>
@@ -141,31 +109,6 @@
 <main class="container">
     <div class="grid" id="main-grid"></div>
 </main>
-
-<section class="info-section">
-    <div class="reveal">
-        <h2 style="color: var(--primary); margin-bottom: 15px;">Horário de Atendimento</h2>
-        <p>Estamos prontos para atender você nos seguintes horários:</p>
-        <table class="schedule-table">
-            <tr><td>Segunda a Sexta</td><td>08:00 – 18:00</td></tr>
-            <tr><td>Sábado</td><td>08:00 – 12:00</td></tr>
-            <tr><td>Domingo</td><td><span style="color: #ef4444;">Fechado</span></td></tr>
-        </table>
-    </div>
-    <div class="reveal" style="animation-delay: 0.2s;">
-        <h2 style="color: var(--primary); margin-bottom: 15px;">Nossa Localização</h2>
-        <p><i class="fas fa-map-marker-alt" style="color: var(--secondary);"></i> Atendimento em toda Presidente Médici - RO</p>
-        <p style="margin-top: 10px;">Realizamos entregas de peças e serviços técnicos no local.</p>
-        <div style="margin-top: 20px; font-weight: 700; color: var(--accent);">
-            <i class="fas fa-check-circle"></i> Garantia em todos os serviços
-        </div>
-    </div>
-</section>
-
-<footer>
-    <p>&copy; 2026 Mais Frio Climatização - Todos os direitos reservados.</p>
-    <p style="font-size: 0.8rem; margin-top: 10px; opacity: 0.7;">Presidente Médici, Rondônia</p>
-</footer>
 
 <div id="cartPreview" class="cart-panel">
     <div style="padding:25px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
@@ -184,87 +127,16 @@
 
 <script>
     const inventory = [
-        { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
-        { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
-        { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
-        { name: "Carga de Gás", price: 200, cat: "serviço" },
-        { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "elétrica" },
-        { name: "Capacitor Duplo 30UF", price: 36, cat: "elétrica" },
-        { name: "Capacitor Duplo 35UF", price: 36, cat: "elétrica" },
-        { name: "Capacitor Duplo 40UF", price: 36, cat: "elétrica" },
-        { name: "Capacitor Ventilador 1.0UF", price: 8.50, cat: "elétrica" },
-        { name: "Capacitor Ventilador 1.5UF", price: 8.50, cat: "elétrica" },
-        { name: "Capacitor Ventilador 2.5UF", price: 8.50, cat: "elétrica" },
-        { name: "Capacitor Ventilador 3.0UF", price: 8.50, cat: "elétrica" },
-        { name: "Contactor 18A", price: 53.50, cat: "elétrica" },
-        { name: "Contactor 25A", price: 135.00, cat: "elétrica" },
-        { name: "Sensor Degelo AC 05k", price: 10, cat: "elétrica" },
-        { name: "Controle Ar Universal", price: 80, cat: "elétrica" },
-        { name: "Gás R32 (13kg)", price: 1150.00, cat: "instalação" },
-        { name: "Gás R-22 Lata 1kg", price: 130, cat: "instalação" },
-        { name: "Gás R-410A Lata 800g", price: 110, cat: "instalação" },
-        { name: "Tubulação de Cobre (kg)", price: 165, cat: "instalação" },
-        { name: "Suporte L Condensadora 47cm", price: 27, cat: "instalação" },
-        { name: "Válvula de Serviço 1/4", price: 36.50, cat: "instalação" },
-        { name: "Válvula de Serviço 3/8", price: 55.99, cat: "instalação" },
-        { name: "Válvula de Serviço 1/2", price: 62.99, cat: "instalação" },
-        { name: "Polipex 1/4", price: 3.99, cat: "instalação" },
-        { name: "Polipex 3/8", price: 4.90, cat: "instalação" },
-        { name: "Polipex 1/2", price: 5.90, cat: "instalação" },
-        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, cat: "instalação" },
-        { name: "Fita Isolante 18mm x 10m", price: 6.90, cat: "instalação" },
-        { name: "Fita De PVC", price: 3.99, cat: "instalação" },
-        { name: "Bucha Plástica 0,8 C", price: 0.20, cat: "fixação" },
-        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" },
-        { name: "Bucha Plástica 0,12 C", price: 0.60, cat: "fixação" },
-        { name: "Parafuso Cônico", price: 0.35, cat: "fixação" },
-        { name: "Parafuso Sextavado", price: 1.50, cat: "fixação" }
+        { name: "Instalação Ar Novo", price: 400 },
+        { name: "Manutenção Preventiva", price: 150 },
+        { name: "Carga de Gás", price: 200 },
+        { name: "Capacitor Duplo 35UF", price: 36 }
     ];
-
-    const itemPhotos = {
-        "Instalação Ar Novo": "Seção%20de%20Serviços.png",
-        "Instalação Ar Usado": "Seção%20de%20Serviços.png",
-        "Manutenção Preventiva": "ManutencaoPreventiva.png",
-        "Carga de Gás": "CargadeGas.png",
-        "Capacitor Duplo 25+2.5UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 30UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 35UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 40UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Ventilador 1.0UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 1.5UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 2.5UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 3.0UF": "capacitordeventilador.png",
-        "Contactor 18A": "Contactor18A.png",
-        "Contactor 25A": "Contactor25A.png",
-        "Sensor Degelo AC 05k": "SensorDegeloAC05k.png",
-        "Controle Ar Universal": "ControlArUniversal.png",
-        "Gás R32 (13kg)": "gasr3213kg.png",
-        "Gás R-22 Lata 1kg": "GasR-22Lata1kg.png",
-        "Gás R-410A Lata 800g": "GásR-410ALata800g.png",
-        "Tubulação de Cobre (kg)": "TubulaçãodeCobre(kg).png",
-        "Suporte L Condensadora 47cm": "SuporteLCondensadora47cm.png",
-        "Válvula de Serviço 1/4": "valvuladeservicio.png",
-        "Válvula de Serviço 3/8": "valvuladeservicio.png",
-        "Válvula de Serviço 1/2": "valvuladeservicio.png",
-        "Polipex 1/4": "Polipex.png",
-        "Polipex 3/8": "Polipex.png",
-        "Polipex 1/2": "Polipex.png",
-        "Fita Isolante 10mm x 0,5m": "FitaIsolante18mmx10m.png",
-        "Fita Isolante 18mm x 10m": "FitaIsolante18mmx10m.png",
-        "Fita De PVC": "FitaDePVC.png",
-        "Bucha Plástica 0,8 C": "BuchaPlástica0,8C.png",
-        "Bucha Plástica 0,10 C": "BuchaPlástica0,10C.png",
-        "Bucha Plástica 0,12 C": "BuchaPlástic0,12C.png",
-        "Parafuso Cônico": "ParafusoCônico.png",
-        "Parafuso Sextavado": "ParafusoSextavado.png"
-    };
 
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
 
     function updateBusinessStatus() {
-        const d = new Date();
-        const h = d.getHours();
-        const day = d.getDay();
+        const d = new Date(), h = d.getHours(), day = d.getDay();
         const el = document.getElementById('business-status');
         let open = (day >= 1 && day <= 5 && h >= 8 && h < 18) || (day == 6 && h >= 8 && h < 12);
         el.innerHTML = open ? `<span class="status-dot status-open"></span> Aberto Agora` : `<span class="status-dot status-closed"></span> Fechado Agora`;
@@ -273,12 +145,10 @@
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        const filtered = inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()));
-        
-        filtered.forEach((item, index) => {
-            const delay = (index % 4) * 0.1;
-            grid.innerHTML += `<div class="card reveal" style="animation-delay: ${delay}s">
-                <div class="card-img" style="background-image: url('${itemPhotos[item.name] || ''}')"></div>
+        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()))
+        .forEach((item, index) => {
+            grid.innerHTML += `<div class="card reveal" style="animation-delay: ${index * 0.1}s">
+                <div class="card-img" style="background-color:#eee;"></div>
                 <div style="padding:15px;">
                     <h3 style="font-size:0.9rem; min-height:40px;">${item.name}</h3>
                     <div style="font-weight:700; color:var(--primary); margin:10px 0;">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
@@ -291,15 +161,19 @@
     function addToCart(name, price) {
         let item = cart.find(p => p.name === name);
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
+        
         localStorage.setItem('maisFrioCart', JSON.stringify(cart));
         renderCart();
+
+        // --- MENSAGEM RESTAURADA AQUI ---
+        alert(`✅ ${name} foi adicionado ao seu carrinho!`);
     }
 
     function renderCart() {
         let total = 0, count = 0;
         document.getElementById("cartItems").innerHTML = cart.map(i => {
             total += i.price * i.qty; count += i.qty;
-            return `<div style="display:flex;justify-content:space-between;margin-bottom:10px; font-size:0.9rem;">${i.name} (x${i.qty}) <span>R$ ${(i.price*i.qty).toFixed(2).replace('.', ',')}</span></div>`;
+            return `<div style="display:flex;justify-content:space-between;margin-bottom:10px;">${i.name} (x${i.qty}) <span>R$ ${(i.price*i.qty).toFixed(2)}</span></div>`;
         }).join('');
         document.getElementById("total-price").innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         document.getElementById("cart-count").innerText = count;
