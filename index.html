@@ -140,6 +140,23 @@
         .cart-panel.open { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
         .cart-content { padding: 20px; flex-grow: 1; overflow-y: auto; }
+        
+        /* BOTÕES DE QUANTIDADE NO CARRINHO */
+        .qty-controls { display: flex; align-items: center; gap: 10px; }
+        .qty-btn {
+            background: #e2e8f0;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qty-btn:hover { background: var(--secondary); color: white; }
+
         .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid #eee; }
         .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; }
         .checkout-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
@@ -225,7 +242,6 @@
         { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" }
     ];
 
-    // MAPA DE FOTOS ESPECÍFICAS (Importante: nomes idênticos aos arquivos no GitHub)
     const itemPhotos = {
         "Bucha Plástica 0,10 C": "BuchaPlástica0,10C.png",
         "Tubulação de Cobre (kg)": "TubulaçãodeCobre(kg).png",
@@ -234,7 +250,6 @@
         "Capacitor Duplo 25+2.5UF": "CapacitorDuplo25+2.5UF.png"
     };
 
-    // FOTOS DE CATEGORIA (Fallback)
     const categoryPhotos = {
         'serviço': 'Seção%20de%20Serviços.png',
         'elétrica': 'Peças%20Elétricas.png',
@@ -248,17 +263,13 @@
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        
         const filtered = inventory.filter(i => {
             const matchesSearch = i.name.toLowerCase().includes(term.toLowerCase());
             const matchesCat = currentCategory === "" || i.cat === currentCategory;
             return matchesSearch && matchesCat;
         });
-
         filtered.forEach(item => {
-            // Tenta foto do item -> depois categoria -> depois hero
             const imgPath = itemPhotos[item.name] || categoryPhotos[item.cat] || 'imagemprincipal.png';
-            
             grid.innerHTML += `
                 <div class="card">
                     <div class="card-img" style="background-image: url('${imgPath}')"></div>
@@ -277,6 +288,18 @@
         updateCartUI();
     }
 
+    // NOVA FUNÇÃO PARA ALTERAR QUANTIDADE DENTRO DO CARRINHO
+    function changeQty(name, amount) {
+        let item = cart.find(p => p.name === name);
+        if (item) {
+            item.qty += amount;
+            if (item.qty <= 0) {
+                cart = cart.filter(p => p.name !== name);
+            }
+        }
+        updateCartUI();
+    }
+
     function updateCartUI() {
         const cartDiv = document.getElementById("cartItems");
         const totalSpan = document.getElementById("total-price");
@@ -289,9 +312,16 @@
             total += item.price * item.qty;
             count += item.qty;
             cartDiv.innerHTML += `
-                <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:0.9rem;">
-                    <span>${item.qty}x ${item.name}</span>
-                    <span>R$ ${(item.price * item.qty).toFixed(2)}</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:10px; border-bottom:1px solid #f0f0f0;">
+                    <div style="max-width:60%;">
+                        <div style="font-size:0.9rem; font-weight:600;">${item.name}</div>
+                        <div style="font-size:0.85rem; color:var(--secondary);">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</div>
+                    </div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty('${item.name}', -1)">-</button>
+                        <span style="font-weight:700; min-width:20px; text-align:center;">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty('${item.name}', 1)">+</button>
+                    </div>
                 </div>`;
         });
 
@@ -305,7 +335,8 @@
         if (cart.length === 0 || !addr) return alert("Por favor, preencha o endereço e adicione itens.");
 
         let msg = "*NOVO PEDIDO - MAIS FRIO CLIMATIZAÇÃO*\n\n";
-        cart.forEach(i => msg += `• ${i.name} (x${i.qty})\n`);
+        cart.forEach(i => msg += `• ${i.name} (x${i.qty}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`);
+        msg += `\n💰 *Total: ${document.getElementById("total-price").innerText}*`;
         msg += `\n📍 *Endereço:* ${addr}\n💳 *Pagamento:* ${pay}`;
         
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
