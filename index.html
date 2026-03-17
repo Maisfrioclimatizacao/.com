@@ -22,7 +22,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
 
-        /* TOAST NOTIFICATION */
+        /* NOTIFICAÇÃO TOAST (MODERNA) */
         #toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             background: var(--primary); color: white; padding: 12px 25px;
@@ -70,11 +70,13 @@
         .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
         .cart-panel.open { right: 0; }
         .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #f1f5f9; }
-        .qty-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-controls { display: flex; align-items: center; gap: 10px; }
         .qty-controls button { width: 28px; height: 28px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; font-weight: bold; }
 
         .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid #eee; }
-        .cart-input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
+        .cart-input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem; }
+        
+        #pix-info { background: #e8f5e9; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.85rem; border: 1px solid #25D366; display: none; }
 
         @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
     </style>
@@ -119,8 +121,8 @@
     </div>
     <div>
         <h2 style="color: var(--primary);"><i class="fas fa-map-marker-alt"></i> Onde Atendemos</h2>
-        <p style="margin-top:15px;">Presidente Médici - RO e região.</p>
-        <div style="margin-top: 20px; font-weight: 700; color: var(--accent);"><i class="fas fa-check-circle"></i> Garantia em todos os serviços</div>
+        <p style="margin-top:15px;">Atendemos em residências e comércios de <b>Presidente Médici - RO</b> e região rural próxima.</p>
+        <div style="margin-top: 20px; font-weight: 700; color: var(--accent);"><i class="fas fa-check-circle"></i> Garantia em todos os serviços técnicos</div>
     </div>
 </section>
 
@@ -133,14 +135,19 @@
     <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
     
     <div class="cart-footer">
-        <input type="text" id="address" class="cart-input" placeholder="Seu endereço completo">
+        <input type="text" id="address" class="cart-input" placeholder="Endereço de entrega em Médici">
         
-        <label style="font-size: 0.8rem; font-weight: 600; color: var(--primary);">Forma de Pagamento:</label>
-        <select id="paymentMethod" class="cart-input">
+        <label style="font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; display: block;">FORMA DE PAGAMENTO:</label>
+        <select id="paymentMethod" class="cart-input" onchange="checkPixInfo()">
             <option value="Pix">Pix</option>
             <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
+
+        <div id="pix-info">
+            <i class="fas fa-info-circle"></i> <strong>Chave Pix: 59874260220</strong><br>
+            <small>Favorecido: Mais Frio Climatização</small>
+        </div>
 
         <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px; font-size:1.1rem;">
             <span>Total:</span> <span id="total-price">R$ 0,00</span>
@@ -300,25 +307,39 @@
 
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
+    
+    function checkPixInfo() {
+        const pay = document.getElementById("paymentMethod").value;
+        document.getElementById("pix-info").style.display = (pay === "Pix") ? "block" : "none";
+    }
 
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
         const pay = document.getElementById("paymentMethod").value;
+        const chavePix = "59874260220";
         
         if (!addr) return alert("Por favor, informe seu endereço!");
         if (cart.length === 0) return alert("Seu carrinho está vazio!");
 
         const total = document.getElementById("total-price").innerText;
         let message = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
-        message += cart.map(i => `• ${i.name} (x${i.qty}) - R$ ${(i.price*i.qty).toFixed(2)}`).join("\n");
-        message += `\n\n*Total:* ${total}`;
+        
+        cart.forEach(i => {
+            message += `• ${i.name} (x${i.qty}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`;
+        });
+
+        message += `\n*Total:* ${total}`;
         message += `\n*Endereço:* ${addr}`;
         message += `\n*Pagamento:* ${pay}`;
+        
+        if (pay === "Pix") {
+            message += `\n\n*Pix Chave:* ${chavePix}`;
+        }
 
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(message)}`);
     }
 
-    updateBusinessStatus(); renderItems(); renderCart();
+    updateBusinessStatus(); renderItems(); renderCart(); checkPixInfo();
 </script>
 </body>
 </html>
