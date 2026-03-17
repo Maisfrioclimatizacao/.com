@@ -22,7 +22,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
 
-        /* NOTIFICAÇÃO TOAST (MODERNA) */
+        /* TOAST NOTIFICATION */
         #toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             background: var(--primary); color: white; padding: 12px 25px;
@@ -40,15 +40,12 @@
 
         .top-bar { background: #061731; color: white; font-size: 0.75rem; padding: 8px 5%; display: flex; justify-content: space-between; align-items: center; }
         .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .status-open { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+        .status-open { background: var(--accent); }
         .status-closed { background: #ef4444; }
 
         header { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
         .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-        .logo span { color: var(--secondary); font-weight: 400; font-size: 0.9rem; }
-
-        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; font-size: 30px; box-shadow: 2px 10px 20px rgba(0,0,0,0.1); z-index: 2500; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
-
+        
         .hero { background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%); color: white; padding: 60px 5%; text-align: center; }
         .search-box { background: white; border-radius: 15px; display: flex; align-items: center; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
         .search-box input { border: none; padding: 15px; width: 100%; outline: none; font-size: 16px; }
@@ -59,24 +56,21 @@
         .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
         .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; background-color: #f1f5f9; }
 
+        /* DICAS DE ESPECIALISTA (MELHORIA 2) */
+        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
+        .tip-card { background: #ebf5ff; padding: 20px; border-radius: 15px; border-left: 5px solid var(--secondary); }
+
         .btn-add { width: 100%; padding: 10px; border-radius: 8px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; transition: 0.2s; }
         .btn-add:hover { background: var(--primary); color: white; }
 
-        .info-section { background: white; padding: 60px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .schedule-table td { padding: 10px 0; border-bottom: 1px solid #eee; }
-
-        /* CARRINHO */
         .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
         .cart-panel.open { right: 0; }
-        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #f1f5f9; }
-        .qty-controls { display: flex; align-items: center; gap: 10px; }
-        .qty-controls button { width: 28px; height: 28px; border-radius: 5px; border: 1px solid #ddd; background: white; cursor: pointer; font-weight: bold; }
+        
+        /* BOTÃO COPIAR PIX (MELHORIA 1) */
+        .btn-copy-pix { background: var(--secondary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; margin-top: 10px; width: 100%; font-weight: 600; }
 
         .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid #eee; }
-        .cart-input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem; }
-        
-        #pix-info { background: #e8f5e9; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 0.85rem; border: 1px solid #25D366; display: none; }
+        .cart-input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
 
         @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
     </style>
@@ -84,8 +78,6 @@
 <body>
 
 <div id="toast"><i class="fas fa-shopping-cart"></i> <span id="toast-msg">Adicionado!</span></div>
-
-<a href="https://wa.me/556993060469" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
 <div class="top-bar">
     <div id="business-status"></div>
@@ -100,7 +92,7 @@
 </header>
 
 <section class="hero">
-    <h1>Peças e Serviços em Presidente Médici</h1>
+    <h1>Peças e Serviços em Médici</h1>
     <div class="search-box">
         <input type="text" id="searchInput" placeholder="Buscar peça ou serviço..." onkeyup="filterItems()">
     </div>
@@ -108,23 +100,25 @@
 
 <main class="container">
     <div class="grid" id="main-grid"></div>
+    
+    <div style="margin-top: 60px;">
+        <h2 style="color: var(--primary); text-align:center;">Dicas do Especialista</h2>
+        <div class="tips-grid">
+            <div class="tip-card reveal">
+                <h3 style="color:var(--primary); font-size:1rem;"><i class="fas fa-bolt"></i> Economize Energia</h3>
+                <p style="font-size:0.85rem;">Mantenha os filtros limpos! Filtro sujo faz o compressor trabalhar o dobro e aumenta sua conta de luz em até 30%.</p>
+            </div>
+            <div class="tip-card reveal" style="animation-delay: 0.1s;">
+                <h3 style="color:var(--primary); font-size:1rem;"><i class="fas fa-tint-slash"></i> Evite Vazamentos</h3>
+                <p style="font-size:0.85rem;">Se o seu ar está pingando dentro de casa, o dreno pode estar entupido por falta de manutenção preventiva.</p>
+            </div>
+            <div class="tip-card reveal" style="animation-delay: 0.2s;">
+                <h3 style="color:var(--primary); font-size:1rem;"><i class="fas fa-shield-alt"></i> Vida Útil</h3>
+                <p style="font-size:0.85rem;">Uma carga de gás correta e capacitores novos evitam que o motor do seu ar condicionado queime prematuramente.</p>
+            </div>
+        </div>
+    </div>
 </main>
-
-<section class="info-section reveal">
-    <div>
-        <h2 style="color: var(--primary);"><i class="far fa-clock"></i> Horário de Atendimento</h2>
-        <table class="schedule-table">
-            <tr><td>Segunda a Sexta</td><td style="text-align:right;">08:00 – 18:00</td></tr>
-            <tr><td>Sábado</td><td style="text-align:right;">08:00 – 12:00</td></tr>
-            <tr><td>Domingo</td><td style="text-align:right; color: #ef4444;">Fechado</td></tr>
-        </table>
-    </div>
-    <div>
-        <h2 style="color: var(--primary);"><i class="fas fa-map-marker-alt"></i> Onde Atendemos</h2>
-        <p style="margin-top:15px;">Atendemos em residências e comércios de <b>Presidente Médici - RO</b> e região rural próxima.</p>
-        <div style="margin-top: 20px; font-weight: 700; color: var(--accent);"><i class="fas fa-check-circle"></i> Garantia em todos os serviços técnicos</div>
-    </div>
-</section>
 
 <div id="cartPreview" class="cart-panel">
     <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
@@ -135,26 +129,26 @@
     <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
     
     <div class="cart-footer">
-        <input type="text" id="address" class="cart-input" placeholder="Endereço de entrega em Médici">
+        <input type="text" id="address" class="cart-input" placeholder="Endereço de entrega">
         
-        <label style="font-size: 0.75rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; display: block;">FORMA DE PAGAMENTO:</label>
-        <select id="paymentMethod" class="cart-input" onchange="checkPixInfo()">
-            <option value="Pix">Pix</option>
-            <option value="Cartão de Crédito/Débito">Cartão de Crédito/Débito</option>
+        <select id="paymentMethod" class="cart-input" onchange="checkPix()">
+            <option value="Pix">Pagamento via Pix</option>
+            <option value="Cartão">Cartão de Crédito/Débito</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
 
-        <div id="pix-info">
-            <i class="fas fa-info-circle"></i> <strong>Chave Pix: 59874260220</strong><br>
-            <small>Favorecido: Mais Frio Climatização</small>
+        <div id="pix-area" style="background:#e8f5e9; padding:12px; border-radius:10px; margin-bottom:15px; border:1px solid var(--accent); display:none;">
+            <div style="font-size:0.75rem; font-weight:bold; color:#1b5e20;">CHAVE PIX:</div>
+            <div style="font-family:monospace; background:white; padding:5px; margin:5px 0; border-radius:4px; text-align:center;">59874260220</div>
+            <button class="btn-copy-pix" onclick="copyPix()"><i class="far fa-copy"></i> Copiar Chave Pix</button>
         </div>
 
-        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px; font-size:1.1rem;">
+        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
             <span>Total:</span> <span id="total-price">R$ 0,00</span>
         </div>
         
-        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer; font-size:1rem;">
-            <i class="fab fa-whatsapp"></i> Finalizar no WhatsApp
+        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer;">
+            Finalizar no WhatsApp
         </button>
     </div>
 </div>
@@ -234,6 +228,18 @@
 
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
 
+    function checkPix() {
+        const pixArea = document.getElementById('pix-area');
+        pixArea.style.display = (document.getElementById('paymentMethod').value === 'Pix') ? 'block' : 'none';
+    }
+
+    function copyPix() {
+        navigator.clipboard.writeText("59874260220");
+        const btn = document.querySelector('.btn-copy-pix');
+        btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+        setTimeout(() => btn.innerHTML = '<i class="far fa-copy"></i> Copiar Chave Pix', 2000);
+    }
+
     function updateBusinessStatus() {
         const d = new Date(), h = d.getHours(), day = d.getDay();
         const el = document.getElementById('business-status');
@@ -308,38 +314,26 @@
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
     
-    function checkPixInfo() {
-        const pay = document.getElementById("paymentMethod").value;
-        document.getElementById("pix-info").style.display = (pay === "Pix") ? "block" : "none";
-    }
-
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
         const pay = document.getElementById("paymentMethod").value;
         const chavePix = "59874260220";
-        
         if (!addr) return alert("Por favor, informe seu endereço!");
         if (cart.length === 0) return alert("Seu carrinho está vazio!");
 
-        const total = document.getElementById("total-price").innerText;
         let message = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
-        
         cart.forEach(i => {
             message += `• ${i.name} (x${i.qty}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`;
         });
-
-        message += `\n*Total:* ${total}`;
+        message += `\n*Total:* ${document.getElementById("total-price").innerText}`;
         message += `\n*Endereço:* ${addr}`;
         message += `\n*Pagamento:* ${pay}`;
-        
-        if (pay === "Pix") {
-            message += `\n\n*Pix Chave:* ${chavePix}`;
-        }
+        if (pay === "Pix") message += `\n*Chave Pix:* ${chavePix}`;
 
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(message)}`);
     }
 
-    updateBusinessStatus(); renderItems(); renderCart(); checkPixInfo();
+    updateBusinessStatus(); renderItems(); renderCart(); checkPix();
 </script>
 </body>
 </html>
