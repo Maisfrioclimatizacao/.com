@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mais Frio Climatização | Catálogo Completo</title>
+    <title>Mais Frio Climatização | Busca Inteligente</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -44,22 +44,20 @@
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
 
-        /* --- HEADER --- */
         header { 
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: -0.5px; }
+        .logo { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; }
         .logo span { color: var(--secondary); }
         
         .btn-cart-top { 
             background: var(--primary); color: white; padding: 10px 22px; border-radius: 50px; 
             cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700;
-            transition: var(--transition); box-shadow: 0 4px 12px rgba(10, 25, 47, 0.1);
+            transition: var(--transition);
         }
 
-        /* --- HERO --- */
         .hero { 
             background: linear-gradient(135deg, #0a192f 0%, #061121 100%); 
             color: white; padding: 60px 6% 80px; text-align: center;
@@ -73,14 +71,12 @@
             margin: 0 auto 35px; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             transition: var(--transition);
         }
-        .search-area:focus-within { transform: translateY(-5px); }
         .search-area input { width: 100%; padding: 12px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: #333; }
 
         .tabs { display: flex; gap: 12px; justify-content: center; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .tab { padding: 12px 25px; background: rgba(255,255,255,0.1); border-radius: 50px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: var(--transition); }
         .tab.active { background: white; color: var(--primary); transform: scale(1.05); }
 
-        /* --- GRID & CARDS --- */
         .container { padding: 40px 5%; max-width: 1300px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
         @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; } }
@@ -145,7 +141,7 @@
     <h1>Peças & Serviços<br>Profissionais</h1>
     <div class="search-area">
         <i class="fas fa-search" style="color:#ccc"></i>
-        <input type="text" id="searchInput" placeholder="O que busca?" onkeyup="render()">
+        <input type="text" id="searchInput" placeholder="Busque por 'gas', 'instalação'..." onkeyup="render()">
     </div>
     <div class="tabs">
         <div class="tab active" id="tab-all" onclick="filter('all')">Todos Itens</div>
@@ -230,12 +226,22 @@
     let cart = JSON.parse(localStorage.getItem('cart_mf_v3')) || [];
     let currentFilter = 'all';
 
+    // FUNÇÃO PARA REMOVER ACENTOS DA BUSCA
+    function removeAccents(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
     function render() {
         const grid = document.getElementById('grid');
-        const term = document.getElementById('searchInput').value.toLowerCase();
+        const term = removeAccents(document.getElementById('searchInput').value);
         grid.innerHTML = "";
         
-        const filtered = inventory.filter(i => i.name.toLowerCase().includes(term) && (currentFilter === 'all' || i.cat === currentFilter));
+        const filtered = inventory.filter(item => {
+            const nameNormal = removeAccents(item.name);
+            const matchesSearch = nameNormal.includes(term);
+            const matchesTab = (currentFilter === 'all' || item.cat === currentFilter);
+            return matchesSearch && matchesTab;
+        });
         
         filtered.forEach((item, index) => {
             const card = document.createElement('div');
@@ -321,12 +327,12 @@
 
     function copyPix() {
         navigator.clipboard.writeText("59874260220");
-        alert("Pix Copiado com Sucesso!");
+        alert("CNPJ Pix Copiado!");
     }
 
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
-        if(!ad || cart.length === 0) return alert("Preencha os dados do pedido!");
+        if(!ad || cart.length === 0) return alert("Preencha os dados!");
         let m = `*PEDIDO MAIS FRIO*\n\n`;
         cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
         m += `\n*Pagamento:* ${document.getElementById('userPay').value}\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
