@@ -26,9 +26,9 @@
             background: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.6;
-            padding-bottom: 40px;
         }
 
+        /* HEADER */
         header {
             background: var(--white);
             padding: 15px 5%;
@@ -41,7 +41,7 @@
             box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
 
-        .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; letter-spacing: -0.5px; }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
         .logo span { color: var(--secondary); }
 
         .cart-btn {
@@ -58,6 +58,15 @@
             transition: 0.3s;
         }
 
+        /* ANIMAÇÃO BUMP */
+        .bump { animation: bump 0.3s ease-out; }
+        @keyframes bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* HERO */
         .hero {
             background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
             color: white;
@@ -84,34 +93,34 @@
             width: 100%;
             outline: none;
             font-size: 1rem;
+            color: var(--text-dark);
         }
 
-        /* FILTERS BAR */
+        /* FILTROS */
         .filters {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-top: 30px;
             overflow-x: auto;
-            padding: 0 5% 10px;
+            padding-bottom: 10px;
         }
 
         .filter-btn {
             background: rgba(255,255,255,0.15);
             color: white;
             border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
             white-space: nowrap;
-            font-size: 0.85rem;
         }
 
         .filter-btn.active { background: var(--white); color: var(--primary); font-weight: 700; }
 
+        /* CATALOGO */
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
-        
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -128,23 +137,58 @@
             border: 1px solid rgba(0,0,0,0.03);
             transition: 0.3s;
         }
-
         .card:hover { transform: translateY(-5px); border-color: var(--secondary); }
-        .card h3 { font-size: 0.9rem; margin-bottom: 10px; color: var(--primary); min-height: 45px; }
-        .card .price { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; }
+        .card h3 { font-size: 0.95rem; color: var(--primary); min-height: 45px; margin-bottom: 10px; }
+        .card .price { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; }
 
         .add-btn {
             background: #f1f5f9;
             color: var(--primary);
             border: none;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 12px;
             font-weight: 700;
             cursor: pointer;
         }
         .add-btn:hover { background: var(--primary); color: white; }
 
-        /* CARRINHO PANEL */
+        /* SEÇÃO SOBRE NÓS (RESTAURADA) */
+        .about-section {
+            background: var(--white);
+            padding: 80px 5%;
+            margin-top: 40px;
+            text-align: center;
+            border-top: 1px solid #edf2f7;
+        }
+
+        .about-container { max-width: 800px; margin: auto; }
+        .about-section h2 { color: var(--primary); font-size: 2rem; margin-bottom: 20px; }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        .stat-item b { display: block; font-size: 2rem; color: var(--secondary); }
+        .stat-item span { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* TOAST FEEDBACK */
+        #toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: none;
+            z-index: 3000;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* CARRINHO */
         .cart-panel {
             position: fixed;
             right: -100%;
@@ -160,35 +204,41 @@
             flex-direction: column;
         }
         .cart-panel.open { right: 0; }
+        .cart-header { padding: 25px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
+        .cart-content { padding: 25px; flex-grow: 1; overflow-y: auto; }
+        .cart-footer { padding: 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; }
 
-        #toast {
+        .form-select { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-family: inherit; }
+        .checkout-btn { width: 100%; padding: 18px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; }
+
+        .fab-whatsapp {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
             color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            display: none;
-            z-index: 3000;
-            font-weight: 600;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 1500;
+            text-decoration: none;
         }
 
-        /* Estilos do formulário no carrinho */
-        .cart-footer { padding: 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; }
-        .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; }
-        .checkout-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
-
         @media (max-width: 480px) {
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .hero h1 { font-size: 1.5rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .hero h1 { font-size: 1.6rem; }
+            .stats { flex-direction: column; gap: 30px; }
         }
     </style>
 </head>
 <body>
 
-<div id="toast">Adicionado com sucesso! 🛒</div>
+<div id="toast">Item adicionado ao carrinho! 🛒</div>
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
@@ -198,11 +248,11 @@
 </header>
 
 <section class="hero">
-    <h1>Loja & Serviços</h1>
-    <p>O que você precisa para seu ar-condicionado hoje?</p>
+    <h1>Climatização Profissional</h1>
+    <p>Excelência e garantia desde 2011.</p>
     <div class="search-box">
         <i class="fas fa-search" style="color:#94a3b8;"></i>
-        <input type="text" id="searchInput" placeholder="Buscar item..." onkeyup="filterItems()">
+        <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="filterItems()">
     </div>
 
     <div class="filters">
@@ -218,47 +268,61 @@
     <div class="grid" id="main-grid"></div>
 </main>
 
+<section class="about-section">
+    <div class="about-container">
+        <h2>Nossa História</h2>
+        <p>Atuando em Porto Velho e região desde <b>2011</b>, a Mais Frio Climatização combina técnica e compromisso. Com mais de <b>15 anos de experiência</b> no mercado, entregamos soluções precisas para manter seu ambiente sempre fresco e confortável.</p>
+        
+        <div class="stats">
+            <div class="stat-item"><b>15+</b><span>Anos de Experiência</span></div>
+            <div class="stat-item"><b>100%</b><span>Qualidade Técnica</span></div>
+            <div class="stat-item"><b>2011</b><span>No mercado</span></div>
+        </div>
+    </div>
+</section>
+
 <div id="cartPreview" class="cart-panel">
-    <div style="padding: 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+    <div class="cart-header">
         <h3>Seu Pedido</h3>
         <button onclick="toggleCart()" style="border:none; background:none; font-size:2rem; cursor:pointer;">&times;</button>
     </div>
-    <div class="cart-content" id="cartItems" style="padding: 25px; flex-grow: 1; overflow-y: auto;"></div>
+    <div class="cart-content" id="cartItems"></div>
     <div class="cart-footer">
-        <div id="service-scheduling" style="display:none; margin-bottom:15px;">
-            <p style="font-size:0.75rem; font-weight:700; color:var(--primary); margin-bottom:5px;">AGENDAR VISITA:</p>
+        <div id="service-scheduling" style="display:none; margin-bottom:15px; background:#fff; padding:10px; border-radius:10px; border:1px solid #eee;">
+            <p style="font-size:0.75rem; font-weight:700; color:var(--primary);">AGENDAR SERVIÇO:</p>
             <div style="display:flex; gap:5px;">
-                <input type="date" id="serviceDate" class="form-select">
-                <select id="serviceTime" class="form-select">
+                <input type="date" id="serviceDate" class="form-select" style="margin:0">
+                <select id="serviceTime" class="form-select" style="margin:0">
                     <option value="Manhã">Manhã</option>
                     <option value="Tarde">Tarde</option>
                 </select>
             </div>
         </div>
-        <input type="text" id="address" class="form-select" placeholder="Seu Endereço">
+        <input type="text" id="address" class="form-select" placeholder="Endereço Completo">
         <select id="paymentMethod" class="form-select">
-            <option value="" disabled selected>Pagamento</option>
+            <option value="" disabled selected>Forma de Pagamento</option>
             <option value="PIX">PIX</option>
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão">Cartão</option>
+            <option value="Cartão">Cartão de Crédito/Débito</option>
         </select>
-        <div style="display:flex; justify-content:space-between; margin:15px 0; font-weight:700;">
+        <div style="display:flex; justify-content:space-between; margin:15px 0; font-weight:700; font-size:1.2rem;">
             <span>Total:</span>
             <span id="total-price">R$ 0,00</span>
         </div>
-        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Finalizar no WhatsApp</button>
+        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Enviar para WhatsApp</button>
     </div>
 </div>
 
+<a href="https://wa.me/556993060469" class="fab-whatsapp" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
 <script>
     const inventory = [
-        // CATEGORIA: SERVIÇO
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
         { name: "Carga de Gás", price: 200, cat: "serviço" },
-
-        // CATEGORIA: ELÉTRICA
         { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "elétrica" },
         { name: "Capacitor Duplo 40UF", price: 36, cat: "elétrica" },
         { name: "Capacitor Duplo 35UF", price: 36, cat: "elétrica" },
@@ -267,8 +331,6 @@
         { name: "Contactor 25A", price: 135.00, cat: "elétrica" },
         { name: "Sensor Degelo AC 05k", price: 10, cat: "elétrica" },
         { name: "Controle Ar Universal", price: 80, cat: "elétrica" },
-
-        // CATEGORIA: INSTALAÇÃO
         { name: "Gás R-22 Lata 1kg", price: 130, cat: "instalação" },
         { name: "Tubulação de Cobre (kg)", price: 165, cat: "instalação" },
         { name: "Suporte L Condensadora 47cm", price: 27, cat: "instalação" },
@@ -278,8 +340,6 @@
         { name: "Fita Isolante 10mm x 0,5m", price: 4.99, cat: "instalação" },
         { name: "Fita Isolante 18mm x 10m", price: 6.90, cat: "instalação" },
         { name: "Fita De PVC", price: 3.99, cat: "instalação" },
-
-        // CATEGORIA: FIXAÇÃO
         { name: "Bucha Plástica 0,8 C", price: 0.20, cat: "fixação" },
         { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" },
         { name: "Bucha Plástica 0,12 C", price: 0.60, cat: "fixação" },
@@ -298,7 +358,6 @@
             const matchesCat = currentCategory === "" || i.cat === currentCategory;
             return matchesSearch && matchesCat;
         });
-
         filtered.forEach(item => {
             grid.innerHTML += `
                 <div class="card">
@@ -329,18 +388,18 @@
         const sched = document.getElementById("service-scheduling");
         let total = 0, count = 0, hasService = false;
 
-        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center;color:#999;">Vazio</p>' : '';
-        
+        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center;color:#999;padding:20px;">Carrinho vazio.</p>' : '';
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
-            if(inventory.find(i => i.name === item.name && i.cat === 'serviço')) hasService = true;
+            const original = inventory.find(i => i.name === item.name);
+            if(original && original.cat === 'serviço') hasService = true;
             cartDiv.innerHTML += `
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
                     <div style="font-size:0.85rem;"><strong>${item.name}</strong><br>R$ ${item.price.toFixed(2)} x ${item.qty}</div>
-                    <div>
-                        <button onclick="changeQty('${item.name}', -1)" style="padding:2px 8px; cursor:pointer;">-</button>
-                        <button onclick="changeQty('${item.name}', 1)" style="padding:2px 8px; cursor:pointer;">+</button>
+                    <div style="display:flex; gap:5px;">
+                        <button onclick="changeQty('${item.name}', -1)" style="padding:4px 8px; cursor:pointer;">-</button>
+                        <button onclick="changeQty('${item.name}', 1)" style="padding:4px 8px; cursor:pointer; background:var(--primary); color:white; border:none; border-radius:4px;">+</button>
                     </div>
                 </div>`;
         });
@@ -362,24 +421,34 @@
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
         const pay = document.getElementById("paymentMethod").value;
-        if (cart.length === 0 || !addr || !pay) return alert("Preencha todos os dados!");
+        const date = document.getElementById("serviceDate").value;
+        const time = document.getElementById("serviceTime").value;
+        const schedVisible = document.getElementById("service-scheduling").style.display === "block";
 
-        let msg = "*PEDIDO - MAIS FRIO CLIMATIZAÇÃO*\n\n";
+        if (cart.length === 0) return alert("Adicione itens!");
+        if (!addr) return alert("Informe o endereço!");
+        if (!pay) return alert("Escolha o pagamento!");
+
+        let msg = "*NOVO PEDIDO - MAIS FRIO CLIMATIZAÇÃO* ❄️\n\n";
         let total = 0;
         cart.forEach(i => {
-            msg += `• ${i.name} (x${i.qty})\n`;
+            msg += `• ${i.name} (x${i.qty}) - R$ ${(i.price * i.qty).toFixed(2)}\n`;
             total += i.price * i.qty;
         });
-        msg += `\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
-        msg += `\n📍 *Endereço:* ${addr}\n💳 *Pagamento:* ${pay}`;
-        if(pay === "PIX") msg += `\n🔑 *PIX:* 59874260220`;
+
+        if(schedVisible && date) msg += `\n📅 *AGENDAMENTO:* ${date.split('-').reverse().join('/')} (${time})`;
+        msg += `\n📍 *ENDEREÇO:* ${addr}\n💳 *PAGAMENTO:* ${pay}\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+        if(pay === "PIX") msg += `\n🔑 *Chave PIX:* 59874260220`;
 
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
     }
 
     function setFilter(c) {
         currentCategory = c;
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.onclick.toString().includes(`'${c}'`)));
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            const btnText = b.innerText.toLowerCase();
+            b.classList.toggle('active', btnText.includes(c) || (c==='' && btnText==='tudo'));
+        });
         renderItems();
     }
 
@@ -388,11 +457,15 @@
     function showFeedback() {
         const t = document.getElementById('toast');
         t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 2000);
+        setTimeout(() => t.style.display = 'none', 2500);
+        const btn = document.getElementById('header-cart-btn');
+        btn.classList.add('bump');
+        setTimeout(() => btn.classList.remove('bump'), 300);
     }
 
     renderItems();
     renderCart();
 </script>
+
 </body>
 </html>
