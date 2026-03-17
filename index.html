@@ -22,6 +22,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
 
+        /* ANIMAÇÕES PROFISSIONAIS */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -41,26 +42,27 @@
             align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
         .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
+        .logo span { color: var(--secondary); }
 
         .whatsapp-float {
             position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px;
             background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
             font-size: 30px; box-shadow: 2px 10px 20px rgba(0,0,0,0.1); z-index: 2500;
-            display: flex; align-items: center; justify-content: center; text-decoration: none; 
-            transition: var(--transition);
+            display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s;
         }
-        .whatsapp-float:hover { transform: scale(1.1); }
+        .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); }
 
         .hero { background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%); color: white; padding: 60px 5%; text-align: center; }
-        .search-box { background: white; border-radius: 15px; display: flex; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
-        .search-box input { border: none; padding: 15px; width: 100%; outline: none; }
+        .search-box { background: white; border-radius: 15px; display: flex; align-items: center; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
+        .search-box input { border: none; padding: 15px; width: 100%; outline: none; font-size: 16px; }
 
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
         
         .card { 
             background: var(--white); border-radius: 20px; overflow: hidden; 
-            border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); opacity: 0;
+            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); 
+            transition: var(--transition); opacity: 0;
         }
         .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
         .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; transition: 0.5s; }
@@ -69,15 +71,15 @@
         .btn-add {
             width: 100%; padding: 10px; border-radius: 8px; border: none; 
             background: #f1f5f9; color: var(--primary); font-weight: 700; 
-            cursor: pointer; transition: var(--transition);
+            cursor: pointer; transition: 0.2s;
         }
         .btn-add:hover { background: var(--primary); color: white; }
 
-        .cart-panel { 
-            position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; 
-            height: 100%; background: white; z-index: 2000; 
-            transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); box-shadow: -5px 0 30px rgba(0,0,0,0.1);
-        }
+        .info-section { background: white; padding: 60px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .schedule-table td { padding: 12px 0; border-bottom: 1px solid #eee; }
+
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; }
         .cart-panel.open { right: 0; }
 
         @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
@@ -110,6 +112,22 @@
     <div class="grid" id="main-grid"></div>
 </main>
 
+<section class="info-section reveal">
+    <div>
+        <h2 style="color: var(--primary); margin-bottom: 15px;">Horário de Atendimento</h2>
+        <table class="schedule-table">
+            <tr><td>Segunda a Sexta</td><td style="text-align:right;">08:00 – 18:00</td></tr>
+            <tr><td>Sábado</td><td style="text-align:right;">08:00 – 12:00</td></tr>
+            <tr><td>Domingo</td><td style="text-align:right; color: #ef4444;">Fechado</td></tr>
+        </table>
+    </div>
+    <div>
+        <h2 style="color: var(--primary); margin-bottom: 15px;">Localização</h2>
+        <p><i class="fas fa-map-marker-alt"></i> Atendimento em toda Presidente Médici - RO</p>
+        <div style="margin-top: 20px; font-weight: 700; color: var(--accent);"><i class="fas fa-check-circle"></i> Garantia em todos os serviços</div>
+    </div>
+</section>
+
 <div id="cartPreview" class="cart-panel">
     <div style="padding:25px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
         <h3>Seu Pedido</h3>
@@ -126,11 +144,42 @@
 </div>
 
 <script>
+    // LISTA COMPLETA RESTAURADA
     const inventory = [
         { name: "Instalação Ar Novo", price: 400 },
+        { name: "Instalação Ar Usado", price: 250 },
         { name: "Manutenção Preventiva", price: 150 },
         { name: "Carga de Gás", price: 200 },
-        { name: "Capacitor Duplo 35UF", price: 36 }
+        { name: "Capacitor Duplo 25+2.5UF", price: 30 },
+        { name: "Capacitor Duplo 30UF", price: 36 },
+        { name: "Capacitor Duplo 35UF", price: 36 },
+        { name: "Capacitor Duplo 40UF", price: 36 },
+        { name: "Capacitor Ventilador 1.0UF", price: 8.50 },
+        { name: "Capacitor Ventilador 1.5UF", price: 8.50 },
+        { name: "Capacitor Ventilador 2.5UF", price: 8.50 },
+        { name: "Capacitor Ventilador 3.0UF", price: 8.50 },
+        { name: "Contactor 18A", price: 53.50 },
+        { name: "Contactor 25A", price: 135.00 },
+        { name: "Sensor Degelo AC 05k", price: 10 },
+        { name: "Controle Ar Universal", price: 80 },
+        { name: "Gás R32 (13kg)", price: 1150.00 },
+        { name: "Gás R-22 Lata 1kg", price: 130 },
+        { name: "Gás R-410A Lata 800g", price: 110 },
+        { name: "Tubulação de Cobre (kg)", price: 165 },
+        { name: "Suporte L Condensadora 47cm", price: 27 },
+        { name: "Válvula de Serviço 1/4", price: 36.50 },
+        { name: "Válvula de Serviço 3/8", price: 55.99 },
+        { name: "Válvula de Serviço 1/2", price: 62.99 },
+        { name: "Polipex 1/4", price: 3.99 },
+        { name: "Polipex 3/8", price: 4.90 },
+        { name: "Polipex 1/2", price: 5.90 },
+        { name: "Fita Isolante 10mm x 0,5m", price: 4.99 },
+        { name: "Fita De PVC", price: 3.99 },
+        { name: "Bucha Plástica 0,8 C", price: 0.20 },
+        { name: "Bucha Plástica 0,10 C", price: 0.50 },
+        { name: "Bucha Plástica 0,12 C", price: 0.60 },
+        { name: "Parafuso Cônico", price: 0.35 },
+        { name: "Parafuso Sextavado", price: 1.50 }
     ];
 
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
@@ -145,12 +194,12 @@
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()))
-        .forEach((item, index) => {
-            grid.innerHTML += `<div class="card reveal" style="animation-delay: ${index * 0.1}s">
+        const filtered = inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()));
+        filtered.forEach((item, index) => {
+            grid.innerHTML += `<div class="card reveal" style="animation-delay: ${index * 0.05}s">
                 <div class="card-img" style="background-color:#eee;"></div>
                 <div style="padding:15px;">
-                    <h3 style="font-size:0.9rem; min-height:40px;">${item.name}</h3>
+                    <h3 style="font-size:0.85rem; min-height:40px;">${item.name}</h3>
                     <div style="font-weight:700; color:var(--primary); margin:10px 0;">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
                     <button class="btn-add" onclick="addToCart('${item.name}', ${item.price})">Adicionar</button>
                 </div>
@@ -161,19 +210,16 @@
     function addToCart(name, price) {
         let item = cart.find(p => p.name === name);
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
-        
         localStorage.setItem('maisFrioCart', JSON.stringify(cart));
         renderCart();
-
-        // --- MENSAGEM RESTAURADA AQUI ---
-        alert(`✅ ${name} foi adicionado ao seu carrinho!`);
+        alert(`✅ ${name} adicionado ao carrinho!`);
     }
 
     function renderCart() {
         let total = 0, count = 0;
         document.getElementById("cartItems").innerHTML = cart.map(i => {
             total += i.price * i.qty; count += i.qty;
-            return `<div style="display:flex;justify-content:space-between;margin-bottom:10px;">${i.name} (x${i.qty}) <span>R$ ${(i.price*i.qty).toFixed(2)}</span></div>`;
+            return `<div style="display:flex;justify-content:space-between;margin-bottom:10px;">${i.name} (x${i.qty}) <span>R$ ${(i.price*i.qty).toFixed(2).replace('.', ',')}</span></div>`;
         }).join('');
         document.getElementById("total-price").innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         document.getElementById("cart-count").innerText = count;
@@ -183,7 +229,7 @@
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
-        if (!addr) return alert("Por favor, informe seu endereço em Médici.");
+        if (!addr) return alert("Informe seu endereço!");
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent("*PEDIDO MAIS FRIO*\n" + cart.map(i => `${i.name} x${i.qty}`).join("\n") + "\n\nEndereço: " + addr)}`);
     }
 
