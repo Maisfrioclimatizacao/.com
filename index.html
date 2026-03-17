@@ -16,104 +16,145 @@
             --bg: #f2f2f7;
             --card-bg: #ffffff;
             --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition: all 0.3s var(--spring);
         }
 
         body.modal-open { overflow: hidden; position: fixed; width: 100%; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--primary); }
+        body { background: var(--bg); color: var(--primary); overflow-x: hidden; }
 
-        /* --- STATUS BAR (HORÁRIO) --- */
-        .status-bar { background: var(--primary); color: white; padding: 10px; text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
-        .status-bar i { color: var(--accent); margin-right: 5px; }
+        /* --- STATUS BAR --- */
+        .status-bar { background: var(--primary); color: white; padding: 10px; text-align: center; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .status-bar i { color: var(--accent); margin-right: 5px; animation: pulse 2s infinite; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         
         header { 
-            background: rgba(255, 255, 255, 0.75); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 18px 6%; display: flex; justify-content: space-between; align-items: center; 
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; text-transform: uppercase; }
+        .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; text-transform: uppercase; transition: var(--transition); }
+        .logo:hover { transform: scale(1.02); }
         .logo span { color: var(--secondary); }
         
         .btn-cart-top { 
-            background: var(--primary); color: white; padding: 10px 20px; border-radius: 50px; 
+            background: var(--primary); color: white; padding: 10px 22px; border-radius: 50px; 
             cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700; 
-            box-shadow: 0 8px 20px rgba(10, 25, 47, 0.2); transition: 0.3s;
+            box-shadow: 0 8px 15px rgba(10, 25, 47, 0.15); transition: var(--transition);
         }
+        .btn-cart-top:active { transform: scale(0.9); }
 
-        /* --- HERO CENTRALIZADO --- */
+        /* --- HERO --- */
         .hero { 
             background: linear-gradient(135deg, #0a192f 0%, #061121 100%); 
-            color: white; padding: 60px 6%; text-align: center;
+            color: white; padding: 70px 6%; text-align: center;
             border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
             display: flex; flex-direction: column; align-items: center;
         }
-        .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 25px; max-width: 600px; line-height: 1.2; }
+        .hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; max-width: 600px; line-height: 1.1; animation: slideDown 0.8s var(--spring); }
         
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
         .search-area { 
-            background: white; border-radius: 20px; padding: 5px 20px; 
+            background: white; border-radius: 22px; padding: 5px 22px; 
             width: 100%; max-width: 500px; display: flex; align-items: center; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3); margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25); margin-bottom: 35px;
+            transition: var(--transition); border: 2px solid transparent;
         }
+        .search-area:focus-within { transform: translateY(-5px); border-color: var(--secondary); }
         .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: #333; }
 
-        .tabs { display: flex; gap: 10px; justify-content: center; width: 100%; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
-        .tab { padding: 12px 20px; background: rgba(255,255,255,0.1); border-radius: 50px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: 0.3s; }
-        .tab.active { background: white; color: var(--primary); }
+        .tabs { display: flex; gap: 12px; justify-content: center; width: 100%; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+        .tab { padding: 12px 25px; background: rgba(255,255,255,0.08); border-radius: 50px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: var(--transition); border: 1px solid rgba(255,255,255,0.1); }
+        .tab:hover { background: rgba(255,255,255,0.15); }
+        .tab.active { background: white; color: var(--primary); transform: scale(1.05); }
 
-        /* --- GRID --- */
+        /* --- GRID & CARDS --- */
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); } }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); } }
 
-        .card { background: white; border-radius: 25px; overflow: hidden; display: flex; flex-direction: column; transition: 0.4s var(--spring); opacity: 0; transform: translateY(20px); }
+        .card { 
+            background: white; border-radius: 28px; overflow: hidden; display: flex; 
+            flex-direction: column; transition: var(--transition); opacity: 0; 
+            transform: translateY(30px); border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        }
         .card.active { opacity: 1; transform: translateY(0); }
-        .img-box { width: 100%; height: 180px; position: relative; overflow: hidden; }
-        .img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .badge { position: absolute; top: 10px; left: 10px; padding: 5px 10px; border-radius: 50px; font-size: 0.6rem; font-weight: 800; color: white; text-transform: uppercase; }
+        .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 20px 30px rgba(0,0,0,0.08); }
+
+        .img-box { width: 100%; height: 190px; position: relative; overflow: hidden; background: #f9f9f9; }
+        .img-box img { width: 100%; height: 100%; object-fit: contain; padding: 10px; transition: 0.5s; }
+        .card:hover .img-box img { transform: scale(1.1); }
+        
+        .badge { position: absolute; top: 12px; left: 12px; padding: 6px 12px; border-radius: 50px; font-size: 0.65rem; font-weight: 800; color: white; text-transform: uppercase; z-index: 10; }
         .badge.peca { background: var(--secondary); }
         .badge.servico { background: var(--accent); }
 
-        .card-body { padding: 15px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card h3 { font-size: 0.9rem; font-weight: 700; height: 35px; overflow: hidden; margin-bottom: 10px; color: var(--primary); }
-        .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
-        .btn-add { width: 100%; background: #f2f2f7; padding: 12px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .card-body { padding: 20px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card h3 { font-size: 0.95rem; font-weight: 700; height: 40px; overflow: hidden; margin-bottom: 12px; color: var(--primary); line-height: 1.3; }
+        .price { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 18px; }
+        
+        .btn-add { 
+            width: 100%; background: #f2f2f7; padding: 14px; border-radius: 18px; 
+            border: none; font-weight: 800; cursor: pointer; transition: var(--transition);
+            color: var(--primary);
+        }
         .btn-add:hover { background: var(--primary); color: white; }
+        .btn-add:active { transform: scale(0.95); }
 
-        /* --- NOVO CARRINHO (CLEAN WHITE) --- */
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1900; display: none; backdrop-filter: blur(8px); }
-        .overlay.active { display: block; }
+        /* --- CARRINHO PREMIUM --- */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 25, 47, 0.4); z-index: 1900; display: none; backdrop-filter: blur(10px); transition: 0.3s; }
+        .overlay.active { display: block; animation: fadeIn 0.3s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         #sideCart { 
             position: fixed; right: -100%; top: 0; width: 90%; max-width: 420px; height: 100%; 
             background: #ffffff; color: var(--primary); z-index: 2000; 
-            transition: 0.4s var(--spring); display: flex; flex-direction: column; 
-            box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+            transition: 0.5s var(--spring); display: flex; flex-direction: column; 
+            box-shadow: -15px 0 50px rgba(0,0,0,0.1);
         }
         #sideCart.open { right: 0; }
         
-        .cart-header { padding: 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 20px; background: #fff; }
+        .cart-header { padding: 30px 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f0f0f0; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; background: #fff; scrollbar-width: none; }
         
         .cart-item { 
-            background: #f8f9fa; padding: 15px; border-radius: 18px; margin-bottom: 12px; 
+            background: #f8fafc; padding: 18px; border-radius: 22px; margin-bottom: 15px; 
             display: flex; justify-content: space-between; align-items: center;
-            border: 1px solid #eee;
+            border: 1px solid #f1f5f9; animation: slideInRight 0.4s var(--spring);
         }
-        .qty-btn { background: #e2e8f0; border: none; color: #333; width: 28px; height: 28px; border-radius: 8px; cursor: pointer; font-weight: 800; }
+        @keyframes slideInRight { from { transform: translateX(50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        .cart-footer { padding: 25px; background: #ffffff; border-top: 1px solid #f0f0f0; }
-        .premium-input { width: 100%; padding: 14px; border-radius: 12px; border: 1.5px solid #e2e8f0; margin-bottom: 10px; font-weight: 600; background: #f8fafc; font-size: 0.9rem; }
+        .qty-btn { background: #fff; border: 1px solid #e2e8f0; color: #333; width: 32px; height: 32px; border-radius: 10px; cursor: pointer; font-weight: 800; transition: 0.2s; }
+        .qty-btn:hover { background: var(--secondary); color: white; border-color: var(--secondary); }
+
+        .cart-footer { padding: 30px 25px; background: #ffffff; border-top: 1px solid #f0f0f0; border-radius: 30px 30px 0 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.02); }
+        .premium-input { width: 100%; padding: 16px; border-radius: 15px; border: 2px solid #f1f5f9; margin-bottom: 12px; font-weight: 600; background: #f8fafc; transition: 0.3s; }
+        .premium-input:focus { border-color: var(--secondary); outline: none; background: #fff; }
         
-        #pix-info { background: #f0fff4; color: #1e7e34; padding: 12px; border-radius: 12px; margin-bottom: 12px; text-align: center; border: 1px dashed #c3e6cb; font-size: 0.85rem; }
+        /* BOTÃO COPIAR CNPJ */
+        .copy-box { 
+            background: #f0fff4; color: #1e7e34; padding: 15px; border-radius: 15px; 
+            margin-bottom: 15px; text-align: center; border: 2px dashed #c3e6cb; 
+            cursor: pointer; position: relative; transition: 0.3s; overflow: hidden;
+        }
+        .copy-box:hover { background: #e6ffed; transform: scale(1.02); }
+        .copy-box:active { transform: scale(0.98); }
+        .copy-box strong { font-size: 1.1rem; display: block; margin-top: 5px; }
+        .copy-badge { position: absolute; top: 5px; right: 10px; font-size: 0.6rem; background: #28cd41; color: white; padding: 2px 8px; border-radius: 10px; opacity: 0; transition: 0.3s; }
+        .copy-box.copied .copy-badge { opacity: 1; transform: translateY(0); }
 
-        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--accent); color: white; padding: 15px 30px; border-radius: 50px; z-index: 3000; transition: 0.4s; font-weight: 800; box-shadow: 0 10px 20px rgba(40,205,65,0.3); }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 16px 35px; border-radius: 50px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 800; box-shadow: 0 15px 30px rgba(10, 25, 47, 0.3); }
         #toast.active { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
 <div class="status-bar">
-    <i class="fas fa-clock"></i> SEGUNDA A SÁBADO: 08:00 ÀS 18:00
+    <i class="fas fa-circle"></i> ABERTO: SEG A SÁB - 08:00 ÀS 18:00
 </div>
 
 <header>
@@ -127,7 +168,7 @@
     <h1>Peças originais &<br>Serviços certificados.</h1>
     <div class="search-area">
         <i class="fas fa-search" style="color:#999"></i>
-        <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="render()">
+        <input type="text" id="searchInput" placeholder="O que você precisa hoje?" onkeyup="render()">
     </div>
     <div class="tabs">
         <div class="tab active" id="tab-all" onclick="filter('all')">Todos</div>
@@ -144,34 +185,38 @@
 
 <div id="sideCart">
     <div class="cart-header">
-        <h2 style="font-weight: 800; font-size: 1.2rem;">Meu Carrinho</h2>
-        <i class="fas fa-times" onclick="toggleCart()" style="cursor:pointer; font-size: 1.5rem; opacity: 0.3;"></i>
+        <h2 style="font-weight: 800; font-size: 1.3rem;">Seu Carrinho</h2>
+        <i class="fas fa-times-circle" onclick="toggleCart()" style="cursor:pointer; font-size: 1.8rem; opacity: 0.2; transition: 0.3s;"></i>
     </div>
     <div class="cart-items" id="cart-list"></div>
     <div class="cart-footer">
-        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega">
+        <input type="text" id="userAddr" class="premium-input" placeholder="Onde entregamos seu pedido?">
         <select id="userPay" class="premium-input" onchange="checkPix()">
-            <option value="Pix">Pagamento via Pix</option>
+            <option value="Pix">Pagar via Pix (Copia e Cola)</option>
             <option value="Cartão">Cartão na Entrega</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
         
         <div id="pix-info" style="display:none;">
-            <small>Chave CNPJ:</small><br><strong>59874260220</strong>
+            <div class="copy-box" onclick="copyCNPJ(this)">
+                <span class="copy-badge">COPIADO!</span>
+                <small><i class="fas fa-copy"></i> Toque para copiar o CNPJ:</small>
+                <strong>59874260220</strong>
+            </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; margin: 15px 0;">
-            <span style="font-weight: 600; opacity: 0.6;">Total do Pedido:</span>
-            <span id="cart-total" style="font-weight: 800; font-size: 1.4rem; color: var(--primary);">R$ 0,00</span>
+        <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+            <span style="font-weight: 600; opacity: 0.5;">Subtotal:</span>
+            <span id="cart-total" style="font-weight: 800; font-size: 1.5rem; color: var(--primary);">R$ 0,00</span>
         </div>
         
-        <button onclick="sendOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:18px; font-weight: 800; cursor:pointer; font-size: 1rem; box-shadow: 0 10px 20px rgba(40,205,65,0.2);">
-            <i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP
+        <button onclick="sendOrder()" style="width:100%; padding:20px; background:var(--accent); color:white; border:none; border-radius:20px; font-weight: 800; cursor:pointer; font-size: 1rem; box-shadow: 0 10px 25px rgba(40,205,65,0.25); display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <i class="fab fa-whatsapp" style="font-size: 1.3rem;"></i> FINALIZAR NO WHATSAPP
         </button>
     </div>
 </div>
 
-<div id="toast">✅ Adicionado com sucesso!</div>
+<div id="toast">✅ Adicionado ao carrinho!</div>
 
 <script>
     const inventory = [
@@ -234,7 +279,7 @@
                     <button class="btn-add" onclick="add('${item.name}', ${item.price})">ADICIONAR</button>
                 </div>`;
             grid.appendChild(card);
-            setTimeout(() => card.classList.add('active'), idx * 30);
+            setTimeout(() => card.classList.add('active'), idx * 50);
         });
     }
 
@@ -266,12 +311,12 @@
             list.innerHTML += `
                 <div class="cart-item">
                     <div>
-                        <div style="font-weight:700; font-size:0.85rem; color: #1a1a1a;">${item.n}</div>
-                        <div style="color:var(--secondary); font-weight:800; font-size: 0.9rem; margin-top: 4px;">R$ ${(item.p * item.q).toFixed(2).replace('.',',')}</div>
+                        <div style="font-weight:700; font-size:0.9rem; color: #1a1a1a;">${item.n}</div>
+                        <div style="color:var(--secondary); font-weight:800; font-size: 1rem; margin-top: 4px;">R$ ${(item.p * item.q).toFixed(2).replace('.',',')}</div>
                     </div>
                     <div style="display:flex; align-items:center; gap:12px">
                         <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
-                        <span style="font-weight:800; font-size: 0.9rem;">${item.q}</span>
+                        <span style="font-weight:800;">${item.q}</span>
                         <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
                     </div>
                 </div>`;
@@ -295,7 +340,7 @@
     function showToast() {
         const t = document.getElementById('toast');
         t.classList.add('active');
-        setTimeout(() => t.classList.remove('active'), 2000);
+        setTimeout(() => t.classList.remove('active'), 2500);
     }
 
     function checkPix() {
@@ -303,12 +348,19 @@
         document.getElementById('pix-info').style.display = (pay === 'Pix') ? 'block' : 'none';
     }
 
+    function copyCNPJ(el) {
+        const cnpj = "59874260220";
+        navigator.clipboard.writeText(cnpj);
+        el.classList.add('copied');
+        setTimeout(() => el.classList.remove('copied'), 2000);
+    }
+
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
         const pay = document.getElementById('userPay').value;
-        if(!ad || cart.length === 0) return alert("Por favor, adicione itens e seu endereço!");
-        let m = `*PEDIDO MAIS FRIO CLIMATIZAÇÃO*\n\n`;
-        cart.forEach(i => m += `✅ ${i.n} (x${i.q})\n`);
+        if(!ad || cart.length === 0) return alert("Por favor, preencha o endereço e adicione itens!");
+        let m = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
+        cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
         m += `\n*Pagamento:* ${pay}\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
