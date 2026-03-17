@@ -26,6 +26,7 @@
             background: var(--bg-light);
             color: var(--text-dark);
             line-height: 1.6;
+            padding-bottom: 40px;
         }
 
         /* HEADER */
@@ -58,6 +59,13 @@
             transition: 0.3s;
         }
         .cart-btn:hover { background: var(--secondary); }
+
+        .bump { animation: bump 0.3s ease-out; }
+        @keyframes bump {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
 
         /* HERO SECTION */
         .hero {
@@ -109,6 +117,7 @@
             cursor: pointer;
             transition: 0.3s;
             backdrop-filter: blur(5px);
+            white-space: nowrap;
         }
 
         .filter-btn.active { background: var(--white); color: var(--primary); font-weight: 700; }
@@ -118,7 +127,7 @@
         
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
         }
 
@@ -139,8 +148,8 @@
             border-color: var(--secondary);
         }
 
-        .card h3 { font-size: 1rem; margin-bottom: 12px; color: var(--primary); }
-        .card .price { font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; }
+        .card h3 { font-size: 0.95rem; margin-bottom: 12px; color: var(--primary); min-height: 45px; }
+        .card .price { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; }
 
         .add-btn {
             background: #f1f5f9;
@@ -346,20 +355,37 @@
 
 <script>
     const inventory = [
+        // SERVIÇOS
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
         { name: "Carga de Gás", price: 200, cat: "serviço" },
+
+        // CAPACITORES
+        { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "capacitor" },
+        { name: "Capacitor Duplo 40UF", price: 36, cat: "capacitor" },
+        { name: "Capacitor Duplo 35UF", price: 36, cat: "capacitor" },
+        { name: "Capacitor Duplo 30UF", price: 36, cat: "capacitor" },
+
+        // PEÇAS (NOVOS ITENS ABAIXO)
+        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, cat: "peça" },
+        { name: "Fita Isolante 18mm x 10m", price: 6.90, cat: "peça" },
+        { name: "Polipex 1/4", price: 3.99, cat: "peça" },
+        { name: "Polipex 3/8", price: 4.90, cat: "peça" },
+        { name: "Polipex 1/2", price: 5.90, cat: "peça" },
+        { name: "Bucha Plástica 0,8 C", price: 0.20, cat: "peça" },
+        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "peça" },
+        { name: "Bucha Plástica 0,12 C", price: 0.60, cat: "peça" },
+        { name: "Parafuso Cônico", price: 0.35, cat: "peça" },
+        { name: "Parafuso Sextavado", price: 1.50, cat: "peça" },
+        { name: "Contactor 18A", price: 53.50, cat: "peça" },
+        { name: "Contactor 25A", price: 135.00, cat: "peça" },
         { name: "Controle Ar Universal", price: 80, cat: "peça" },
         { name: "Suporte L Condensadora 47cm", price: 27, cat: "peça" },
         { name: "Tubulação de Cobre (kg)", price: 165, cat: "peça" },
         { name: "Gás R-22 Lata 1kg", price: 130, cat: "peça" },
         { name: "Sensor Degelo AC 05k", price: 10, cat: "peça" },
-        { name: "Fita De PVC", price: 3.99, cat: "peça" },
-        { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "capacitor" },
-        { name: "Capacitor Duplo 40UF", price: 36, cat: "capacitor" },
-        { name: "Capacitor Duplo 35UF", price: 36, cat: "capacitor" },
-        { name: "Capacitor Duplo 30UF", price: 36, cat: "capacitor" }
+        { name: "Fita De PVC", price: 3.99, cat: "peça" }
     ];
 
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
@@ -415,13 +441,15 @@
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
-            if(inventory.find(i => i.name === item.name && i.cat === 'serviço')) hasService = true;
+            const original = inventory.find(i => i.name === item.name);
+            if(original && original.cat === 'serviço') hasService = true;
+            
             cartDiv.innerHTML += `
                 <div style="display:flex; justify-content:space-between; margin-bottom:18px; align-items:center;">
                     <div style="font-size:0.9rem;"><strong>${item.name}</strong><br><span style="color:#64748b;">R$ ${item.price.toFixed(2)} x ${item.qty}</span></div>
                     <div style="display:flex; gap:8px;">
-                        <button onclick="changeQty('${item.name}', -1)" style="padding:4px 10px; border:1px solid #e2e8f0; border-radius:6px; background:white;">-</button>
-                        <button onclick="changeQty('${item.name}', 1)" style="padding:4px 10px; background:var(--primary); color:white; border:none; border-radius:6px;">+</button>
+                        <button onclick="changeQty('${item.name}', -1)" style="padding:4px 10px; border:1px solid #e2e8f0; border-radius:6px; background:white; cursor:pointer;">-</button>
+                        <button onclick="changeQty('${item.name}', 1)" style="padding:4px 10px; background:var(--primary); color:white; border:none; border-radius:6px; cursor:pointer;">+</button>
                     </div>
                 </div>`;
         });
@@ -449,19 +477,21 @@
         const schedVisible = document.getElementById("service-scheduling").style.display === "block";
         
         if (cart.length === 0) return alert("Adicione itens ao pedido!");
-        if (!addr.trim()) return alert("Por favor, informe o endereço de entrega/serviço.");
+        if (!addr.trim()) return alert("Por favor, informe o endereço.");
         if (schedVisible && !date) return alert("Escolha uma data para o agendamento.");
         if (!pay) return alert("Selecione a forma de pagamento.");
         
         let msg = "*NOVO PEDIDO - MAIS FRIO CLIMATIZAÇÃO* ❄️\n\n";
         let total = 0;
         cart.forEach(item => {
-            msg += `• ${item.name} (x${item.qty}) - R$ ${(item.price * item.qty).toFixed(2)}\n`;
+            msg += `• ${item.name} (x${item.qty}) - R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}\n`;
             total += item.price * item.qty;
         });
         
         if(schedVisible) msg += `\n📅 *AGENDAMENTO:* ${date.split('-').reverse().join('/')} (${time})`;
         msg += `\n📍 *ENDEREÇO:* ${addr}\n💳 *PAGAMENTO:* ${pay}\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+        
+        if(pay === "PIX") msg += `\n🔑 *Chave PIX:* 59874260220`;
         
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
         localStorage.removeItem('maisFrioCart');
@@ -471,18 +501,22 @@
     }
 
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
+    
     function setFilter(c) { 
         currentCategory = c; 
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase().includes(c) || (c==='' && b.innerText==='Tudo')));
         renderItems(); 
     }
+
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
+
     function showFeedback() {
         const t = document.getElementById('toast');
         t.style.display = 'block';
         setTimeout(() => t.style.display = 'none', 3000);
-        document.getElementById('header-cart-btn').classList.add('bump');
-        setTimeout(() => document.getElementById('header-cart-btn').classList.remove('bump'), 300);
+        const btn = document.getElementById('header-cart-btn');
+        btn.classList.add('bump');
+        setTimeout(() => btn.classList.remove('bump'), 300);
     }
 
     renderItems();
