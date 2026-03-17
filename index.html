@@ -22,8 +22,18 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--primary); }
 
-        /* --- HEADER & STATUS --- */
-        .status-bar { background: var(--primary); color: white; padding: 10px; text-align: center; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; }
+        /* --- STATUS BAR (HORÁRIO) --- */
+        .status-bar { 
+            background: var(--primary); 
+            color: white; 
+            padding: 10px; 
+            text-align: center; 
+            font-size: 0.75rem; 
+            font-weight: 700; 
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .status-bar i { color: var(--accent); margin-right: 5px; }
         
         header { 
             background: rgba(255, 255, 255, 0.75); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -98,7 +108,9 @@
 </head>
 <body>
 
-<div class="status-bar">ESPECIALISTA EM INVERTER E VRF</div>
+<div class="status-bar">
+    <i class="fas fa-clock"></i> Segunda a Sábado: 08:00 às 18:00
+</div>
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
@@ -153,6 +165,7 @@
 <div id="toast">✅ Adicionado!</div>
 
 <script>
+    // Inventário mantido conforme solicitado
     const inventory = [
         { name: "Instalação Ar Novo", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
         { name: "Instalação Ar Usado", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
@@ -191,7 +204,6 @@
         { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" }
     ];
 
-    // CARREGAR CARRINHO SALVO OU CRIAR NOVO
     let cart = JSON.parse(localStorage.getItem('cart_maisfrio')) || [];
     let currentFilter = 'all';
 
@@ -235,7 +247,7 @@
     }
 
     function saveAndUpdate() {
-        localStorage.setItem('cart_maisfrio', JSON.stringify(cart)); // SALVA NO NAVEGADOR
+        localStorage.setItem('cart_maisfrio', JSON.stringify(cart));
         updateUI();
     }
 
@@ -286,16 +298,12 @@
         let m = `*PEDIDO MAIS FRIO CLIMATIZAÇÃO*\n\n`;
         cart.forEach(i => m += `✅ ${i.n} (x${i.q})\n`);
         m += `\n*Pagamento:* ${pay}\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
-        
-        // OPCIONAL: Limpar carrinho após enviar
-        // cart = []; saveAndUpdate();
-        
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
 
     window.onload = () => { 
         render(); 
-        updateUI(); // Inicia com o que estiver salvo
+        updateUI();
         checkPix(); 
     };
 </script>
