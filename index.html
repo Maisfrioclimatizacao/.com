@@ -22,133 +22,138 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
 
-        /* TOAST NOTIFICATION */
+        /* TOAST */
         #toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             background: var(--primary); color: white; padding: 12px 25px;
             border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 3000; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            font-weight: 600; display: flex; align-items: center; gap: 10px; font-size: 0.9rem;
+            z-index: 3000; transition: 0.5s; font-weight: 600; display: flex; align-items: center; gap: 10px;
         }
         #toast.show { top: 20px; }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .reveal { animation: fadeInUp 0.6s ease forwards; }
-
         .top-bar { background: #061731; color: white; font-size: 0.75rem; padding: 8px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
-        .status-open { background: var(--accent); }
-        .status-closed { background: #ef4444; }
+        .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; background: var(--accent); }
 
         header { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
         .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-        
-        .hero { background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%); color: white; padding: 60px 5%; text-align: center; }
+
+        .hero { background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%); color: white; padding: 40px 5%; text-align: center; }
         .search-box { background: white; border-radius: 15px; display: flex; align-items: center; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
-        .search-box input { border: none; padding: 15px; width: 100%; outline: none; font-size: 16px; }
+        .search-box input { border: none; padding: 12px; width: 100%; outline: none; font-size: 16px; }
 
-        .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
-        .card { background: var(--white); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); opacity: 0; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
-        .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; background-color: #f1f5f9; }
-
-        /* DICAS DE ESPECIALISTA (MELHORIA 2) */
-        .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
-        .tip-card { background: #ebf5ff; padding: 20px; border-radius: 15px; border-left: 5px solid var(--secondary); }
-
-        .btn-add { width: 100%; padding: 10px; border-radius: 8px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .container { padding: 30px 5%; max-width: 1200px; margin: auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        
+        .card { background: var(--white); border-radius: 15px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
+        .card-img { width: 100%; height: 160px; background-size: cover; background-position: center; background-color: #f1f5f9; }
+        .btn-add { width: 100%; padding: 10px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; border-radius: 8px; transition: 0.2s; }
         .btn-add:hover { background: var(--primary); color: white; }
 
-        .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; box-shadow: -5px 0 30px rgba(0,0,0,0.1); }
+        /* CARRINHO PROFISSIONAL */
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.7, 0, 0.3, 1); display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
         .cart-panel.open { right: 0; }
         
-        /* BOTÃO COPIAR PIX (MELHORIA 1) */
-        .btn-copy-pix { background: var(--secondary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; margin-top: 10px; width: 100%; font-weight: 600; }
+        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: var(--bg-light); }
+        .cart-items-container { padding: 15px; flex-grow: 1; overflow-y: auto; }
 
-        .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid #eee; }
-        .cart-input { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
+        .cart-item-row { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px; background: #fff; border-radius: 12px; 
+            margin-bottom: 10px; border: 1px solid #f1f5f9; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        
+        .item-info { flex: 1; padding-right: 10px; }
+        .item-name { font-size: 0.85rem; font-weight: 600; color: var(--primary); display: block; }
+        .item-price { font-size: 0.8rem; color: var(--secondary); font-weight: 700; }
 
-        @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
+        .qty-wrapper { display: flex; align-items: center; background: #f1f5f9; border-radius: 50px; padding: 4px 8px; gap: 10px; }
+        .btn-qty { 
+            width: 28px; height: 28px; border-radius: 50%; border: none; 
+            background: var(--primary); color: white; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; font-size: 0.8rem; transition: 0.2s;
+        }
+        .btn-qty:active { transform: scale(0.9); }
+        .qty-num { font-weight: 700; font-size: 0.9rem; min-width: 20px; text-align: center; }
+
+        .cart-footer { padding: 20px; background: var(--bg-light); border-top: 1px solid #eee; }
+        .cart-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
+
+        .btn-checkout { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+
+        /* DICAS */
+        .tips-section { margin-top: 40px; border-top: 1px solid #eee; padding-top: 30px; }
+        .tip-card { background: #eef6ff; padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--secondary); }
+
+        @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
     </style>
 </head>
 <body>
 
-<div id="toast"><i class="fas fa-shopping-cart"></i> <span id="toast-msg">Adicionado!</span></div>
+<div id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg">Item adicionado</span></div>
 
 <div class="top-bar">
-    <div id="business-status"></div>
-    <div><i class="fas fa-phone-alt"></i> (69) 9306-0469</div>
+    <div><span class="status-dot"></span> Aberto - Médici/RO</div>
+    <div>(69) 9306-0469</div>
 </div>
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
-    <button onclick="toggleCart()" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:50px; cursor:pointer;">
-        <i class="fas fa-shopping-basket"></i> <span id="cart-count">0</span>
+    <button onclick="toggleCart()" style="background:var(--primary); color:white; border:none; padding:10px 18px; border-radius:50px; cursor:pointer; font-weight:600;">
+        <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
     </button>
 </header>
 
 <section class="hero">
-    <h1>Peças e Serviços em Médici</h1>
+    <h2 style="font-size: 1.4rem;">Peças e Serviços</h2>
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar peça ou serviço..." onkeyup="filterItems()">
+        <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="filterItems()">
     </div>
 </section>
 
 <main class="container">
     <div class="grid" id="main-grid"></div>
-    
-    <div style="margin-top: 60px;">
-        <h2 style="color: var(--primary); text-align:center;">Dicas do Especialista</h2>
-        <div class="tips-grid">
-            <div class="tip-card reveal">
-                <h3 style="color:var(--primary); font-size:1rem;"><i class="fas fa-bolt"></i> Economize Energia</h3>
-                <p style="font-size:0.85rem;">Mantenha os filtros limpos! Filtro sujo faz o compressor trabalhar o dobro e aumenta sua conta de luz em até 30%.</p>
-            </div>
-            <div class="tip-card reveal" style="animation-delay: 0.1s;">
-                <h3 style="color:var(--primary); font-size:1rem;"><i class="fas fa-tint-slash"></i> Evite Vazamentos</h3>
-                <p style="font-size:0.85rem;">Se o seu ar está pingando dentro de casa, o dreno pode estar entupido por falta de manutenção preventiva.</p>
-            </div>
-            <div class="tip-card reveal" style="animation-delay: 0.2s;">
-                <h3 style="color:var(--primary); font-size:1rem;"><i class="fas fa-shield-alt"></i> Vida Útil</h3>
-                <p style="font-size:0.85rem;">Uma carga de gás correta e capacitores novos evitam que o motor do seu ar condicionado queime prematuramente.</p>
-            </div>
+
+    <div class="tips-section">
+        <h3 style="margin-bottom:15px; color:var(--primary);">Dicas de Manutenção</h3>
+        <div class="tip-card">
+            <strong>Limpeza Mensal:</strong> Lavar os filtros evita que o ar force o motor e economiza energia.
+        </div>
+        <div class="tip-card">
+            <strong>Capacitores:</strong> Se o seu ar demora a ligar, o capacitor pode estar fraco. Troque antes que queime o compressor.
         </div>
     </div>
 </main>
 
 <div id="cartPreview" class="cart-panel">
-    <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
-        <h3>Seu Pedido</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
+    <div class="cart-header">
+        <h3 style="color:var(--primary);">Meus Itens</h3>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer; color:var(--primary);">&times;</button>
     </div>
     
-    <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
+    <div id="cartItems" class="cart-items-container">
+        </div>
     
     <div class="cart-footer">
         <input type="text" id="address" class="cart-input" placeholder="Endereço de entrega">
         
         <select id="paymentMethod" class="cart-input" onchange="checkPix()">
-            <option value="Pix">Pagamento via Pix</option>
-            <option value="Cartão">Cartão de Crédito/Débito</option>
+            <option value="Pix">Pagar com Pix</option>
+            <option value="Cartão">Cartão de Crédito</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
 
-        <div id="pix-area" style="background:#e8f5e9; padding:12px; border-radius:10px; margin-bottom:15px; border:1px solid var(--accent); display:none;">
-            <div style="font-size:0.75rem; font-weight:bold; color:#1b5e20;">CHAVE PIX:</div>
-            <div style="font-family:monospace; background:white; padding:5px; margin:5px 0; border-radius:4px; text-align:center;">59874260220</div>
-            <button class="btn-copy-pix" onclick="copyPix()"><i class="far fa-copy"></i> Copiar Chave Pix</button>
+        <div id="pix-area" style="background:#fff; padding:10px; border-radius:8px; margin-bottom:15px; border:1px dashed var(--accent); display:none; text-align:center;">
+            <small style="color:#666;">Chave Pix (CNPJ):</small>
+            <div style="font-weight:700; color:var(--primary); margin:5px 0;">59.874.260/0001-22</div>
+            <button onclick="copyPix()" style="background:var(--secondary); color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.7rem; cursor:pointer;">Copiar Chave</button>
         </div>
 
-        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
+        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px; font-size:1.1rem; color:var(--primary);">
             <span>Total:</span> <span id="total-price">R$ 0,00</span>
         </div>
         
-        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer;">
-            Finalizar no WhatsApp
+        <button onclick="sendWhatsAppOrder()" class="btn-checkout">
+            <i class="fab fa-whatsapp"></i> ENVIAR PEDIDO
         </button>
     </div>
 </div>
@@ -190,83 +195,28 @@
         { name: "Parafuso Sextavado", price: 1.50 }
     ];
 
-    const itemPhotos = {
-        "Instalação Ar Novo": "Seção%20de%20Serviços.png",
-        "Instalação Ar Usado": "Seção%20de%20Serviços.png",
-        "Manutenção Preventiva": "ManutencaoPreventiva.png",
-        "Carga de Gás": "CargadeGas.png",
-        "Capacitor Duplo 25+2.5UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 30UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 35UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 40UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Ventilador 1.0UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 1.5UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 2.5UF": "capacitordeventilador.png",
-        "Capacitor Ventilador 3.0UF": "capacitordeventilador.png",
-        "Contactor 18A": "Contactor18A.png",
-        "Contactor 25A": "Contactor25A.png",
-        "Sensor Degelo AC 05k": "SensorDegeloAC05k.png",
-        "Controle Ar Universal": "ControlArUniversal.png",
-        "Gás R32 (13kg)": "gasr3213kg.png",
-        "Gás R-22 Lata 1kg": "GasR-22Lata1kg.png",
-        "Gás R-410A Lata 800g": "GásR-410ALata800g.png",
-        "Tubulação de Cobre (kg)": "TubulaçãodeCobre(kg).png",
-        "Suporte L Condensadora 47cm": "SuporteLCondensadora47cm.png",
-        "Válvula de Serviço 1/4": "valvuladeservicio.png",
-        "Válvula de Serviço 3/8": "valvuladeservicio.png",
-        "Válvula de Serviço 1/2": "valvuladeservicio.png",
-        "Polipex 1/4": "Polipex.png",
-        "Polipex 3/8": "Polipex.png",
-        "Polipex 1/2": "Polipex.png",
-        "Fita De PVC": "FitaDePVC.png",
-        "Bucha Plástica 0,8 C": "BuchaPlástica0,8C.png",
-        "Bucha Plástica 0,10 C": "BuchaPlástica0,10C.png",
-        "Bucha Plástica 0,12 C": "BuchaPlástic0,12C.png",
-        "Parafuso Cônico": "ParafusoCônico.png",
-        "Parafuso Sextavado": "ParafusoSextavado.png"
-    };
-
-    let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
-
-    function checkPix() {
-        const pixArea = document.getElementById('pix-area');
-        pixArea.style.display = (document.getElementById('paymentMethod').value === 'Pix') ? 'block' : 'none';
-    }
-
-    function copyPix() {
-        navigator.clipboard.writeText("59874260220");
-        const btn = document.querySelector('.btn-copy-pix');
-        btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-        setTimeout(() => btn.innerHTML = '<i class="far fa-copy"></i> Copiar Chave Pix', 2000);
-    }
-
-    function updateBusinessStatus() {
-        const d = new Date(), h = d.getHours(), day = d.getDay();
-        const el = document.getElementById('business-status');
-        let open = (day >= 1 && day <= 5 && h >= 8 && h < 18) || (day == 6 && h >= 8 && h < 12);
-        el.innerHTML = open ? `<span class="status-dot status-open"></span> Aberto Agora` : `<span class="status-dot status-closed"></span> Fechado Agora`;
-    }
+    let cart = [];
 
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()))
-        .forEach((item, index) => {
-            grid.innerHTML += `<div class="card reveal" style="animation-delay: ${index * 0.05}s">
-                <div class="card-img" style="background-image: url('${itemPhotos[item.name] || ''}')"></div>
-                <div style="padding:15px;">
-                    <h3 style="font-size:0.85rem; min-height:40px;">${item.name}</h3>
-                    <div style="font-weight:700; color:var(--primary); margin:10px 0;">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
-                    <button class="btn-add" onclick="addToCart('${item.name}', ${item.price})">Adicionar</button>
-                </div>
-            </div>`;
+        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase())).forEach(item => {
+            grid.innerHTML += `
+                <div class="card">
+                    <div class="card-img" style="background-image: url('${item.name.replace(/ /g, '%20')}.png')"></div>
+                    <div style="padding:12px;">
+                        <div style="font-size:0.8rem; font-weight:600; min-height:35px;">${item.name}</div>
+                        <div style="color:var(--primary); font-weight:700; margin:8px 0;">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+                        <button class="btn-add" onclick="addToCart('${item.name}', ${item.price})">ADICIONAR</button>
+                    </div>
+                </div>`;
         });
     }
 
     function addToCart(name, price) {
         let item = cart.find(p => p.name === name);
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
-        saveAndRender();
+        updateCart();
         showToast(name);
     }
 
@@ -276,64 +226,60 @@
             item.qty += delta;
             if (item.qty <= 0) cart = cart.filter(p => p.name !== name);
         }
-        saveAndRender();
+        updateCart();
     }
 
-    function saveAndRender() {
-        localStorage.setItem('maisFrioCart', JSON.stringify(cart));
-        renderCart();
-    }
-
-    function renderCart() {
+    function updateCart() {
         let total = 0, count = 0;
-        document.getElementById("cartItems").innerHTML = cart.map(i => {
+        const container = document.getElementById("cartItems");
+        container.innerHTML = cart.map(i => {
             total += i.price * i.qty; count += i.qty;
-            return `<div class="cart-item-row">
-                <div>
-                    <div style="font-size:0.85rem; font-weight:600;">${i.name}</div>
-                    <div style="font-size:0.8rem; color:var(--secondary);">R$ ${(i.price*i.qty).toFixed(2).replace('.', ',')}</div>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="changeQty('${i.name}', -1)">-</button>
-                    <span>${i.qty}</span>
-                    <button onclick="changeQty('${i.name}', 1)">+</button>
-                </div>
-            </div>`;
+            return `
+                <div class="cart-item-row">
+                    <div class="item-info">
+                        <span class="item-name">${i.name}</span>
+                        <span class="item-price">R$ ${(i.price * i.qty).toFixed(2).replace('.',',')}</span>
+                    </div>
+                    <div class="qty-wrapper">
+                        <button class="btn-qty" onclick="changeQty('${i.name}', -1)"><i class="fas fa-minus"></i></button>
+                        <span class="qty-num">${i.qty}</span>
+                        <button class="btn-qty" onclick="changeQty('${i.name}', 1)"><i class="fas fa-plus"></i></button>
+                    </div>
+                </div>`;
         }).join('');
-        document.getElementById("total-price").innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        
+        document.getElementById("total-price").innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
         document.getElementById("cart-count").innerText = count;
     }
 
     function showToast(name) {
         const toast = document.getElementById('toast');
-        document.getElementById('toast-msg').innerText = `${name} no carrinho!`;
+        document.getElementById('toast-msg').innerText = "Adicionado ao carrinho";
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
+        setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
-    
+    function checkPix() { document.getElementById('pix-area').style.display = (document.getElementById('paymentMethod').value === 'Pix') ? 'block' : 'none'; }
+    function copyPix() { navigator.clipboard.writeText("59874260220"); alert("Chave Pix Copiada!"); }
+
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
-        const pay = document.getElementById("paymentMethod").value;
-        const chavePix = "59874260220";
-        if (!addr) return alert("Por favor, informe seu endereço!");
-        if (cart.length === 0) return alert("Seu carrinho está vazio!");
+        if (!addr) return alert("Informe seu endereço!");
+        if (cart.length === 0) return alert("Carrinho vazio!");
+        
+        let msg = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
+        cart.forEach(i => msg += `• ${i.name} (x${i.qty}) - R$ ${(i.price*i.qty).toFixed(2)}\n`);
+        msg += `\n*Total:* ${document.getElementById("total-price").innerText}`;
+        msg += `\n*Endereço:* ${addr}`;
+        msg += `\n*Pagamento:* ${document.getElementById("paymentMethod").value}`;
+        if(document.getElementById("paymentMethod").value === "Pix") msg += `\n*Chave Pix:* 59874260220`;
 
-        let message = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
-        cart.forEach(i => {
-            message += `• ${i.name} (x${i.qty}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`;
-        });
-        message += `\n*Total:* ${document.getElementById("total-price").innerText}`;
-        message += `\n*Endereço:* ${addr}`;
-        message += `\n*Pagamento:* ${pay}`;
-        if (pay === "Pix") message += `\n*Chave Pix:* ${chavePix}`;
-
-        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(message)}`);
+        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
     }
 
-    updateBusinessStatus(); renderItems(); renderCart(); checkPix();
+    renderItems();
 </script>
 </body>
 </html>
