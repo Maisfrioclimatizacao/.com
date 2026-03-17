@@ -42,70 +42,54 @@
             border-radius: 50px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 10px;
         }
 
-        /* BOTÃO FLUTUANTE DO WHATSAPP */
+        /* BOTÃO WHATSAPP */
         .whatsapp-float {
-            position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 20px;
-            right: 20px;
-            background-color: #25d366;
-            color: #FFF;
-            border-radius: 50px;
-            text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-            z-index: 2500;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: transform 0.3s;
+            position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px;
+            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
+            font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.2); z-index: 2500;
+            display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s;
         }
         .whatsapp-float:hover { transform: scale(1.1); color: white; }
 
-        /* HERO & FILTROS */
+        /* HERO */
         .hero {
             background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
             color: white; padding: 60px 5% 40px; text-align: center;
         }
         .search-box {
             background: white; border-radius: 15px; display: flex; align-items: center;
-            padding: 5px 20px; max-width: 600px; margin: 20px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 5px 20px; max-width: 600px; margin: 20px auto;
         }
-        .search-box input { border: none; padding: 15px; width: 100%; outline: none; font-size: 16px; color: var(--text-dark); }
+        .search-box input { border: none; padding: 15px; width: 100%; outline: none; font-size: 16px; }
 
         .filters { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; overflow-x: auto; padding: 10px; }
         .filter-btn {
             background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.1);
-            padding: 8px 20px; border-radius: 50px; cursor: pointer; white-space: nowrap; transition: 0.3s;
+            padding: 8px 20px; border-radius: 50px; cursor: pointer; white-space: nowrap;
         }
         .filter-btn.active { background: white; color: var(--primary); font-weight: 700; }
 
         /* GRID */
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
-        .card {
-            background: var(--white); border-radius: 20px; overflow: hidden; display: flex;
-            flex-direction: column; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s;
-        }
+        .card { background: var(--white); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); }
         .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; background-color: #f1f5f9; }
         .card-body { padding: 15px; flex-grow: 1; }
-        .price { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; }
-        .add-btn {
-            width: 100%; background: #f1f5f9; color: var(--primary); border: none; padding: 10px;
-            border-radius: 12px; font-weight: 700; cursor: pointer;
-        }
+        .add-btn { width: 100%; background: #f1f5f9; color: var(--primary); border: none; padding: 10px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
-        /* FAQ & DEPOIMENTOS */
+        /* SEÇÃO RESTAURADA: QUEM CONFIA, RECOMENDA */
         .testimonials { background: white; padding: 60px 5%; text-align: center; }
-        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px; }
-        .testi-card { background: var(--bg-light); padding: 20px; border-radius: 20px; text-align: left; }
-        
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+        .testi-card { background: #f8fafc; padding: 30px; border-radius: 20px; text-align: left; position: relative; }
+        .stars { color: #f59e0b; margin-bottom: 10px; font-size: 0.8rem; }
+        .testi-text { font-style: italic; margin-bottom: 15px; color: #475569; }
+        .testi-author { font-weight: 700; color: var(--primary); }
+
+        /* SEÇÃO RESTAURADA: DICAS & DÚVIDAS */
         .faq-section { padding: 60px 5%; background: #f1f5f9; }
-        .faq-item { background: white; margin-bottom: 10px; border-radius: 12px; }
-        .faq-question { padding: 18px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; }
-        .faq-answer { padding: 0 18px 18px; display: none; color: #64748b; font-size: 0.9rem; }
+        .faq-item { background: white; margin-bottom: 12px; border-radius: 12px; overflow: hidden; }
+        .faq-question { padding: 20px; cursor: pointer; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .faq-answer { padding: 0 20px 20px; display: none; color: #64748b; border-top: 1px solid #f8fafc; }
 
         /* CARRINHO */
         .cart-panel {
@@ -114,17 +98,8 @@
             display: flex; flex-direction: column;
         }
         .cart-panel.open { right: 0; }
-        .form-select { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 16px; }
 
-        #toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: var(--primary); color: white; padding: 12px 25px; border-radius: 50px;
-            display: none; z-index: 3000; font-weight: 600;
-        }
-
-        @media (max-width: 480px) {
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        }
+        @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } }
     </style>
 </head>
 <body>
@@ -151,11 +126,6 @@
     <div class="search-box">
         <input type="text" id="searchInput" placeholder="Buscar peça ou serviço..." onkeyup="filterItems()">
     </div>
-    <div class="filters">
-        <button class="filter-btn active" onclick="setFilter('')">Tudo</button>
-        <button class="filter-btn" onclick="setFilter('serviço')">Serviços</button>
-        <button class="filter-btn" onclick="setFilter('elétrica')">Peças</button>
-    </div>
 </section>
 
 <main class="container">
@@ -163,43 +133,50 @@
 </main>
 
 <section class="testimonials">
-    <h2>Confiança Médici</h2>
+    <h2 style="font-weight: 700; color: #0d2a57;">Quem confia, recomenda</h2>
     <div class="testi-grid">
         <div class="testi-card">
-            <div style="color:#f59e0b;">★★★★★</div>
-            <p>"Atendimento excelente. O botão do WhatsApp facilitou muito tirar as dúvidas."</p>
+            <div class="stars">★★★★★</div>
+            <p class="testi-text">"Melhor serviço de Médici. Instalação limpa e o técnico foi super pontual."</p>
+            <p class="testi-author">- João Silva</p>
+        </div>
+        <div class="testi-card">
+            <div class="stars">★★★★★</div>
+            <p class="testi-text">"Sempre compro as peças aqui. Preço justo e entrega rápida no centro."</p>
+            <p class="testi-author">- Maria Oliveira</p>
         </div>
     </div>
 </section>
 
 <section class="faq-section">
-    <h2 style="text-align:center; margin-bottom:30px;">Dúvidas Rápidas</h2>
+    <h2 style="text-align:center; margin-bottom:30px; font-weight: 700; color: #0d2a57;">Dicas & Dúvidas</h2>
     <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(this)">Vocês atendem aos sábados? <i class="fas fa-chevron-down"></i></div>
-        <div class="faq-answer">Sim! Verifique o status no topo do site para ver se estamos online.</div>
+        <div class="faq-question" onclick="toggleFaq(this)">Quando devo limpar o filtro do meu ar? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer">O ideal é limpar os filtros a cada 15 ou 30 dias em uso constante para garantir a saúde e a eficiência do aparelho.</div>
+    </div>
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">O que é a manutenção preventiva? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer">É uma limpeza técnica profunda que inclui a higienização da serpentina, verificação de gás e componentes elétricos para evitar quebras.</div>
     </div>
 </section>
 
 <div id="cartPreview" class="cart-panel">
     <div style="padding:25px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
         <h3>Seu Pedido</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:2rem;">&times;</button>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:2rem; cursor:pointer;">&times;</button>
     </div>
-    <div style="padding:20px; flex-grow:1; overflow-y:auto;">
-        <div id="cartItems"></div>
-    </div>
+    <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
     <div style="padding:25px; background:#f8fafc; border-top:1px solid #eee;">
-        <input type="text" id="address" class="form-select" placeholder="Endereço de Entrega">
+        <input type="text" id="address" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;" placeholder="Endereço">
         <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
             <span>Total:</span> <span id="total-price">R$ 0,00</span>
         </div>
-        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:12px; font-weight:700; cursor:pointer;">Finalizar via WhatsApp</button>
+        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:18px; background:var(--accent); color:white; border:none; border-radius:12px; font-weight:700; cursor:pointer;">Finalizar no WhatsApp</button>
     </div>
 </div>
 
-<div id="toast">Adicionado!</div>
-
 <script>
+    // Inventário e fotos mantidos conforme solicitado anteriormente
     const inventory = [
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
@@ -277,7 +254,6 @@
     };
 
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
-    let currentCategory = "";
 
     function updateBusinessStatus() {
         const h = new Date().getHours();
@@ -289,13 +265,13 @@
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()) && (currentCategory === "" || i.cat === currentCategory))
+        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()))
         .forEach(item => {
             grid.innerHTML += `<div class="card">
                 <div class="card-img" style="background-image: url('${itemPhotos[item.name] || ''}')"></div>
                 <div class="card-body">
                     <h3 style="font-size:0.9rem; margin-bottom:10px;">${item.name}</h3>
-                    <div class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                    <div style="font-weight:700; margin-bottom:15px;">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
                     <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">Adicionar</button>
                 </div>
             </div>`;
@@ -307,23 +283,20 @@
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
         localStorage.setItem('maisFrioCart', JSON.stringify(cart));
         renderCart();
-        const t = document.getElementById('toast');
-        t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 1500);
     }
 
     function renderCart() {
         let total = 0, count = 0;
         document.getElementById("cartItems").innerHTML = cart.map(i => {
             total += i.price * i.qty; count += i.qty;
-            return `<div style="display:flex;justify-content:space-between;margin-bottom:10px;">${i.name} (x${i.qty}) <span>R$ ${(i.price*i.qty).toFixed(2)}</span></div>`;
+            return `<div style="display:flex;justify-content:space-between;margin-bottom:10px; font-size:0.9rem;">${i.name} (x${i.qty}) <span>R$ ${(i.price*i.qty).toFixed(2)}</span></div>`;
         }).join('');
-        document.getElementById("total-price").innerText = `R$ ${total.toFixed(2)}`;
+        document.getElementById("total-price").innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         document.getElementById("cart-count").innerText = count;
     }
 
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
     function toggleFaq(el) { el.nextElementSibling.style.display = el.nextElementSibling.style.display === "block" ? "none" : "block"; }
-    function setFilter(c) { currentCategory = c; renderItems(); }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
