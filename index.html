@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Mais Frio Climatização | Excelência em Presidente Médici</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -156,7 +156,13 @@
         }
 
         .cart-footer { padding: 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; }
-        .form-select { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-family: inherit; }
+        
+        /* FIX DO ZOOM NO CELULAR: Font-size 16px evita o zoom automático */
+        .form-select { 
+            width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; 
+            border: 1px solid #e2e8f0; font-family: inherit; font-size: 16px; 
+        }
+
         .checkout-btn { width: 100%; padding: 18px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
         #toast {
@@ -171,6 +177,8 @@
             .top-bar { display: none; }
             .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .hero h1 { font-size: 1.6rem; }
+            /* Garante que o input não cause zoom no mobile */
+            .form-select { font-size: 16px !important; }
         }
     </style>
 </head>
