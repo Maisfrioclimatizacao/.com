@@ -98,6 +98,13 @@
         .cart-panel.open { right: 0; }
         .form-select { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 16px; }
 
+        /* TOAST FEEDBACK */
+        #toast {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: white; padding: 12px 25px; border-radius: 50px;
+            display: none; z-index: 3000; font-weight: 600; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
         @media (max-width: 480px) {
             .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .hero h1 { font-size: 1.5rem; }
@@ -190,7 +197,6 @@
 <div id="toast">Adicionado com sucesso!</div>
 
 <script>
-    // INVENTÁRIO COMPLETO (35 ITENS)
     const inventory = [
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
@@ -229,15 +235,11 @@
         { name: "Parafuso Sextavado", price: 1.50, cat: "fixação" }
     ];
 
-    // MAPEAMENTO CORRIGIDO DE FOTOS (TODOS OS 35 ITENS)
     const itemPhotos = {
-        // Serviços
         "Instalação Ar Novo": "Seção%20de%20Serviços.png",
         "Instalação Ar Usado": "Seção%20de%20Serviços.png",
         "Manutenção Preventiva": "ManutencaoPreventiva.png",
         "Carga de Gás": "CargadeGas.png",
-
-        // Elétrica
         "Capacitor Duplo 25+2.5UF": "CapacitorDuplo25+2.5UF.png",
         "Capacitor Duplo 30UF": "CapacitorDuplo25+2.5UF.png",
         "Capacitor Duplo 35UF": "CapacitorDuplo25+2.5UF.png",
@@ -250,10 +252,8 @@
         "Contactor 25A": "Contactor25A.png",
         "Sensor Degelo AC 05k": "SensorDegeloAC05k.png",
         "Controle Ar Universal": "ControlArUniversal.png",
-
-        // Instalação
         "Gás R32 (13kg)": "gasr3213kg.png",
-        "Gás R-22 Lata 1kg": "GásR-410ALata800g.png", // Usando a mesma imagem de gás lata
+        "Gás R-22 Lata 1kg": "GasR-22Lata1kg.png", // CORREÇÃO REALIZADA AQUI
         "Gás R-410A Lata 800g": "GásR-410ALata800g.png",
         "Tubulação de Cobre (kg)": "TubulaçãodeCobre(kg).png",
         "Suporte L Condensadora 47cm": "SuporteLCondensadora47cm.png",
@@ -266,8 +266,6 @@
         "Fita Isolante 10mm x 0,5m": "FitaIsolante18mmx10m.png",
         "Fita Isolante 18mm x 10m": "FitaIsolante18mmx10m.png",
         "Fita De PVC": "FitaDePVC.png",
-
-        // Fixação
         "Bucha Plástica 0,8 C": "BuchaPlástica0,8C.png",
         "Bucha Plástica 0,10 C": "BuchaPlástica0,10C.png",
         "Bucha Plástica 0,12 C": "BuchaPlástic0,12C.png",
@@ -305,7 +303,6 @@
             return matchesSearch && matchesCat;
         });
         filtered.forEach(item => {
-            // Tenta foto do item, se não houver, tenta foto da categoria, se não houver, usa vazio
             const imgPath = itemPhotos[item.name] || categoryPhotos[item.cat] || '';
             grid.innerHTML += `
                 <div class="card">
@@ -330,6 +327,13 @@
         let item = cart.find(p => p.name === name);
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
         saveAndUpdateUI();
+        showFeedback();
+    }
+
+    function showFeedback() {
+        const t = document.getElementById('toast');
+        t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 2000);
     }
 
     function clearCart() { if(confirm("Esvaziar carrinho?")) { cart = []; saveAndUpdateUI(); } }
