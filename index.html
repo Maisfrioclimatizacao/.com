@@ -30,7 +30,6 @@
             line-height: 1.6;
         }
 
-        /* BARRA SUPERIOR PROFISSIONAL */
         .top-bar {
             background: #061731;
             color: white;
@@ -105,7 +104,6 @@
         }
         .filter-btn.active { background: var(--white); color: var(--primary); font-weight: 700; }
 
-        /* GRID E CARDS */
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
 
@@ -135,16 +133,13 @@
         }
         .add-btn:hover { background: var(--primary); color: white; }
 
-        /* WHATSAPP FLUTUANTE */
         .whatsapp-float {
             position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: white;
             width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-size: 30px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); z-index: 999;
             transition: 0.3s; text-decoration: none;
         }
-        .whatsapp-float:hover { transform: scale(1.1); background: #20ba5a; }
 
-        /* PAINEL CARRINHO */
         .cart-panel {
             position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; height: 100%;
             background: white; z-index: 2000; box-shadow: -10px 0 30px rgba(0,0,0,0.1); transition: 0.4s;
@@ -191,7 +186,7 @@
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
-    <button class="cart-btn" id="header-cart-btn" onclick="toggleCart()">
+    <button class="cart-btn" onclick="toggleCart()">
         <i class="fas fa-shopping-basket"></i> <span id="cart-count">0</span>
     </button>
 </header>
@@ -221,7 +216,7 @@
 </a>
 
 <footer>
-    <p>&copy; 2011 - 2024 Mais Frio Climatização<br>Presidente Médici - Rondônia</p>
+    <p>&copy; 2011 - 2026 Mais Frio Climatização<br>Presidente Médici - Rondônia</p>
 </footer>
 
 <div id="cartPreview" class="cart-panel">
@@ -264,6 +259,14 @@
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
         { name: "Carga de Gás", price: 200, cat: "serviço" },
+        { name: "Gás R32 (13kg)", price: 1150.00, cat: "instalação" },
+        { name: "Válvula de Serviço 1/4", price: 36.50, cat: "instalação" },
+        { name: "Válvula de Serviço 3/8", price: 55.99, cat: "instalação" },
+        { name: "Válvula de Serviço 1/2", price: 62.99, cat: "instalação" },
+        { name: "Capacitor Ventilador 1.0UF", price: 8.50, cat: "elétrica" },
+        { name: "Capacitor Ventilador 1.5UF", price: 8.50, cat: "elétrica" },
+        { name: "Capacitor Ventilador 2.5UF", price: 8.50, cat: "elétrica" },
+        { name: "Capacitor Ventilador 3.0UF", price: 8.50, cat: "elétrica" },
         { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "elétrica" },
         { name: "Capacitor Duplo 30UF", price: 36, cat: "elétrica" },
         { name: "Capacitor Duplo 35UF", price: 36, cat: "elétrica" },
@@ -279,41 +282,27 @@
         { name: "Polipex 1/4", price: 3.99, cat: "instalação" },
         { name: "Polipex 3/8", price: 4.90, cat: "instalação" },
         { name: "Polipex 1/2", price: 5.90, cat: "instalação" },
-        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, cat: "instalação" },
         { name: "Fita Isolante 18mm x 10m", price: 6.90, cat: "instalação" },
         { name: "Fita De PVC", price: 3.99, cat: "instalação" },
-        { name: "Bucha Plástica 0,8 C", price: 0.20, cat: "fixação" },
         { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" },
-        { name: "Bucha Plástica 0,12 C", price: 0.60, cat: "fixação" },
-        { name: "Parafuso Cônico", price: 0.35, cat: "fixação" },
         { name: "Parafuso Sextavado", price: 1.50, cat: "fixação" }
     ];
 
     const itemPhotos = {
+        "Gás R32 (13kg)": "gasr3213kg.png",
+        "Válvula de Serviço 1/4": "valvuladeservicio.png",
+        "Válvula de Serviço 3/8": "valvuladeservicio.png",
+        "Válvula de Serviço 1/2": "valvuladeservicio.png",
+        "Capacitor Ventilador 1.0UF": "capacitordeventilador.png",
+        "Capacitor Ventilador 1.5UF": "capacitordeventilador.png",
+        "Capacitor Ventilador 2.5UF": "capacitordeventilador.png",
+        "Capacitor Ventilador 3.0UF": "capacitordeventilador.png",
         "Sensor Degelo AC 05k": "SensorDegeloAC05k.png",
         "Capacitor Duplo 25+2.5UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 30UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 35UF": "CapacitorDuplo25+2.5UF.png",
-        "Capacitor Duplo 40UF": "CapacitorDuplo25+2.5UF.png",
         "Manutenção Preventiva": "ManutencaoPreventiva.png",
         "Carga de Gás": "CargadeGas.png",
         "Contactor 25A": "Contactor25A.png",
-        "Controle Ar Universal": "ControlArUniversal.png",
-        "Fita Isolante 10mm x 0,5m": "FitaIsolante18mmx10m.png",
-        "Fita Isolante 18mm x 10m": "FitaIsolante18mmx10m.png",
-        "Bucha Plástica 0,8 C": "BuchaPlástica0,8C.png",
-        "Bucha Plástica 0,10 C": "BuchaPlástica0,10C.png",
-        "Bucha Plástica 0,12 C": "BuchaPlástic0,12C.png",
-        "Fita De PVC": "FitaDePVC.png",
-        "Parafuso Cônico": "ParafusoCônico.png",
-        "Polipex 1/4": "Polipex.png",
-        "Polipex 3/8": "Polipex.png",
-        "Polipex 1/2": "Polipex.png",
-        "Suporte L Condensadora 47cm": "SuporteLCondensadora47cm.png",
-        "Gás R-410A Lata 800g": "GásR-410ALata800g.png",
-        "Tubulação de Cobre (kg)": "TubulaçãodeCobre(kg).png",
-        "Parafuso Sextavado": "ParafusoSextavado.png",
-        "Contactor 18A": "Contactor18A.png"
+        "Controle Ar Universal": "ControlArUniversal.png"
     };
 
     const categoryPhotos = {
@@ -337,11 +326,11 @@
         filtered.forEach(item => {
             const imgPath = itemPhotos[item.name] || categoryPhotos[item.cat];
             const styleImg = imgPath ? `background-image: url('${imgPath}')` : '';
-            const badgeType = item.cat === 'serviço' ? '<span class="badge badge-serv">Garantia</span>' : '<span class="badge badge-prod">Pronta Entrega</span>';
+            const badge = item.cat === 'serviço' ? '<span class="badge badge-serv">Garantia</span>' : '<span class="badge badge-prod">Pronta Entrega</span>';
             
             grid.innerHTML += `
                 <div class="card">
-                    ${badgeType}
+                    ${badge}
                     <div class="card-img" style="${styleImg}"></div>
                     <div class="card-body">
                         <h3>${item.name}</h3>
@@ -410,18 +399,11 @@
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
         const pay = document.getElementById("paymentMethod").value;
-        const date = document.getElementById("serviceDate").value;
-        const time = document.getElementById("serviceTime").value;
-        const isSchedVisible = (document.getElementById("service-scheduling").style.display === "block");
-
-        if (cart.length === 0) return alert("Seu carrinho está vazio.");
-        if (!addr) return alert("Por favor, informe seu endereço em Presidente Médici.");
-        if (!pay) return alert("Escolha o método de pagamento.");
+        if (cart.length === 0 || !addr || !pay) return alert("Preencha todos os campos do carrinho.");
 
         let msg = "*PEDIDO: MAIS FRIO MÉDICI* ❄️\n\n";
         cart.forEach(i => msg += `• ${i.name} (x${i.qty})\n`);
-        if(isSchedVisible && date) msg += `\n📅 *AGENDAMENTO:* ${date.split('-').reverse().join('/')} (${time})`;
-        msg += `\n\n💰 *TOTAL: ${document.getElementById("total-price").innerText}*`;
+        msg += `\n💰 *TOTAL: ${document.getElementById("total-price").innerText}*`;
         msg += `\n📍 *LOCAL:* ${addr}\n💳 *PAGAMENTO:* ${pay}`;
 
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
@@ -430,15 +412,13 @@
     function setFilter(c) {
         currentCategory = c;
         document.querySelectorAll('.filter-btn').forEach(b => {
-            const txt = b.innerText.toLowerCase();
-            b.classList.toggle('active', txt.includes(c) || (c==='' && txt==='tudo'));
+            b.classList.toggle('active', b.innerText.toLowerCase().includes(c) || (c==='' && b.innerText==='Tudo'));
         });
         renderItems();
     }
 
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
-    
     function showFeedback() {
         const t = document.getElementById('toast');
         t.style.display = 'block';
