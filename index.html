@@ -141,25 +141,19 @@
         .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
         .cart-content { padding: 20px; flex-grow: 1; overflow-y: auto; }
         
-        /* BOTÕES DE QUANTIDADE NO CARRINHO */
         .qty-controls { display: flex; align-items: center; gap: 10px; }
         .qty-btn {
-            background: #e2e8f0;
-            border: none;
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: #e2e8f0; border: none; width: 28px; height: 28px; border-radius: 6px;
+            cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;
         }
-        .qty-btn:hover { background: var(--secondary); color: white; }
 
         .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid #eee; }
-        .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; }
+        .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; }
         .checkout-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+
+        /* ESTILO AGENDAMENTO */
+        .sched-box { background: #fff; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 15px; }
+        .sched-box label { font-size: 0.75rem; font-weight: 700; color: var(--primary); display: block; margin-bottom: 5px; text-transform: uppercase; }
 
         @media (max-width: 480px) {
             .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -213,14 +207,29 @@
         <h3>Seu Carrinho</h3>
         <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
     </div>
+    
     <div id="cartItems" class="cart-content"></div>
+
     <div class="cart-footer">
+        <div id="service-scheduling" class="sched-box" style="display:none;">
+            <label>Agendar Visita/Serviço:</label>
+            <div style="display:flex; gap:8px;">
+                <input type="date" id="serviceDate" class="form-select" style="margin:0; font-size: 0.8rem;">
+                <select id="serviceTime" class="form-select" style="margin:0; font-size: 0.8rem;">
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
+                </select>
+            </div>
+        </div>
+
         <input type="text" id="address" class="form-select" placeholder="Endereço Completo">
+        
         <select id="paymentMethod" class="form-select">
             <option value="PIX">Pagamento via PIX</option>
             <option value="Cartão">Cartão (Crédito/Débito)</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
+
         <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px; font-size:1.1rem;">
             <span>Total:</span>
             <span id="total-price">R$ 0,00</span>
@@ -288,14 +297,11 @@
         updateCartUI();
     }
 
-    // NOVA FUNÇÃO PARA ALTERAR QUANTIDADE DENTRO DO CARRINHO
     function changeQty(name, amount) {
         let item = cart.find(p => p.name === name);
         if (item) {
             item.qty += amount;
-            if (item.qty <= 0) {
-                cart = cart.filter(p => p.name !== name);
-            }
+            if (item.qty <= 0) cart = cart.filter(p => p.name !== name);
         }
         updateCartUI();
     }
@@ -304,13 +310,20 @@
         const cartDiv = document.getElementById("cartItems");
         const totalSpan = document.getElementById("total-price");
         const countSpan = document.getElementById("cart-count");
-        let total = 0, count = 0;
+        const schedDiv = document.getElementById("service-scheduling");
+        
+        let total = 0, count = 0, hasService = false;
 
         cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#999;">Carrinho vazio</p>' : '';
         
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
+            
+            // Verifica se o item no carrinho é um serviço para mostrar agendamento
+            const original = inventory.find(i => i.name === item.name);
+            if(original && original.cat === 'serviço') hasService = true;
+
             cartDiv.innerHTML += `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:10px; border-bottom:1px solid #f0f0f0;">
                     <div style="max-width:60%;">
@@ -327,16 +340,30 @@
 
         totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         countSpan.innerText = count;
+        
+        // Mostra ou esconde o agendamento
+        schedDiv.style.display = hasService ? "block" : "none";
     }
 
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
         const pay = document.getElementById("paymentMethod").value;
+        const date = document.getElementById("serviceDate").value;
+        const time = document.getElementById("serviceTime").value;
+        const isSchedVisible = document.getElementById("service-scheduling").style.display === "block";
+
         if (cart.length === 0 || !addr) return alert("Por favor, preencha o endereço e adicione itens.");
+        if (isSchedVisible && !date) return alert("Por favor, selecione uma data para o serviço.");
 
         let msg = "*NOVO PEDIDO - MAIS FRIO CLIMATIZAÇÃO*\n\n";
         cart.forEach(i => msg += `• ${i.name} (x${i.qty}) - R$ ${(i.price * i.qty).toFixed(2).replace('.', ',')}\n`);
-        msg += `\n💰 *Total: ${document.getElementById("total-price").innerText}*`;
+        
+        if(isSchedVisible && date) {
+            const dataFormatada = date.split('-').reverse().join('/');
+            msg += `\n📅 *AGENDAMENTO:* ${dataFormatada} (${time})`;
+        }
+
+        msg += `\n\n💰 *Total: ${document.getElementById("total-price").innerText}*`;
         msg += `\n📍 *Endereço:* ${addr}\n💳 *Pagamento:* ${pay}`;
         
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
