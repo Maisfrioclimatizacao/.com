@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mais Frio Climatização | Elite Pro</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -13,218 +13,84 @@
             --primary: #0a192f;
             --secondary: #007aff;
             --accent: #28cd41;
-            --danger: #ff3b30;
             --bg: #f5f5f7;
-            --white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.85);
-            --shadow-sm: 0 5px 15px rgba(0,0,0,0.03);
-            --shadow-lg: 0 20px 50px rgba(0,0,0,0.1);
-            /* Curvas de animação Spring */
-            --spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+            --glass: rgba(255, 255, 255, 0.9);
+            --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Bloqueio de scroll do fundo */
-        body.modal-open { overflow: hidden; height: 100vh; }
+        /* Trava de Scroll */
+        body.modal-open { overflow: hidden; position: fixed; width: 100%; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg); color: var(--primary); scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--primary); }
 
-        /* Animações Avançadas */
-        @keyframes springInUp {
-            from { opacity: 0; transform: translateY(50px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        /* Status & Header */
+        .status-bar { background: white; padding: 10px; display: flex; justify-content: center; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 800; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .dot.online { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
 
-        @keyframes pulseAccent {
-            0% { box-shadow: 0 0 0 0 rgba(40, 205, 65, 0.5); }
-            70% { box-shadow: 0 0 0 10px rgba(40, 205, 65, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(40, 205, 65, 0); }
-        }
-
-        @keyframes toastIn {
-            0% { transform: translateX(-50%) translateY(100px) scale(0.8); opacity: 0; }
-            70% { transform: translateX(-50%) translateY(0) scale(1.05); opacity: 1; }
-            100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
-        }
-
-        @keyframes toastOut {
-            0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateX(-50%) translateY(100px) scale(0.9); opacity: 0; }
-        }
-
-        .reveal { opacity: 0; }
-        .reveal.active { animation: springInUp 0.9s var(--spring-bounce) forwards; }
-
-        /* Status Bar Dinâmica */
-        .status-bar { 
-            background: var(--white); padding: 12px; display: flex; justify-content: center; 
-            align-items: center; gap: 12px; font-size: 0.8rem; font-weight: 800; 
-            border-bottom: 1px solid rgba(0,0,0,0.05); letter-spacing: -0.2px;
-        }
-        .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; position: relative; }
-        .dot.online { background: var(--accent); animation: pulseAccent 2s infinite; }
-        .dot.offline { background: var(--danger); }
-
-        /* Header Estilo Apple */
         header { 
             background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            padding: 20px 6%; display: flex; justify-content: space-between; align-items: center; 
-            position: sticky; top: 0; z-index: 900; border-bottom: 1px solid rgba(0,0,0,0.03);
-            transition: 0.3s;
+            padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; 
+            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1.3rem; letter-spacing: -1px; color: var(--primary); text-transform: uppercase; }
+        .logo { font-weight: 800; font-size: 1.1rem; }
         .logo span { color: var(--secondary); }
-        .btn-cart-top { 
-            background: var(--primary); color: white; padding: 12px 22px; border-radius: 50px; 
-            cursor: pointer; display: flex; align-items: center; gap: 10px; font-weight: 700; 
-            transition: all 0.3s var(--spring-bounce);
-        }
-        .btn-cart-top:hover { transform: scale(1.05); background: var(--secondary); }
-        .btn-cart-top:active { transform: scale(0.95); }
+        .btn-cart-top { background: var(--primary); color: white; padding: 10px 18px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700; transition: 0.3s var(--spring); }
 
-        /* Hero & Search */
-        .hero { 
-            background: radial-gradient(circle at top right, #1e3a8a, #0a192f);
-            color: white; padding: 80px 6% 60px; text-align: center; 
-            border-bottom-left-radius: 60px; border-bottom-right-radius: 60px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 25px; line-height: 1.1; letter-spacing: -1.5px; }
+        /* Hero */
+        .hero { background: var(--primary); color: white; padding: 50px 6% 40px; text-align: center; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; }
+        .search-area { background: white; border-radius: 18px; padding: 5px 15px; max-width: 500px; margin: 20px auto; display: flex; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .search-area input { width: 100%; padding: 12px; border: none; outline: none; font-size: 16px; }
 
-        .search-area { 
-            background: white; border-radius: 20px; padding: 8px 25px; max-width: 600px; 
-            margin: 0 auto 30px; display: flex; align-items: center; box-shadow: var(--shadow-lg);
-            transition: 0.3s var(--spring-smooth); border: 2px solid transparent;
-        }
-        .search-area:focus-within { border-color: var(--secondary); transform: scale(1.03); }
-        .search-area input { width: 100%; padding: 15px; border: none; outline: none; font-size: 16px; color: var(--primary); font-family: inherit; }
-        .search-area i { color: #ccc; transition: 0.3s; }
-        .search-area:focus-within i { color: var(--secondary); }
+        /* Grid & Cards */
+        .container { padding: 25px 5%; max-width: 1200px; margin: auto; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); } }
+
+        .card { background: white; border-radius: 25px; overflow: hidden; display: flex; flex-direction: column; transition: 0.4s var(--spring); border: 1px solid rgba(0,0,0,0.03); opacity: 0; transform: translateY(20px); }
+        .card.active { opacity: 1; transform: translateY(0); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         
-        .cat-tabs { display: flex; gap: 12px; justify-content: center; overflow-x: auto; padding: 10px 0; -webkit-overflow-scrolling: touch; }
-        .tab { 
-            background: rgba(255,255,255,0.08); color: white; padding: 12px 26px; border-radius: 18px; 
-            cursor: pointer; white-space: nowrap; font-size: 0.9rem; font-weight: 600; 
-            transition: all 0.3s var(--spring-bounce);
-        }
-        .tab:hover { background: rgba(255,255,255,0.15); transform: translateY(-3px); }
-        .tab.active { background: white; color: var(--primary); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        /* Imagens Zoom In */
+        .img-box { width: 100%; height: 160px; overflow: hidden; }
+        .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .card:hover .img-box img { transform: scale(1.1); }
 
-        /* Grid de Produtos Premium */
-        .container { padding: 40px 6% 80px; max-width: 1400px; margin: auto; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; } }
+        .card-body { padding: 15px; text-align: center; }
+        .card h3 { font-size: 0.9rem; height: 40px; margin-bottom: 10px; }
+        .price { font-size: 1.3rem; font-weight: 800; color: var(--secondary); margin-bottom: 12px; }
+        .btn-add { width: 100%; background: var(--bg); padding: 12px; border-radius: 15px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-add:hover { background: var(--primary); color: white; }
 
-        .card { 
-            background: white; border-radius: 35px; overflow: hidden; 
-            transition: all 0.5s var(--spring-bounce);
-            border: 1px solid rgba(0,0,0,0.015); display: flex; flex-direction: column;
-            position: relative;
-        }
-        .card:hover { transform: translateY(-15px); box-shadow: var(--shadow-lg); }
-        
-        /* CORREÇÃO DAS IMAGENS: REMOVIDO "ZOOM OUT" */
-        .card .card-img-wrapper { 
-            width: 100%; height: 200px; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .card img { 
-            width: 100%; height: 100%; object-fit: cover; /* IMAGEM IMERSIVA */
-            transition: transform 0.8s var(--spring-bounce);
-        }
-        .card:hover img { transform: scale(1.1) rotate(2deg); }
+        /* CARRINHO (CORRIGIDO) */
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1900; display: none; backdrop-filter: blur(5px); }
+        .overlay.active { display: block; }
 
-        .card-info { padding: 25px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card h3 { font-size: 1rem; font-weight: 700; height: 48px; margin-bottom: 12px; line-height: 1.2; color: #1a1a1a; }
-        .card .price { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 18px; letter-spacing: -0.5px; }
-        
-        .btn-add { 
-            width: 100%; background: var(--bg); padding: 16px; border-radius: 18px; 
-            font-weight: 700; cursor: pointer; border: none; transition: 0.3s;
-            position: relative; overflow: hidden;
+        #sideCart { 
+            position: fixed; right: -100%; top: 0; width: 85%; max-width: 400px; 
+            height: 100%; background: white; z-index: 2000; 
+            transition: 0.5s var(--spring); display: flex; flex-direction: column;
         }
-        .btn-add:hover { background: var(--primary); color: white; transform: translateY(-3px); }
-        .btn-add:active { animation: pulseAccent 0.5s var(--spring-bounce); }
+        #sideCart.open { right: 0; }
 
-        /* Dicas Premium */
-        .tips-section { margin-top: 60px; }
-        .tips-section h2 { font-size: 2rem; font-weight: 800; text-align: center; margin-bottom: 30px; letter-spacing: -1px; }
-        .tip-card { 
-            background: white; padding: 30px; border-radius: 35px; border-left: 8px solid var(--secondary); 
-            margin-bottom: 20px; box-shadow: var(--shadow-sm); transition: 0.4s var(--spring-bounce);
-        }
-        .tip-card:hover { transform: scale(1.02); box-shadow: var(--shadow-lg); }
-        .tip-card i { font-size: 2rem; color: var(--secondary); margin-bottom: 15px; }
+        .cart-header { padding: 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+        .cart-footer { padding: 25px; border-top: 1px solid #eee; background: white; }
 
-        /* Rodapé Elegante */
-        .footer-info { 
-            background: white; padding: 60px 6%; border-radius: 60px 60px 0 0; 
-            margin-top: 80px; text-align: center; box-shadow: 0 -20px 50px rgba(0,0,0,0.03);
-        }
-        .social-icons i { font-size: 1.5rem; color: #aaa; margin: 0 15px; transition: 0.3s; cursor: pointer; }
-        .social-icons i:hover { color: var(--secondary); transform: scale(1.2) rotate(5deg); }
+        .premium-input { width: 100%; padding: 15px; background: #f2f2f7; border-radius: 12px; border: none; margin-bottom: 10px; font-size: 16px; }
+        .btn-finish { width: 100%; padding: 18px; background: var(--accent); color: white; border-radius: 18px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; box-shadow: 0 10px 20px rgba(40,205,65,0.2); }
 
-        /* CARRINHO ISOLADO E PREMIUM (SLIDE-IN ANIMATION) */
-        .cart-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.6); z-index: 2000; display: none; 
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            opacity: 0; transition: opacity 0.4s ease;
-        }
-        .cart-overlay.active { display: block; opacity: 1; }
-
-        .side-cart { 
-            position: fixed; right: -100%; top: 0; width: 90%; max-width: 480px; 
-            height: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(30px);
-            z-index: 2100; transition: right 0.6s var(--spring-bounce);
-            display: flex; flex-direction: column; box-shadow: -30px 0 70px rgba(0,0,0,0.15);
-            border-left: 1px solid rgba(255,255,255,0.2);
-        }
-        .side-cart.open { right: 0; }
-
-        .cart-header { padding: 35px 30px; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
-        .cart-header i:hover { transform: rotate(90deg) scale(1.1); color: var(--danger); }
-        
-        .cart-body { flex: 1; overflow-y: auto; padding: 30px; -webkit-overflow-scrolling: touch; }
-        .cart-item { animation: springInUp 0.6s var(--spring-bounce) forwards; }
-        
-        .cart-footer { padding: 35px 30px; border-top: 1px solid rgba(0,0,0,0.05); background: white; border-radius: 40px 40px 0 0; }
-
-        /* Pix UI Avançado */
-        .pix-container { 
-            background: #f0fdf4; border: 2px dashed var(--accent); padding: 25px; 
-            border-radius: 25px; margin: 20px 0; display: none; text-align: center;
-            box-shadow: 0 5px 15px rgba(40, 205, 65, 0.05);
-        }
-        .pix-container small { font-weight: 700; color: #166534; font-size: 0.75rem; letter-spacing: 1px; }
-        .cnpj-key { font-weight: 800; font-size: 1.3rem; color: #1a1a1a; margin: 10px 0; display: block; letter-spacing: -0.5px; }
-        .btn-copy-pix { background: var(--accent); color: white; padding: 12px 24px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; margin-top: 10px; transition: 0.3s var(--spring-bounce); }
-        .btn-copy-pix:hover { background: #15803d; transform: translateY(-2px); }
-
-        /* Inputs e Botões de Finalização Premium */
-        .premium-input { width: 100%; padding: 18px; border-radius: 18px; background: #f2f2f7; border: 2px solid transparent; margin-bottom: 15px; font-size: 16px; transition: 0.3s; }
-        .premium-input:focus { border-color: var(--secondary); background: white; box-shadow: 0 0 0 5px rgba(0,122,255,0.1); }
-        
-        .btn-whatsapp-finish { width: 100%; padding: 22px; background: var(--accent); color: white; border-radius: 25px; border: none; font-weight: 800; cursor: pointer; font-size: 1.1rem; transition: 0.4s var(--spring-bounce); box-shadow: 0 15px 30px rgba(40,205,65,0.3); }
-        .btn-whatsapp-finish:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(40,205,65,0.4); animation: pulseAccent 1s infinite; }
-
-        /* Toast com Animação Premium */
-        #toast { 
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(100px);
-            background: var(--primary); color: white; padding: 18px 36px; border-radius: 100px; 
-            z-index: 3000; font-weight: 700; font-size: 0.95rem; opacity: 0; box-shadow: var(--shadow-lg);
-        }
-        #toast.active { animation: toastIn 0.5s var(--spring-bounce) forwards; }
-        #toast.fade-out { animation: toastOut 0.5s var(--spring-bounce) forwards; }
+        /* Toast */
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 12px 25px; border-radius: 50px; z-index: 3000; transition: 0.4s var(--spring); font-weight: 700; }
+        #toast.active { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
 
 <div class="status-bar">
-    <div id="st-dot" class="dot"></div>
-    <span id="st-text">VERIFICANDO STATUS TÉCNICO...</span>
-    <span style="color: #ddd; margin-left: 15px; font-weight: 400;">| Presidente Médici - RO</span>
+    <div id="st-dot" class="dot online"></div>
+    <span id="st-text">ABERTO AGORA • MAIS FRIO</span>
 </div>
 
 <header>
@@ -234,190 +100,137 @@
     </div>
 </header>
 
-<section class="hero reveal">
-    <div style="animation-delay: 0.1s;">
-        <h1>Sua solução Pro <br> em Climatização.</h1>
-        <div class="search-area">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="O que o seu ar condicionado precisa?" onkeyup="render()">
-        </div>
-        <div class="cat-tabs">
-            <div class="tab active" id="c-all" onclick="filter('all')">Tudo</div>
-            <div class="tab" id="c-serviço" onclick="filter('serviço')">Serviços Pro</div>
-            <div class="tab" id="c-peça" onclick="filter('peça')">Peças Elétricas</div>
-        </div>
+<section class="hero">
+    <h1>Peças e Serviços Pro</h1>
+    <div class="search-area">
+        <i class="fas fa-search" style="color:#ccc"></i>
+        <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="render()">
     </div>
 </section>
 
 <main class="container">
     <div class="grid" id="grid"></div>
-
-    <div class="tips-section reveal">
-        <h2>Dicas do Especialista <i class="fas fa-bolt" style="color:#f1c40f"></i></h2>
-        <div class="tip-card reveal" style="animation-delay: 0.1s;">
-            <i class="fas fa-snowflake"></i>
-            <h4>Ar não gela como antes?</h4>
-            <p style="font-size: 0.95rem; color: #555; line-height: 1.5; margin-top: 10px;">Geralmente é falta de fluido refrigerante (gás). Isso acontece por **pequenos vazamentos** nas conexões. Uma carga de gás resolve, mas é essencial revisar as porcas!</p>
-        </div>
-        <div class="tip-card reveal" style="animation-delay: 0.2s;">
-            <i class="fas fa-tachometer-alt"></i>
-            <h4>Quando trocar o Capacitor?</h4>
-            <p style="font-size: 0.95rem; color: #555; line-height: 1.5; margin-top: 10px;">Se o ventilador ou o motor (lá fora) tentam partir, fazem barulho e param, o problema quase sempre é o capacitor. Trocá-lo custa pouco e preserva o compressor.</p>
-        </div>
-    </div>
 </main>
 
-<footer class="footer-info reveal">
-    <div class="logo" style="font-size: 1rem;">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
-    <p style="font-size: 0.85rem; color: #777; margin: 10px 0 25px;">Excelência técnica em Rondônia.</p>
-    <div class="social-icons">
-        <i class="fab fa-instagram"></i>
-        <i class="fab fa-whatsapp"></i>
-    </div>
-</footer>
-
-<div class="cart-overlay" id="overlay" onclick="toggleCart()"></div>
-<div class="side-cart" id="sideCart">
+<div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div id="sideCart">
     <div class="cart-header">
         <h2 style="font-weight: 800;">Meu Pedido</h2>
-        <i class="fas fa-times" onclick="toggleCart()" style="font-size: 1.5rem; cursor: pointer; transition: 0.3s;"></i>
+        <i class="fas fa-times" onclick="toggleCart()" style="font-size: 1.5rem; cursor: pointer;"></i>
     </div>
     
-    <div class="cart-body" id="cart-list">
-        </div>
+    <div class="cart-items" id="cart-list"></div>
     
     <div class="cart-footer">
-        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço Completo de Entrega/Serviço">
-        
-        <select id="userPay" class="premium-input" onchange="checkPix()">
+        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de entrega">
+        <select id="userPay" class="premium-input">
             <option value="Pix">Pix (Copiável)</option>
             <option value="Cartão">Cartão na Entrega</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
-
-        <div id="pix-ui" class="pix-container">
-            <small>CHAVE CNPJ CNPJ CNPJ</small><br>
-            <strong class="cnpj-key">59874260220</strong>
-            <button class="btn-copy-pix" onclick="copyPix()" id="btn-copy-pix">COPIAR CHAVE PIX</button>
+        <div style="display: flex; justify-content: space-between; margin: 15px 0;">
+            <span style="font-weight: 600;">Total:</span>
+            <span id="cart-total" style="font-weight: 800; font-size: 1.4rem;">R$ 0,00</span>
         </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px 0;">
-            <span style="font-weight: 600; color: #777;">Total do Pedido</span>
-            <span id="total-val" style="font-weight: 800; font-size: 1.8rem; color: var(--primary);">R$ 0,00</span>
-        </div>
-        
-        <button class="btn-whatsapp-finish" onclick="sendOrder()">
-            FINALIZAR NO WHATSAPP
-            <i class="fab fa-whatsapp" style="margin-left: 10px; font-size: 1.3rem;"></i>
-        </button>
+        <button class="btn-finish" onclick="sendOrder()">FINALIZAR NO WHATSAPP</button>
     </div>
 </div>
 
-<div id="toast"><i class="fas fa-check-circle" style="color:var(--accent); margin-right: 10px;"></i> Adicionado com sucesso</div>
+<div id="toast">✅ Adicionado!</div>
 
 <script>
-    // LISTA 100% FIEL AOS SEUS PREÇOS E ITENS (35 ITENS)
     const inventory = [
-        { name: "Instalação Ar Novo", price: 400.00, img: "Seção de Serviços.png", cat: "serviço" },
-        { name: "Instalação Ar Usado", price: 250.00, img: "Seção de Serviços.png", cat: "serviço" },
-        { name: "Manutenção Preventiva", price: 150.00, img: "ManutencaoPreventiva.png", cat: "serviço" },
-        { name: "Carga de Gás", price: 200.00, img: "CargadeGas.png", cat: "serviço" },
-        { name: "Capacitor Duplo 25+2.5UF", price: 30.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peça" },
-        { name: "Capacitor Duplo 30UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peça" },
-        { name: "Capacitor Duplo 35UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peça" },
-        { name: "Capacitor Duplo 40UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peça" },
-        { name: "Capacitor Ventilador 1.0UF", price: 8.50, img: "capacitordeventilador.png", cat: "peça" },
-        { name: "Capacitor Ventilador 1.5UF", price: 8.50, img: "capacitordeventilador.png", cat: "peça" },
-        { name: "Capacitor Ventilador 2.5UF", price: 8.50, img: "capacitordeventilador.png", cat: "peça" },
-        { name: "Capacitor Ventilador 3.0UF", price: 8.50, img: "capacitordeventilador.png", cat: "peça" },
-        { name: "Contactor 18A", price: 53.50, img: "Contactor18A.png", cat: "peça" },
-        { name: "Contactor 25A", price: 135.00, img: "Contactor25A.png", cat: "peça" },
-        { name: "Sensor Degelo AC 05k", price: 10.00, img: "SensorDegeloAC05k.png", cat: "peça" },
-        { name: "Controle Ar Universal", price: 80.00, img: "ControlArUniversal.png", cat: "peça" },
-        { name: "Gás R32 (13kg)", price: 1150.00, img: "gasr3213kg.png", cat: "peça" },
-        { name: "Gás R-22 Lata 1kg", price: 130.00, img: "GasR-22Lata1kg.png", cat: "peça" },
-        { name: "Gás R-410A Lata 800g", price: 110.00, img: "GásR-410ALata800g.png", cat: "peça" },
-        { name: "Tubulação de Cobre (kg)", price: 165.00, img: "TubulaçãodeCobre(kg).png", cat: "peça" },
-        { name: "Suporte L Condensadora 47cm", price: 27.00, img: "SuporteLCondensadora47cm.png", cat: "peça" },
-        { name: "Válvula de Serviço 1/4", price: 36.50, img: "valvuladeservicio.png", cat: "peça" },
-        { name: "Válvula de Serviço 3/8", price: 55.99, img: "valvuladeservicio.png", cat: "peça" },
-        { name: "Válvula de Serviço 1/2", price: 62.99, img: "valvuladeservicio.png", cat: "peça" },
-        { name: "Polipex 1/4", price: 3.99, img: "Polipex.png", cat: "peça" },
-        { name: "Polipex 3/8", price: 4.90, img: "Polipex.png", cat: "peça" },
-        { name: "Polipex 1/2", price: 5.90, img: "Polipex.png", cat: "peça" },
-        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, img: "FitaIsolante18mmx10m.png", cat: "peça" },
-        { name: "Fita Isolante 18mm x 10m", price: 6.90, img: "FitaIsolante18mmx10m.png", cat: "peça" },
-        { name: "Fita De PVC", price: 3.99, img: "FitaDePVC.png", cat: "peça" },
-        { name: "Bucha Plástica 0,8 C", price: 0.20, img: "BuchaPlástica0,8C.png", cat: "peça" },
-        { name: "Bucha Plástica 0,10 C", price: 0.50, img: "BuchaPlástica0,10C.png", cat: "peça" },
-        { name: "Bucha Plástica 0,12 C", price: 0.60, img: "BuchaPlástic0,12C.png", cat: "peça" },
-        { name: "Parafuso Cônico", price: 0.35, img: "ParafusoCônico.png", cat: "peça" },
-        { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peça" }
+        { name: "Instalação Ar Novo", price: 400.00, img: "Seção de Serviços.png" },
+        { name: "Instalação Ar Usado", price: 250.00, img: "Seção de Serviços.png" },
+        { name: "Manutenção Preventiva", price: 150.00, img: "ManutencaoPreventiva.png" },
+        { name: "Carga de Gás", price: 200.00, img: "CargadeGas.png" },
+        { name: "Capacitor Duplo 25+2.5UF", price: 30.00, img: "CapacitorDuplo25+2.5UF.png" },
+        { name: "Capacitor Duplo 30UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png" },
+        { name: "Capacitor Duplo 35UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png" },
+        { name: "Capacitor Duplo 40UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png" },
+        { name: "Capacitor Ventilador 1.0UF", price: 8.50, img: "capacitordeventilador.png" },
+        { name: "Capacitor Ventilador 1.5UF", price: 8.50, img: "capacitordeventilador.png" },
+        { name: "Capacitor Ventilador 2.5UF", price: 8.50, img: "capacitordeventilador.png" },
+        { name: "Capacitor Ventilador 3.0UF", price: 8.50, img: "capacitordeventilador.png" },
+        { name: "Contactor 18A", price: 53.50, img: "Contactor18A.png" },
+        { name: "Contactor 25A", price: 135.00, img: "Contactor25A.png" },
+        { name: "Sensor Degelo AC 05k", price: 10.00, img: "SensorDegeloAC05k.png" },
+        { name: "Controle Ar Universal", price: 80.00, img: "ControlArUniversal.png" },
+        { name: "Gás R32 (13kg)", price: 1150.00, img: "gasr3213kg.png" },
+        { name: "Gás R-22 Lata 1kg", price: 130.00, img: "GasR-22Lata1kg.png" },
+        { name: "Gás R-410A Lata 800g", price: 110.00, img: "GásR-410ALata800g.png" },
+        { name: "Tubulação de Cobre (kg)", price: 165.00, img: "TubulaçãodeCobre(kg).png" },
+        { name: "Suporte L Condensadora 47cm", price: 27.00, img: "SuporteLCondensadora47cm.png" },
+        { name: "Válvula de Serviço 1/4", price: 36.50, img: "valvuladeservicio.png" },
+        { name: "Válvula de Serviço 3/8", price: 55.99, img: "valvuladeservicio.png" },
+        { name: "Válvula de Serviço 1/2", price: 62.99, img: "valvuladeservicio.png" },
+        { name: "Polipex 1/4", price: 3.99, img: "Polipex.png" },
+        { name: "Polipex 3/8", price: 4.90, img: "Polipex.png" },
+        { name: "Polipex 1/2", price: 5.90, img: "Polipex.png" },
+        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, img: "FitaIsolante18mmx10m.png" },
+        { name: "Fita Isolante 18mm x 10m", price: 6.90, img: "FitaIsolante18mmx10m.png" },
+        { name: "Fita De PVC", price: 3.99, img: "FitaDePVC.png" },
+        { name: "Bucha Plástica 0,8 C", price: 0.20, img: "BuchaPlástica0,8C.png" },
+        { name: "Bucha Plástica 0,10 C", price: 0.50, img: "BuchaPlástica0,10C.png" },
+        { name: "Bucha Plástica 0,12 C", price: 0.60, img: "BuchaPlástic0,12C.png" },
+        { name: "Parafuso Cônico", price: 0.35, img: "ParafusoCônico.png" },
+        { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png" }
     ];
 
     let cart = [];
-    let curCat = 'all';
-
-    function setStatus() {
-        const h = new Date().getHours();
-        const dot = document.getElementById('st-dot');
-        const txt = document.getElementById('st-text');
-        if(h >= 8 && h < 18) {
-            dot.className = "dot online"; txt.innerText = "OPEN NOW • ATENDIMENTO PROFISSIONAL";
-        } else {
-            dot.className = "dot offline"; txt.innerText = "CLOSED • RETORNAMOS ÀS 08H";
-        }
-    }
 
     function render() {
         const grid = document.getElementById('grid');
         const term = document.getElementById('searchInput').value.toLowerCase();
         grid.innerHTML = "";
         
-        const filtered = inventory.filter(i => 
-            i.name.toLowerCase().includes(term) && (curCat === 'all' || i.cat === curCat)
-        );
-
-        filtered.forEach((item, idx) => {
+        inventory.filter(i => i.name.toLowerCase().includes(term)).forEach((item, idx) => {
             const card = document.createElement('div');
-            card.className = "card reveal";
-            card.style.animationDelay = `${idx * 0.05}s`;
+            card.className = "card";
             card.innerHTML = `
-                <div class="card-img-wrapper">
-                    <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
-                </div>
-                <div class="card-info">
+                <div class="img-box"><img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'"></div>
+                <div class="card-body">
                     <h3>${item.name}</h3>
                     <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
                     <button class="btn-add" onclick="add('${item.name}', ${item.price})">ADICIONAR</button>
                 </div>
             `;
             grid.appendChild(card);
-            setTimeout(() => card.classList.add('active'), 10);
+            setTimeout(() => card.classList.add('active'), idx * 50);
         });
     }
 
+    function toggleCart() {
+        const cart = document.getElementById('sideCart');
+        const overlay = document.getElementById('cartOverlay');
+        cart.classList.toggle('open');
+        overlay.classList.toggle('active');
+        document.body.classList.toggle('modal-open');
+    }
+
     function add(n, p) {
-        let exists = cart.find(x => x.n === n);
-        if(exists) exists.q++; else cart.push({n, p, q:1});
+        let x = cart.find(i => i.n === n);
+        if(x) x.q++; else cart.push({n, p, q:1});
         update();
-        showToast();
+        const t = document.getElementById('toast');
+        t.classList.add('active');
+        setTimeout(() => t.classList.remove('active'), 2000);
     }
 
     function update() {
         let tot = 0, c = 0;
         document.getElementById('cart-list').innerHTML = cart.map((i, idx) => {
             tot += i.p * i.q; c += i.q;
-            return `<div class="cart-item" style="background: #fcfcfd; padding: 18px; border-radius: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); animation-delay: ${idx * 0.05}s;">
-                <div><div style="font-weight:700; font-size:0.9rem">${i.n}</div><div style="color:var(--secondary); font-weight:800; margin-top:3px;">R$ ${(i.p*i.q).toFixed(2).replace('.',',')}</div></div>
-                <div style="display: flex; align-items: center; gap: 10px; background:white; padding: 5px; border-radius:10px;">
-                    <button onclick="changeQty(${idx}, -1)" style="width:28px; height:28px; border-radius:8px; border:none; background:var(--bg); cursor:pointer; font-weight:800">-</button>
-                    <b>${i.q}</b>
-                    <button onclick="changeQty(${idx}, 1)" style="width:28px; height:28px; border-radius:8px; border:none; background:var(--bg); cursor:pointer; font-weight:800">+</button>
+            return `<div style="background:#f9f9f9; padding:12px; border-radius:12px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+                <div><b>${i.n}</b><br><small>R$ ${(i.p*i.q).toFixed(2)}</small></div>
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button onclick="changeQty(${idx},-1)" style="width:25px; height:25px; border-radius:50%; border:none;">-</button>
+                    <span>${i.q}</span>
+                    <button onclick="changeQty(${idx},1)" style="width:25px; height:25px; border-radius:50%; border:none;">+</button>
                 </div>
             </div>`;
         }).join('');
-        document.getElementById('total-val').innerText = "R$ " + tot.toFixed(2).replace('.',',');
+        document.getElementById('cart-total').innerText = "R$ " + tot.toFixed(2).replace('.',',');
         document.getElementById('cart-count').innerText = c;
     }
 
@@ -427,55 +240,16 @@
         update();
     }
 
-    function toggleCart() {
-        document.getElementById('side-cart').classList.toggle('open');
-        document.getElementById('overlay').classList.toggle('active');
-        document.body.classList.toggle('modal-open'); // CORREÇÃO DE ARRASTE
-    }
-
-    function filter(c) {
-        curCat = c;
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('c-'+c).classList.add('active');
-        render();
-    }
-
-    function checkPix() { document.getElementById('pix-ui').style.display = (document.getElementById('userPay').value === 'Pix') ? 'block' : 'none'; }
-    
-    function copyPix() {
-        navigator.clipboard.writeText("59874260220");
-        const b = document.getElementById('btn-copy-pix');
-        b.innerText = "COPIADO COM SUCESSO!"; b.style.background = "#15803d";
-        setTimeout(() => { b.innerText = "COPIAR CHAVE PIX"; b.style.background = "var(--accent)"; }, 2000);
-    }
-
-    function showToast() {
-        const t = document.getElementById('toast');
-        t.classList.add('active'); 
-        setTimeout(() => t.classList.add('fade-out'), 2000); 
-        setTimeout(() => { t.classList.remove('active', 'fade-out'); }, 2500);
-    }
-
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
-        const pm = document.getElementById('userPay').value;
-        if(!ad || cart.length === 0) return alert("Por favor, informe seu endereço e adicione itens!");
+        if(!ad || cart.length === 0) return alert("Preencha o endereço!");
         let m = `*PEDIDO MAIS FRIO*\n\n`;
-        cart.forEach(i => m += `✅ ${i.n} (${i.q}x)\n`);
-        m += `\n*Total:* ${document.getElementById('total-val').innerText}\n*Endereço:* ${ad}\n*Pagamento:* ${pm}`;
+        cart.forEach(i => m += `• ${i.n} (x${i.q})\n`);
+        m += `\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
 
-    // Inicialização
-    setStatus();
-    render();
-    checkPix();
-
-    // Intersection Observer para animações de rolagem
-    const obs = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
-    });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    window.onload = render;
 </script>
 </body>
 </html>
