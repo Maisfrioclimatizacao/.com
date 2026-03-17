@@ -29,7 +29,6 @@
             padding-bottom: 40px;
         }
 
-        /* HEADER */
         header {
             background: var(--white);
             padding: 15px 5%;
@@ -58,16 +57,7 @@
             gap: 10px;
             transition: 0.3s;
         }
-        .cart-btn:hover { background: var(--secondary); }
 
-        .bump { animation: bump 0.3s ease-out; }
-        @keyframes bump {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
-
-        /* HERO SECTION */
         .hero {
             background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
             color: white;
@@ -76,7 +66,6 @@
         }
 
         .hero h1 { font-size: 2.2rem; margin-bottom: 15px; font-weight: 700; }
-        .hero p { opacity: 0.9; margin-bottom: 30px; font-weight: 300; }
 
         .search-box {
             background: white;
@@ -95,34 +84,32 @@
             width: 100%;
             outline: none;
             font-size: 1rem;
-            color: var(--text-dark);
         }
 
-        /* FILTERS */
+        /* FILTERS BAR */
         .filters {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             margin-top: 30px;
             overflow-x: auto;
-            padding-bottom: 10px;
+            padding: 0 5% 10px;
         }
 
         .filter-btn {
             background: rgba(255,255,255,0.15);
             color: white;
             border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 22px;
+            padding: 10px 20px;
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
-            backdrop-filter: blur(5px);
             white-space: nowrap;
+            font-size: 0.85rem;
         }
 
         .filter-btn.active { background: var(--white); color: var(--primary); font-weight: 700; }
 
-        /* GRID & CARDS */
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         
         .grid {
@@ -139,51 +126,25 @@
             flex-direction: column;
             justify-content: space-between;
             border: 1px solid rgba(0,0,0,0.03);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.3s;
         }
 
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-            border-color: var(--secondary);
-        }
-
-        .card h3 { font-size: 0.95rem; margin-bottom: 12px; color: var(--primary); min-height: 45px; }
-        .card .price { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 20px; }
+        .card:hover { transform: translateY(-5px); border-color: var(--secondary); }
+        .card h3 { font-size: 0.9rem; margin-bottom: 10px; color: var(--primary); min-height: 45px; }
+        .card .price { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; }
 
         .add-btn {
             background: #f1f5f9;
             color: var(--primary);
             border: none;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 10px;
+            border-radius: 10px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
         }
         .add-btn:hover { background: var(--primary); color: white; }
 
-        /* SOBRE NÓS SECTION */
-        .about-section {
-            background: var(--white);
-            padding: 80px 5%;
-            margin-top: 40px;
-            text-align: center;
-            border-radius: 40px 40px 0 0;
-        }
-
-        .about-container { max-width: 800px; margin: auto; }
-        .about-section h2 { color: var(--primary); font-size: 2rem; margin-bottom: 20px; }
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 30px;
-        }
-        .stat-item b { display: block; font-size: 1.8rem; color: var(--secondary); }
-        .stat-item span { font-size: 0.9rem; color: var(--text-muted); }
-
-        /* CARRINHO */
+        /* CARRINHO PANEL */
         .cart-panel {
             position: fixed;
             right: -100%;
@@ -199,53 +160,6 @@
             flex-direction: column;
         }
         .cart-panel.open { right: 0; }
-        .cart-header { padding: 25px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
-        .cart-content { padding: 25px; flex-grow: 1; overflow-y: auto; }
-        .cart-footer { padding: 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; }
-
-        .form-select {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 12px;
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            font-family: inherit;
-            outline: none;
-        }
-        .form-select:focus { border-color: var(--secondary); }
-
-        .checkout-btn {
-            width: 100%;
-            padding: 18px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.2);
-        }
-
-        .fab-whatsapp {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25D366;
-            color: white;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            z-index: 1500;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .fab-whatsapp:hover { transform: scale(1.1); }
 
         #toast {
             position: fixed;
@@ -259,19 +173,22 @@
             display: none;
             z-index: 3000;
             font-weight: 600;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
+        /* Estilos do formulário no carrinho */
+        .cart-footer { padding: 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; }
+        .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; }
+        .checkout-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+
         @media (max-width: 480px) {
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .hero h1 { font-size: 1.6rem; }
-            .stats { gap: 20px; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .hero h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-<div id="toast">Item adicionado com sucesso! ❄️</div>
+<div id="toast">Adicionado com sucesso! 🛒</div>
 
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
@@ -281,18 +198,19 @@
 </header>
 
 <section class="hero">
-    <h1>Climatização Profissional</h1>
-    <p>Peças e serviços com garantia de quem entende do assunto.</p>
+    <h1>Loja & Serviços</h1>
+    <p>O que você precisa para seu ar-condicionado hoje?</p>
     <div class="search-box">
-        <i class="fas fa-search" style="color:#94a3b8; font-size: 1.2rem;"></i>
-        <input type="text" id="searchInput" placeholder="O que você precisa hoje?" onkeyup="filterItems()">
+        <i class="fas fa-search" style="color:#94a3b8;"></i>
+        <input type="text" id="searchInput" placeholder="Buscar item..." onkeyup="filterItems()">
     </div>
 
     <div class="filters">
         <button class="filter-btn active" onclick="setFilter('')">Tudo</button>
-        <button class="filter-btn" onclick="setFilter('capacitor')">Capacitores</button>
-        <button class="filter-btn" onclick="setFilter('peça')">Peças</button>
         <button class="filter-btn" onclick="setFilter('serviço')">Serviços</button>
+        <button class="filter-btn" onclick="setFilter('elétrica')">Elétrica</button>
+        <button class="filter-btn" onclick="setFilter('instalação')">Instalação</button>
+        <button class="filter-btn" onclick="setFilter('fixação')">Fixação</button>
     </div>
 </section>
 
@@ -300,109 +218,85 @@
     <div class="grid" id="main-grid"></div>
 </main>
 
-<section class="about-section">
-    <div class="about-container">
-        <h2>Nossa História</h2>
-        <p>Atuando em Porto Velho e região desde <b>2011</b>, a Mais Frio Climatização combina técnica e compromisso. Com mais de <b>15 anos de experiência</b> no mercado, entregamos soluções precisas para manter seu ambiente sempre fresco e confortável.</p>
-        
-        <div class="stats">
-            <div class="stat-item"><b>15+</b><span>Anos de Experiência</span></div>
-            <div class="stat-item"><b>100%</b><span>Clientes Satisfeitos</span></div>
-            <div class="stat-item"><b>2011</b><span>No mercado</span></div>
-        </div>
-    </div>
-</section>
-
 <div id="cartPreview" class="cart-panel">
-    <div class="cart-header">
+    <div style="padding: 25px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
         <h3>Seu Pedido</h3>
         <button onclick="toggleCart()" style="border:none; background:none; font-size:2rem; cursor:pointer;">&times;</button>
     </div>
-    <div class="cart-content" id="cartItems"></div>
+    <div class="cart-content" id="cartItems" style="padding: 25px; flex-grow: 1; overflow-y: auto;"></div>
     <div class="cart-footer">
-        <div id="service-scheduling" style="display:none; margin-bottom:15px; background:#fff; padding:15px; border-radius:12px; border:1px solid #e2e8f0;">
-            <p style="font-size:0.8rem; font-weight:700; margin-bottom:8px; color:var(--primary);">AGENDAR VISITA TÉCNICA:</p>
-            <div style="display:flex; gap:10px;">
-                <input type="date" id="serviceDate" class="form-select" style="margin-bottom:0;">
-                <select id="serviceTime" class="form-select" style="margin-bottom:0;">
-                    <option value="Manhã (08h-12h)">Manhã</option>
-                    <option value="Tarde (13h-18h)">Tarde</option>
+        <div id="service-scheduling" style="display:none; margin-bottom:15px;">
+            <p style="font-size:0.75rem; font-weight:700; color:var(--primary); margin-bottom:5px;">AGENDAR VISITA:</p>
+            <div style="display:flex; gap:5px;">
+                <input type="date" id="serviceDate" class="form-select">
+                <select id="serviceTime" class="form-select">
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
                 </select>
             </div>
         </div>
-
-        <input type="text" id="address" class="form-select" placeholder="Endereço Completo">
-        
+        <input type="text" id="address" class="form-select" placeholder="Seu Endereço">
         <select id="paymentMethod" class="form-select">
-            <option value="" disabled selected>Forma de Pagamento</option>
+            <option value="" disabled selected>Pagamento</option>
             <option value="PIX">PIX</option>
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão">Cartão de Crédito/Débito</option>
+            <option value="Cartão">Cartão</option>
         </select>
-
-        <div style="display:flex; justify-content:space-between; margin:20px 0; font-weight:700; color:var(--primary); font-size: 1.3rem;">
+        <div style="display:flex; justify-content:space-between; margin:15px 0; font-weight:700;">
             <span>Total:</span>
             <span id="total-price">R$ 0,00</span>
         </div>
-
-        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Enviar Pedido ao WhatsApp</button>
+        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Finalizar no WhatsApp</button>
     </div>
 </div>
 
-<a href="https://wa.me/556993060469" class="fab-whatsapp" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-</a>
-
 <script>
     const inventory = [
-        // SERVIÇOS
+        // CATEGORIA: SERVIÇO
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
         { name: "Carga de Gás", price: 200, cat: "serviço" },
 
-        // CAPACITORES
-        { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "capacitor" },
-        { name: "Capacitor Duplo 40UF", price: 36, cat: "capacitor" },
-        { name: "Capacitor Duplo 35UF", price: 36, cat: "capacitor" },
-        { name: "Capacitor Duplo 30UF", price: 36, cat: "capacitor" },
+        // CATEGORIA: ELÉTRICA
+        { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "elétrica" },
+        { name: "Capacitor Duplo 40UF", price: 36, cat: "elétrica" },
+        { name: "Capacitor Duplo 35UF", price: 36, cat: "elétrica" },
+        { name: "Capacitor Duplo 30UF", price: 36, cat: "elétrica" },
+        { name: "Contactor 18A", price: 53.50, cat: "elétrica" },
+        { name: "Contactor 25A", price: 135.00, cat: "elétrica" },
+        { name: "Sensor Degelo AC 05k", price: 10, cat: "elétrica" },
+        { name: "Controle Ar Universal", price: 80, cat: "elétrica" },
 
-        // PEÇAS (NOVOS ITENS ABAIXO)
-        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, cat: "peça" },
-        { name: "Fita Isolante 18mm x 10m", price: 6.90, cat: "peça" },
-        { name: "Polipex 1/4", price: 3.99, cat: "peça" },
-        { name: "Polipex 3/8", price: 4.90, cat: "peça" },
-        { name: "Polipex 1/2", price: 5.90, cat: "peça" },
-        { name: "Bucha Plástica 0,8 C", price: 0.20, cat: "peça" },
-        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "peça" },
-        { name: "Bucha Plástica 0,12 C", price: 0.60, cat: "peça" },
-        { name: "Parafuso Cônico", price: 0.35, cat: "peça" },
-        { name: "Parafuso Sextavado", price: 1.50, cat: "peça" },
-        { name: "Contactor 18A", price: 53.50, cat: "peça" },
-        { name: "Contactor 25A", price: 135.00, cat: "peça" },
-        { name: "Controle Ar Universal", price: 80, cat: "peça" },
-        { name: "Suporte L Condensadora 47cm", price: 27, cat: "peça" },
-        { name: "Tubulação de Cobre (kg)", price: 165, cat: "peça" },
-        { name: "Gás R-22 Lata 1kg", price: 130, cat: "peça" },
-        { name: "Sensor Degelo AC 05k", price: 10, cat: "peça" },
-        { name: "Fita De PVC", price: 3.99, cat: "peça" }
+        // CATEGORIA: INSTALAÇÃO
+        { name: "Gás R-22 Lata 1kg", price: 130, cat: "instalação" },
+        { name: "Tubulação de Cobre (kg)", price: 165, cat: "instalação" },
+        { name: "Suporte L Condensadora 47cm", price: 27, cat: "instalação" },
+        { name: "Polipex 1/4", price: 3.99, cat: "instalação" },
+        { name: "Polipex 3/8", price: 4.90, cat: "instalação" },
+        { name: "Polipex 1/2", price: 5.90, cat: "instalação" },
+        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, cat: "instalação" },
+        { name: "Fita Isolante 18mm x 10m", price: 6.90, cat: "instalação" },
+        { name: "Fita De PVC", price: 3.99, cat: "instalação" },
+
+        // CATEGORIA: FIXAÇÃO
+        { name: "Bucha Plástica 0,8 C", price: 0.20, cat: "fixação" },
+        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" },
+        { name: "Bucha Plástica 0,12 C", price: 0.60, cat: "fixação" },
+        { name: "Parafuso Cônico", price: 0.35, cat: "fixação" },
+        { name: "Parafuso Sextavado", price: 1.50, cat: "fixação" }
     ];
 
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
     let currentCategory = "";
 
-    function normalizeStr(str) {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    }
-
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        const normTerm = normalizeStr(term);
-
-        const filtered = inventory.filter(item => {
-            return normalizeStr(item.name).includes(normTerm) && 
-                   (currentCategory === "" || item.cat === currentCategory);
+        const filtered = inventory.filter(i => {
+            const matchesSearch = i.name.toLowerCase().includes(term.toLowerCase());
+            const matchesCat = currentCategory === "" || i.cat === currentCategory;
+            return matchesSearch && matchesCat;
         });
 
         filtered.forEach(item => {
@@ -431,33 +325,29 @@
 
     function renderCart() {
         const cartDiv = document.getElementById("cartItems");
-        const countSpan = document.getElementById("cart-count");
         const totalSpan = document.getElementById("total-price");
         const sched = document.getElementById("service-scheduling");
-        
         let total = 0, count = 0, hasService = false;
-        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center; color:#94a3b8; margin-top:20px;">Seu carrinho está vazio.</p>' : '';
+
+        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center;color:#999;">Vazio</p>' : '';
         
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
-            const original = inventory.find(i => i.name === item.name);
-            if(original && original.cat === 'serviço') hasService = true;
-            
+            if(inventory.find(i => i.name === item.name && i.cat === 'serviço')) hasService = true;
             cartDiv.innerHTML += `
-                <div style="display:flex; justify-content:space-between; margin-bottom:18px; align-items:center;">
-                    <div style="font-size:0.9rem;"><strong>${item.name}</strong><br><span style="color:#64748b;">R$ ${item.price.toFixed(2)} x ${item.qty}</span></div>
-                    <div style="display:flex; gap:8px;">
-                        <button onclick="changeQty('${item.name}', -1)" style="padding:4px 10px; border:1px solid #e2e8f0; border-radius:6px; background:white; cursor:pointer;">-</button>
-                        <button onclick="changeQty('${item.name}', 1)" style="padding:4px 10px; background:var(--primary); color:white; border:none; border-radius:6px; cursor:pointer;">+</button>
+                <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                    <div style="font-size:0.85rem;"><strong>${item.name}</strong><br>R$ ${item.price.toFixed(2)} x ${item.qty}</div>
+                    <div>
+                        <button onclick="changeQty('${item.name}', -1)" style="padding:2px 8px; cursor:pointer;">-</button>
+                        <button onclick="changeQty('${item.name}', 1)" style="padding:2px 8px; cursor:pointer;">+</button>
                     </div>
                 </div>`;
         });
 
-        sched.style.display = hasService ? "block" : "none";
-        countSpan.innerText = count;
+        document.getElementById("cart-count").innerText = count;
         totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        if(document.getElementById('serviceDate')) document.getElementById('serviceDate').min = new Date().toISOString().split("T")[0];
+        sched.style.display = hasService ? "block" : "none";
     }
 
     function changeQty(name, amt) {
@@ -472,56 +362,37 @@
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
         const pay = document.getElementById("paymentMethod").value;
-        const date = document.getElementById("serviceDate").value;
-        const time = document.getElementById("serviceTime").value;
-        const schedVisible = document.getElementById("service-scheduling").style.display === "block";
-        
-        if (cart.length === 0) return alert("Adicione itens ao pedido!");
-        if (!addr.trim()) return alert("Por favor, informe o endereço.");
-        if (schedVisible && !date) return alert("Escolha uma data para o agendamento.");
-        if (!pay) return alert("Selecione a forma de pagamento.");
-        
-        let msg = "*NOVO PEDIDO - MAIS FRIO CLIMATIZAÇÃO* ❄️\n\n";
+        if (cart.length === 0 || !addr || !pay) return alert("Preencha todos os dados!");
+
+        let msg = "*PEDIDO - MAIS FRIO CLIMATIZAÇÃO*\n\n";
         let total = 0;
-        cart.forEach(item => {
-            msg += `• ${item.name} (x${item.qty}) - R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}\n`;
-            total += item.price * item.qty;
+        cart.forEach(i => {
+            msg += `• ${i.name} (x${i.qty})\n`;
+            total += i.price * i.qty;
         });
-        
-        if(schedVisible) msg += `\n📅 *AGENDAMENTO:* ${date.split('-').reverse().join('/')} (${time})`;
-        msg += `\n📍 *ENDEREÇO:* ${addr}\n💳 *PAGAMENTO:* ${pay}\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
-        
-        if(pay === "PIX") msg += `\n🔑 *Chave PIX:* 59874260220`;
-        
+        msg += `\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
+        msg += `\n📍 *Endereço:* ${addr}\n💳 *Pagamento:* ${pay}`;
+        if(pay === "PIX") msg += `\n🔑 *PIX:* 59874260220`;
+
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
-        localStorage.removeItem('maisFrioCart');
-        cart = [];
-        saveAndRender();
-        toggleCart();
+    }
+
+    function setFilter(c) {
+        currentCategory = c;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.onclick.toString().includes(`'${c}'`)));
+        renderItems();
     }
 
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
-    
-    function setFilter(c) { 
-        currentCategory = c; 
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase().includes(c) || (c==='' && b.innerText==='Tudo')));
-        renderItems(); 
-    }
-
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
-
     function showFeedback() {
         const t = document.getElementById('toast');
         t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 3000);
-        const btn = document.getElementById('header-cart-btn');
-        btn.classList.add('bump');
-        setTimeout(() => btn.classList.remove('bump'), 300);
+        setTimeout(() => t.style.display = 'none', 2000);
     }
 
     renderItems();
     renderCart();
 </script>
-
 </body>
 </html>
