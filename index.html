@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mais Frio Climatização | Busca Inteligente</title>
+    <title>Mais Frio Climatização | Premium</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -104,7 +104,6 @@
         .btn-add { width: 100%; background: #f0f2f5; padding: 12px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: var(--transition); }
         .btn-add:hover { background: var(--primary); color: white; }
 
-        /* --- CARRINHO --- */
         .overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.4); backdrop-filter: blur(8px); z-index: 1900; display: none; }
         .overlay.active { display: block; }
 
@@ -118,7 +117,8 @@
         .cart-footer { padding: 25px; border-top: 1px solid #eee; }
         .premium-input { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; outline: none; }
 
-        .btn-finish { width: 100%; padding: 18px; background: #28cd41; color: white; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-finish { width: 100%; padding: 18px; background: #28cd41; color: white; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); }
+        .btn-finish:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(40,205,65,0.2); }
 
         #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 15px 35px; border-radius: 50px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 800; }
         #toast.active { transform: translateX(-50%) translateY(0); }
@@ -141,7 +141,7 @@
     <h1>Peças & Serviços<br>Profissionais</h1>
     <div class="search-area">
         <i class="fas fa-search" style="color:#ccc"></i>
-        <input type="text" id="searchInput" placeholder="Busque por 'gas', 'instalação'..." onkeyup="render()">
+        <input type="text" id="searchInput" placeholder="O que você precisa?" onkeyup="render()">
     </div>
     <div class="tabs">
         <div class="tab active" id="tab-all" onclick="filter('all')">Todos Itens</div>
@@ -163,17 +163,17 @@
     </div>
     <div class="cart-items" id="cart-list"></div>
     <div class="cart-footer">
-        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega">
+        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega Completo">
         <select id="userPay" class="premium-input" onchange="checkPix()">
-            <option value="Pix">Pix</option>
-            <option value="Cartão">Cartão</option>
+            <option value="Pix">Pagar com Pix</option>
+            <option value="Cartão">Cartão de Crédito/Débito</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
         <div id="pix-info" style="display:none; background:#e6ffed; padding:12px; border-radius:12px; text-align:center; margin-bottom:10px; border: 1px dashed #28cd41;" onclick="copyPix()">
-            <small>CNPJ Pix (clique p/ copiar):</small><br><strong>59874260220</strong>
+            <small>Clique para copiar o CNPJ Pix:</small><br><strong>59874260220</strong>
         </div>
         <div style="display: flex; justify-content: space-between; margin: 15px 0;">
-            <span style="font-weight: 600; opacity: 0.6;">Total:</span>
+            <span style="font-weight: 600; opacity: 0.6;">Total Geral:</span>
             <span id="cart-total" style="font-weight: 800; font-size: 1.5rem;">R$ 0,00</span>
         </div>
         <button onclick="sendOrder()" class="btn-finish">
@@ -182,7 +182,7 @@
     </div>
 </div>
 
-<div id="toast">✅ Adicionado ao carrinho!</div>
+<div id="toast">✅ Item adicionado!</div>
 
 <script>
     const inventory = [
@@ -226,7 +226,6 @@
     let cart = JSON.parse(localStorage.getItem('cart_mf_v3')) || [];
     let currentFilter = 'all';
 
-    // FUNÇÃO PARA REMOVER ACENTOS DA BUSCA
     function removeAccents(str) {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
@@ -238,9 +237,7 @@
         
         const filtered = inventory.filter(item => {
             const nameNormal = removeAccents(item.name);
-            const matchesSearch = nameNormal.includes(term);
-            const matchesTab = (currentFilter === 'all' || item.cat === currentFilter);
-            return matchesSearch && matchesTab;
+            return nameNormal.includes(term) && (currentFilter === 'all' || item.cat === currentFilter);
         });
         
         filtered.forEach((item, index) => {
@@ -327,15 +324,29 @@
 
     function copyPix() {
         navigator.clipboard.writeText("59874260220");
-        alert("CNPJ Pix Copiado!");
+        alert("CNPJ Copiado!");
     }
 
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
-        if(!ad || cart.length === 0) return alert("Preencha os dados!");
-        let m = `*PEDIDO MAIS FRIO*\n\n`;
+        const payMethod = document.getElementById('userPay').value;
+        
+        if(!ad || cart.length === 0) return alert("Preencha o endereço e adicione itens!");
+
+        let m = `*PEDIDO MAIS FRIO CLIMATIZAÇÃO*\n\n`;
         cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
-        m += `\n*Pagamento:* ${document.getElementById('userPay').value}\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
+        
+        m += `\n*Pagamento:* ${payMethod}`;
+        m += `\n*Total:* ${document.getElementById('cart-total').innerText}`;
+        m += `\n*Endereço:* ${ad}\n`;
+
+        if(payMethod === 'Pix') {
+            m += `\n--------------------------\n`;
+            m += `*CHAVE PIX (CNPJ):*\n`;
+            m += `59874260220\n`;
+            m += `_Favor enviar o comprovante após o pagamento._`;
+        }
+
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
 
