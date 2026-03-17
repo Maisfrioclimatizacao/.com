@@ -22,62 +22,43 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
 
-        /* ANIMAÇÕES PROFISSIONAIS */
+        /* NOTIFICAÇÃO TOAST */
+        #toast {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: white; padding: 15px 30px;
+            border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 3000; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600; display: flex; align-items: center; gap: 10px;
+        }
+        #toast.show { top: 20px; }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .reveal { animation: fadeInUp 0.6s ease forwards; }
 
-        .top-bar {
-            background: #061731; color: white; font-size: 0.75rem; padding: 8px 5%;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .top-bar { background: #061731; color: white; font-size: 0.75rem; padding: 8px 5%; display: flex; justify-content: space-between; }
         .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
         .status-open { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
         .status-closed { background: #ef4444; }
 
-        header {
-            background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between;
-            align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05);
-        }
+        header { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
         .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-        .logo span { color: var(--secondary); }
-
-        .whatsapp-float {
-            position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px;
-            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
-            font-size: 30px; box-shadow: 2px 10px 20px rgba(0,0,0,0.1); z-index: 2500;
-            display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s;
-        }
-        .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); }
+        .whatsapp-float { position: fixed; width: 60px; height: 60px; bottom: 20px; right: 20px; background-color: #25d366; color: #FFF; border-radius: 50px; font-size: 30px; z-index: 2500; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: 0.3s; }
 
         .hero { background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%); color: white; padding: 60px 5%; text-align: center; }
-        .search-box { background: white; border-radius: 15px; display: flex; align-items: center; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
-        .search-box input { border: none; padding: 15px; width: 100%; outline: none; font-size: 16px; }
+        .search-box { background: white; border-radius: 15px; display: flex; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
+        .search-box input { border: none; padding: 15px; width: 100%; outline: none; }
 
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
-        
-        .card { 
-            background: var(--white); border-radius: 20px; overflow: hidden; 
-            display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.05); 
-            transition: var(--transition); opacity: 0;
-        }
+        .card { background: var(--white); border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: var(--transition); opacity: 0; }
         .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
-        .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; transition: 0.5s; }
-        .card:hover .card-img { transform: scale(1.05); }
+        .card-img { width: 100%; height: 180px; background-size: cover; background-position: center; transition: 0.5s; background-color: #eee; }
 
-        .btn-add {
-            width: 100%; padding: 10px; border-radius: 8px; border: none; 
-            background: #f1f5f9; color: var(--primary); font-weight: 700; 
-            cursor: pointer; transition: 0.2s;
-        }
+        .btn-add { width: 100%; padding: 10px; border-radius: 8px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; transition: 0.2s; }
         .btn-add:hover { background: var(--primary); color: white; }
-
-        .info-section { background: white; padding: 60px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .schedule-table td { padding: 12px 0; border-bottom: 1px solid #eee; }
 
         .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 420px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.77, 0, 0.175, 1); display: flex; flex-direction: column; }
         .cart-panel.open { right: 0; }
@@ -86,6 +67,8 @@
     </style>
 </head>
 <body>
+
+<div id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg">Item adicionado!</span></div>
 
 <a href="https://wa.me/556993060469" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
 
@@ -112,22 +95,6 @@
     <div class="grid" id="main-grid"></div>
 </main>
 
-<section class="info-section reveal">
-    <div>
-        <h2 style="color: var(--primary); margin-bottom: 15px;">Horário de Atendimento</h2>
-        <table class="schedule-table">
-            <tr><td>Segunda a Sexta</td><td style="text-align:right;">08:00 – 18:00</td></tr>
-            <tr><td>Sábado</td><td style="text-align:right;">08:00 – 12:00</td></tr>
-            <tr><td>Domingo</td><td style="text-align:right; color: #ef4444;">Fechado</td></tr>
-        </table>
-    </div>
-    <div>
-        <h2 style="color: var(--primary); margin-bottom: 15px;">Localização</h2>
-        <p><i class="fas fa-map-marker-alt"></i> Atendimento em toda Presidente Médici - RO</p>
-        <div style="margin-top: 20px; font-weight: 700; color: var(--accent);"><i class="fas fa-check-circle"></i> Garantia em todos os serviços</div>
-    </div>
-</section>
-
 <div id="cartPreview" class="cart-panel">
     <div style="padding:25px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
         <h3>Seu Pedido</h3>
@@ -144,7 +111,6 @@
 </div>
 
 <script>
-    // LISTA COMPLETA RESTAURADA
     const inventory = [
         { name: "Instalação Ar Novo", price: 400 },
         { name: "Instalação Ar Usado", price: 250 },
@@ -182,6 +148,42 @@
         { name: "Parafuso Sextavado", price: 1.50 }
     ];
 
+    const itemPhotos = {
+        "Instalação Ar Novo": "Seção%20de%20Serviços.png",
+        "Instalação Ar Usado": "Seção%20de%20Serviços.png",
+        "Manutenção Preventiva": "ManutencaoPreventiva.png",
+        "Carga de Gás": "CargadeGas.png",
+        "Capacitor Duplo 25+2.5UF": "CapacitorDuplo25+2.5UF.png",
+        "Capacitor Duplo 30UF": "CapacitorDuplo25+2.5UF.png",
+        "Capacitor Duplo 35UF": "CapacitorDuplo25+2.5UF.png",
+        "Capacitor Duplo 40UF": "CapacitorDuplo25+2.5UF.png",
+        "Capacitor Ventilador 1.0UF": "capacitordeventilador.png",
+        "Capacitor Ventilador 1.5UF": "capacitordeventilador.png",
+        "Capacitor Ventilador 2.5UF": "capacitordeventilador.png",
+        "Capacitor Ventilador 3.0UF": "capacitordeventilador.png",
+        "Contactor 18A": "Contactor18A.png",
+        "Contactor 25A": "Contactor25A.png",
+        "Sensor Degelo AC 05k": "SensorDegeloAC05k.png",
+        "Controle Ar Universal": "ControlArUniversal.png",
+        "Gás R32 (13kg)": "gasr3213kg.png",
+        "Gás R-22 Lata 1kg": "GasR-22Lata1kg.png",
+        "Gás R-410A Lata 800g": "GásR-410ALata800g.png",
+        "Tubulação de Cobre (kg)": "TubulaçãodeCobre(kg).png",
+        "Suporte L Condensadora 47cm": "SuporteLCondensadora47cm.png",
+        "Válvula de Serviço 1/4": "valvuladeservicio.png",
+        "Válvula de Serviço 3/8": "valvuladeservicio.png",
+        "Válvula de Serviço 1/2": "valvuladeservicio.png",
+        "Polipex 1/4": "Polipex.png",
+        "Polipex 3/8": "Polipex.png",
+        "Polipex 1/2": "Polipex.png",
+        "Fita De PVC": "FitaDePVC.png",
+        "Bucha Plástica 0,8 C": "BuchaPlástica0,8C.png",
+        "Bucha Plástica 0,10 C": "BuchaPlástica0,10C.png",
+        "Bucha Plástica 0,12 C": "BuchaPlástic0,12C.png",
+        "Parafuso Cônico": "ParafusoCônico.png",
+        "Parafuso Sextavado": "ParafusoSextavado.png"
+    };
+
     let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
 
     function updateBusinessStatus() {
@@ -194,10 +196,10 @@
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
-        const filtered = inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()));
-        filtered.forEach((item, index) => {
+        inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase()))
+        .forEach((item, index) => {
             grid.innerHTML += `<div class="card reveal" style="animation-delay: ${index * 0.05}s">
-                <div class="card-img" style="background-color:#eee;"></div>
+                <div class="card-img" style="background-image: url('${itemPhotos[item.name] || ''}')"></div>
                 <div style="padding:15px;">
                     <h3 style="font-size:0.85rem; min-height:40px;">${item.name}</h3>
                     <div style="font-weight:700; color:var(--primary); margin:10px 0;">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
@@ -212,7 +214,14 @@
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
         localStorage.setItem('maisFrioCart', JSON.stringify(cart));
         renderCart();
-        alert(`✅ ${name} adicionado ao carrinho!`);
+        showToast(name);
+    }
+
+    function showToast(name) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-msg').innerText = `${name} foi para o carrinho!`;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
     function renderCart() {
