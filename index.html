@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mais Frio | Elite Climatização</title>
+    <title>Mais Frio | Climatização</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -39,38 +39,39 @@
             box-shadow: 0 8px 20px rgba(10, 25, 47, 0.2); transition: 0.3s var(--spring);
         }
 
-        /* --- HERO & BUSCA --- */
+        /* --- HERO CENTRALIZADO --- */
         .hero { 
             background: linear-gradient(135deg, #0a192f 0%, #061121 100%); 
-            color: white; padding: 60px 6% 40px; text-align: left; 
+            color: white; padding: 60px 6% 60px; text-align: center; /* Centralizado aqui */
             border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
             position: relative; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center; /* Garante centralização dos filhos */
         }
-        .hero::after { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: var(--secondary); filter: blur(120px); opacity: 0.3; }
+        .hero::after { content: ''; position: absolute; top: -50%; right: -10%; width: 300px; height: 300px; background: var(--secondary); filter: blur(120px); opacity: 0.2; }
 
-        .hero h1 { font-size: 1.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+        .hero h1 { font-size: 2.2rem; font-weight: 800; line-height: 1.2; margin-bottom: 25px; max-width: 800px; }
         
         .search-area { 
-            background: rgba(255,255,255,1); border-radius: 20px; padding: 6px 15px; 
-            max-width: 600px; display: flex; align-items: center; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15); margin-bottom: 30px;
+            background: rgba(255,255,255,1); border-radius: 20px; padding: 6px 20px; 
+            width: 100%; max-width: 550px; display: flex; align-items: center; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); margin-bottom: 35px;
         }
-        .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; }
+        .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: #333; }
 
-        /* --- CATEGORIAS --- */
-        .tabs { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 15px; scrollbar-width: none; }
+        /* --- CATEGORIAS CENTRALIZADAS --- */
+        .tabs { display: flex; gap: 12px; justify-content: center; width: 100%; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
         .tabs::-webkit-scrollbar { display: none; }
         .tab { 
             padding: 12px 25px; background: rgba(255,255,255,0.1); border-radius: 50px; 
             font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: 0.3s; 
-            white-space: nowrap; border: 1px solid rgba(255,255,255,0.1);
+            white-space: nowrap; border: 1px solid rgba(255,255,255,0.05);
         }
         .tab.active { background: white; color: var(--primary); transform: scale(1.05); }
 
-        /* --- GRID & CARDS --- */
+        /* --- GRID DE PRODUTOS --- */
         .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); } }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); } }
 
         .card { 
             background: var(--card-bg); border-radius: 30px; overflow: hidden; 
@@ -79,63 +80,37 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
         .card.active { opacity: 1; transform: translateY(0); }
-        .card:hover { transform: translateY(-12px) scale(1.02); box-shadow: 0 25px 50px rgba(0,0,0,0.08); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
 
-        .img-box { width: 100%; height: 200px; overflow: hidden; position: relative; }
+        .img-box { width: 100%; height: 220px; overflow: hidden; position: relative; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s var(--spring); }
-        .card:hover .img-box img { transform: scale(1.1); }
         
-        /* Badge de Categoria */
         .badge { 
-            position: absolute; top: 15px; left: 15px; padding: 6px 12px; 
+            position: absolute; top: 15px; left: 15px; padding: 6px 14px; 
             border-radius: 50px; font-size: 0.65rem; font-weight: 800; 
             text-transform: uppercase; z-index: 2; color: white;
         }
         .badge.peca { background: var(--secondary); }
         .badge.servico { background: var(--accent); }
 
-        .card-body { padding: 20px; text-align: left; }
-        .card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: #1d1d1f; height: 40px; overflow: hidden; }
-        .price { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 18px; }
+        .card-body { padding: 22px; text-align: center; }
+        .card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; color: #1d1d1f; height: 45px; overflow: hidden; }
+        .price { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
         
         .btn-add { 
-            width: 100%; background: #f2f2f7; padding: 15px; border-radius: 18px; 
+            width: 100%; background: #f2f2f7; padding: 15px; border-radius: 20px; 
             border: none; font-weight: 800; cursor: pointer; transition: 0.3s;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-add:hover { background: var(--secondary); color: white; }
+        .btn-add:hover { background: var(--primary); color: white; }
 
-        /* --- CARRINHO (REESTILIZADO) --- */
-        #sideCart { 
-            position: fixed; right: -100%; top: 0; width: 95%; max-width: 450px; 
-            height: 100%; background: #0a192f; color: white; z-index: 2000; 
-            transition: 0.5s var(--spring); display: flex; flex-direction: column;
-            box-shadow: -20px 0 60px rgba(0,0,0,0.4);
-        }
+        /* --- CARRINHO --- */
+        #sideCart { position: fixed; right: -100%; top: 0; width: 95%; max-width: 450px; height: 100%; background: #0a192f; color: white; z-index: 2000; transition: 0.5s var(--spring); display: flex; flex-direction: column; }
         #sideCart.open { right: 0; }
-        .cart-header { padding: 35px 25px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        
-        .cart-item { 
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); 
-            padding: 18px; border-radius: 25px; margin-bottom: 15px;
-        }
-
-        .premium-input { 
-            width: 100%; padding: 18px; border-radius: 18px; border: none; 
-            margin-bottom: 12px; background: rgba(255,255,255,0.08); 
-            color: white; font-weight: 600; font-size: 1rem;
-        }
-
-        /* --- TOAST & FOOTER --- */
-        #toast { 
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(120px); 
-            background: var(--accent); color: white; padding: 18px 35px; border-radius: 50px; 
-            z-index: 3000; transition: 0.5s var(--spring); font-weight: 800; box-shadow: 0 15px 30px rgba(40,205,65,0.3);
-        }
-        #toast.active { transform: translateX(-50%) translateY(0); }
-
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1900; display: none; backdrop-filter: blur(12px); }
         .overlay.active { display: block; }
+        #toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--accent); color: white; padding: 18px 35px; border-radius: 50px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 800; }
+        #toast.active { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
 <body>
@@ -145,7 +120,7 @@
 </div>
 
 <header>
-    <div class="logo">MAIS FRIO <span>PRO</span></div>
+    <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
     <div class="btn-cart-top" onclick="toggleCart()">
         <i class="fas fa-shopping-bag"></i> <span id="cart-count">0</span>
     </div>
@@ -154,7 +129,7 @@
 <section class="hero">
     <h1>Peças originais &<br>Serviços certificados.</h1>
     <div class="search-area">
-        <i class="fas fa-search" style="color: #666; font-size: 1.2rem;"></i>
+        <i class="fas fa-search" style="color: #666; font-size: 1.1rem;"></i>
         <input type="text" id="searchInput" placeholder="O que você procura hoje?" onkeyup="render()">
     </div>
     <div class="tabs">
@@ -171,45 +146,32 @@
 <div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
 
 <div id="sideCart">
-    <div class="cart-header">
+    <div class="cart-header" style="padding: 30px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2 style="font-weight: 800; font-size: 1.8rem;">Meu Pedido</h2>
+            <h2 style="font-weight: 800;">Meu Pedido</h2>
             <i class="fas fa-times-circle" onclick="toggleCart()" style="font-size: 2rem; cursor: pointer; opacity: 0.3;"></i>
         </div>
     </div>
-    
-    <div class="cart-items" id="cart-list"></div>
-    
+    <div class="cart-items" id="cart-list" style="flex:1; overflow-y:auto; padding:20px;"></div>
     <div class="cart-footer" style="padding: 30px; background: #0e223d; border-radius: 40px 40px 0 0;">
-        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega">
-        
-        <select id="userPay" class="premium-input" onchange="checkPix()" style="appearance: none;">
-            <option value="Pix">Pagamento via Pix</option>
-            <option value="Cartão">Cartão na Entrega</option>
+        <input type="text" id="userAddr" style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:10px;" placeholder="Endereço">
+        <select id="userPay" style="width:100%; padding:15px; border-radius:15px; border:none; margin-bottom:15px;">
+            <option value="Pix">Pix</option>
+            <option value="Cartão">Cartão</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
-
-        <div id="pix-box" style="background: rgba(40, 205, 65, 0.1); border: 1px dashed var(--accent); padding: 20px; border-radius: 20px; margin-bottom: 20px; text-align: center; display: none;">
-            <small style="opacity: 0.6; font-weight: 700; letter-spacing: 1px;">COPIAR CHAVE CNPJ</small><br>
-            <strong style="font-size: 1.2rem; display: block; margin: 10px 0;">59874260220</strong>
-            <button onclick="copyPix()" style="background: var(--accent); border: none; color: white; padding: 10px 25px; border-radius: 12px; font-weight: 800; cursor: pointer;">COPIAR AGORA</button>
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <span>Total</span>
+            <span id="cart-total" style="font-weight: 800; font-size: 1.5rem;">R$ 0,00</span>
         </div>
-
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-            <span style="opacity: 0.5; font-weight: 600;">Subtotal</span>
-            <span id="cart-total" style="font-weight: 800; font-size: 1.8rem;">R$ 0,00</span>
-        </div>
-        
-        <button class="btn-finish" onclick="sendOrder()" style="width: 100%; padding: 22px; background: var(--accent); color: white; border-radius: 22px; border: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 15px 35px rgba(40,205,65,0.3);">
-            <i class="fab fa-whatsapp" style="font-size: 1.4rem;"></i> ENVIAR PARA O WHATSAPP
-        </button>
+        <button onclick="sendOrder()" style="width: 100%; padding: 20px; background: var(--accent); color: white; border-radius: 20px; border: none; font-weight: 800;">FINALIZAR NO WHATSAPP</button>
     </div>
 </div>
 
 <div id="toast">✅ Adicionado com sucesso!</div>
 
 <script>
-    // Lista completa com Categorias
+    // Inventário completo (35 itens)
     const inventory = [
         { name: "Instalação Ar Novo", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
         { name: "Instalação Ar Usado", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
@@ -293,13 +255,12 @@
         document.getElementById('sideCart').classList.toggle('open');
         document.getElementById('cartOverlay').classList.toggle('active');
         document.body.classList.toggle('modal-open');
-        if(document.getElementById('sideCart').classList.contains('open')) update();
     }
 
     function add(n, p) {
         let x = cart.find(i => i.n === n);
         if(x) x.q++; else cart.push({n, p, q:1});
-        update();
+        document.getElementById('cart-count').innerText = cart.reduce((a,b)=>a+b.q, 0);
         const t = document.getElementById('toast');
         t.classList.add('active');
         setTimeout(() => t.classList.remove('active'), 2500);
@@ -309,52 +270,22 @@
         let tot = 0;
         document.getElementById('cart-list').innerHTML = cart.map((i, idx) => {
             tot += i.p * i.q;
-            return `
-            <div class="cart-item" style="animation: itemIn 0.4s ${idx * 0.1}s var(--spring) forwards; opacity:0;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div>
-                        <div style="font-weight:700; font-size:0.9rem">${i.n}</div>
-                        <div style="font-weight:800; color:var(--secondary); margin-top:5px;">R$ ${(i.p*i.q).toFixed(2)}</div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:15px; background:rgba(255,255,255,0.05); padding:8px 15px; border-radius:50px;">
-                        <button onclick="changeQty(${idx},-1)" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;">-</button>
-                        <span style="font-weight:800" id="qty-${idx}">${i.q}</span>
-                        <button onclick="changeQty(${idx},1)" style="background:none; border:none; color:white; font-size:1.2rem; cursor:pointer;">+</button>
-                    </div>
-                </div>
+            return `<div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:15px; margin-bottom:10px;">
+                ${i.n} (x${i.q}) - R$ ${(i.p*i.q).toFixed(2)}
             </div>`;
         }).join('');
         document.getElementById('cart-total').innerText = "R$ " + tot.toFixed(2).replace('.',',');
-        document.getElementById('cart-count').innerText = cart.reduce((a,b)=>a+b.q, 0);
-    }
-
-    function changeQty(idx, v) {
-        cart[idx].q += v;
-        if(cart[idx].q <= 0) cart.splice(idx, 1);
-        update();
-    }
-
-    function checkPix() {
-        const pay = document.getElementById('userPay').value;
-        document.getElementById('pix-box').style.display = (pay === 'Pix') ? 'block' : 'none';
-    }
-
-    function copyPix() {
-        navigator.clipboard.writeText("59874260220");
-        alert("Chave Pix Copiada com Sucesso!");
     }
 
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
-        const pay = document.getElementById('userPay').value;
-        if(!ad || cart.length === 0) return alert("Por favor, informe o endereço e adicione itens.");
-        let m = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
+        if(!ad || cart.length === 0) return alert("Preencha os dados");
+        let m = `*PEDIDO MAIS FRIO*\n\n`;
         cart.forEach(i => m += `✅ ${i.n} (x${i.q})\n`);
-        m += `\n*Pagamento:* ${pay}\n*Total:* ${document.getElementById('cart-total').innerText}\n*Endereço:* ${ad}`;
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
 
-    window.onload = () => { render(); checkPix(); };
+    window.onload = render;
 </script>
 </body>
 </html>
