@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mais Frio Climatização | Excelência desde 2011</title>
+    <title>Mais Frio Climatização | Excelência em Refrigeração</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -13,13 +13,13 @@
             --primary: #0d2a57;
             --secondary: #3498db;
             --accent: #25D366;
-            --bg-light: #f8fafc;
+            --bg-light: #f1f5f9;
             --text-dark: #1e293b;
             --text-muted: #64748b;
             --white: #ffffff;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
 
         body {
             font-family: 'Poppins', sans-serif;
@@ -28,7 +28,7 @@
             line-height: 1.6;
         }
 
-        /* HEADER */
+        /* NAVBAR */
         header {
             background: var(--white);
             padding: 15px 5%;
@@ -38,17 +38,17 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
+        .logo { font-weight: 700; color: var(--primary); font-size: 1.3rem; }
         .logo span { color: var(--secondary); }
 
         .cart-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
@@ -58,91 +58,76 @@
             transition: 0.3s;
         }
 
-        /* ANIMAÇÃO BUMP */
-        .bump { animation: bump 0.3s ease-out; }
-        @keyframes bump {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        /* HERO */
+        /* HERO SECTION COM SUA IMAGEM */
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%);
+            background: linear-gradient(135deg, rgba(13, 42, 87, 0.85) 0%, rgba(30, 64, 175, 0.85) 100%), 
+                        url('imagemprincipal.png'); /* SUA FOTO AQUI */
+            background-size: cover;
+            background-position: center;
             color: white;
-            padding: 60px 5% 80px;
+            padding: 100px 5% 120px;
             text-align: center;
         }
 
-        .hero h1 { font-size: 2.2rem; margin-bottom: 15px; font-weight: 700; }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; font-weight: 700; letter-spacing: -1px; }
+        .hero p { opacity: 0.9; font-size: 1.1rem; margin-bottom: 30px; }
 
         .search-box {
             background: white;
-            border-radius: 15px;
+            border-radius: 50px;
             display: flex;
             align-items: center;
-            padding: 5px 20px;
+            padding: 5px 25px;
             max-width: 600px;
             margin: 0 auto;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
-        .search-box input {
-            border: none;
-            padding: 15px;
-            width: 100%;
-            outline: none;
-            font-size: 1rem;
-            color: var(--text-dark);
-        }
+        .search-box input { border: none; padding: 15px; width: 100%; outline: none; font-size: 1rem; }
 
-        /* FILTROS */
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 30px;
-            overflow-x: auto;
-            padding-bottom: 10px;
-        }
-
+        /* FILTERS */
+        .filters { display: flex; justify-content: center; gap: 12px; margin-top: 35px; overflow-x: auto; padding-bottom: 10px; }
         .filter-btn {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.1);
             color: white;
             border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 22px;
+            padding: 8px 20px;
             border-radius: 50px;
             cursor: pointer;
             transition: 0.3s;
             white-space: nowrap;
         }
+        .filter-btn.active { background: var(--secondary); border-color: var(--secondary); font-weight: 700; }
 
-        .filter-btn.active { background: var(--white); color: var(--primary); font-weight: 700; }
-
-        /* CATALOGO */
-        .container { padding: 40px 5%; max-width: 1200px; margin: auto; }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 20px;
-        }
+        /* CATALOG */
+        .container { padding: 60px 5%; max-width: 1200px; margin: auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
 
         .card {
             background: var(--white);
-            padding: 20px;
-            border-radius: 20px;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            transition: 0.3s;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid rgba(0,0,0,0.03);
-            transition: 0.3s;
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--secondary); }
-        .card h3 { font-size: 0.95rem; color: var(--primary); min-height: 45px; margin-bottom: 10px; }
-        .card .price { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            background-color: #f8fafc;
+        }
+
+        .card-body { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card h3 { font-size: 1rem; color: var(--primary); margin-bottom: 8px; min-height: 48px; }
+        .card .price { font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 15px; }
 
         .add-btn {
-            background: #f1f5f9;
+            background: var(--bg-light);
             color: var(--primary);
             border: none;
             padding: 12px;
@@ -152,104 +137,37 @@
         }
         .add-btn:hover { background: var(--primary); color: white; }
 
-        /* SEÇÃO SOBRE NÓS (RESTAURADA) */
-        .about-section {
-            background: var(--white);
-            padding: 80px 5%;
-            margin-top: 40px;
-            text-align: center;
-            border-top: 1px solid #edf2f7;
-        }
+        /* ABOUT */
+        .about-section { background: var(--white); padding: 80px 5%; border-top: 1px solid #eee; }
+        .about-container { max-width: 900px; margin: auto; text-align: center; }
 
-        .about-container { max-width: 800px; margin: auto; }
-        .about-section h2 { color: var(--primary); font-size: 2rem; margin-bottom: 20px; }
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 40px;
-        }
-        .stat-item b { display: block; font-size: 2rem; color: var(--secondary); }
-        .stat-item span { font-size: 0.9rem; color: var(--text-muted); }
+        /* FOOTER */
+        footer { background: #07162c; color: #94a3b8; padding: 60px 5% 20px; text-align: center; }
 
-        /* TOAST FEEDBACK */
-        #toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
-            display: none;
-            z-index: 3000;
-            font-weight: 600;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        /* CARRINHO */
-        .cart-panel {
-            position: fixed;
-            right: -100%;
-            top: 0;
-            width: 100%;
-            max-width: 420px;
-            height: 100%;
-            background: white;
-            z-index: 2000;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-            transition: 0.4s;
-            display: flex;
-            flex-direction: column;
-        }
+        /* CARRINHO (ESTILO RESUMIDO) */
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; box-shadow: -10px 0 30px rgba(0,0,0,0.1); transition: 0.4s; display: flex; flex-direction: column; }
         .cart-panel.open { right: 0; }
-        .cart-header { padding: 25px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
-        .cart-content { padding: 25px; flex-grow: 1; overflow-y: auto; }
-        .cart-footer { padding: 25px; background: #f8fafc; border-top: 1px solid #f1f5f9; }
-
-        .form-select { width: 100%; padding: 14px; margin-bottom: 10px; border-radius: 12px; border: 1px solid #e2e8f0; font-family: inherit; }
-        .checkout-btn { width: 100%; padding: 18px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; }
-
-        .fab-whatsapp {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #25D366;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            z-index: 1500;
-            text-decoration: none;
-        }
+        .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; }
+        .checkout-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
         @media (max-width: 480px) {
             .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .hero h1 { font-size: 1.6rem; }
-            .stats { flex-direction: column; gap: 30px; }
+            .hero h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-<div id="toast">Item adicionado ao carrinho! 🛒</div>
-
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
-    <button class="cart-btn" id="header-cart-btn" onclick="toggleCart()">
+    <button class="cart-btn" onclick="toggleCart()">
         <i class="fas fa-shopping-basket"></i> <span id="cart-count">0</span>
     </button>
 </header>
 
 <section class="hero">
     <h1>Climatização Profissional</h1>
-    <p>Excelência e garantia desde 2011.</p>
+    <p>Excelência e garantia técnica desde 2011.</p>
     <div class="search-box">
         <i class="fas fa-search" style="color:#94a3b8;"></i>
         <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="filterItems()">
@@ -270,202 +188,136 @@
 
 <section class="about-section">
     <div class="about-container">
-        <h2>Nossa História</h2>
-        <p>Atuando em Porto Velho e região desde <b>2011</b>, a Mais Frio Climatização combina técnica e compromisso. Com mais de <b>15 anos de experiência</b> no mercado, entregamos soluções precisas para manter seu ambiente sempre fresco e confortável.</p>
-        
-        <div class="stats">
-            <div class="stat-item"><b>15+</b><span>Anos de Experiência</span></div>
-            <div class="stat-item"><b>100%</b><span>Qualidade Técnica</span></div>
-            <div class="stat-item"><b>2011</b><span>No mercado</span></div>
-        </div>
+        <h2 style="color:var(--primary); margin-bottom:20px;">15 Anos de Experiência</h2>
+        <p>Atendendo Porto Velho e região com as melhores soluções em refrigeração. Nossa equipe é altamente qualificada para garantir que seu ar-condicionado funcione com máxima eficiência e baixo consumo.</p>
     </div>
 </section>
 
+<footer>
+    <p>&copy; 2024 Mais Frio Climatização | Porto Velho - RO</p>
+</footer>
+
 <div id="cartPreview" class="cart-panel">
-    <div class="cart-header">
+    <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
         <h3>Seu Pedido</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:2rem; cursor:pointer;">&times;</button>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem;">&times;</button>
     </div>
-    <div class="cart-content" id="cartItems"></div>
-    <div class="cart-footer">
-        <div id="service-scheduling" style="display:none; margin-bottom:15px; background:#fff; padding:10px; border-radius:10px; border:1px solid #eee;">
-            <p style="font-size:0.75rem; font-weight:700; color:var(--primary);">AGENDAR SERVIÇO:</p>
-            <div style="display:flex; gap:5px;">
-                <input type="date" id="serviceDate" class="form-select" style="margin:0">
-                <select id="serviceTime" class="form-select" style="margin:0">
-                    <option value="Manhã">Manhã</option>
-                    <option value="Tarde">Tarde</option>
-                </select>
-            </div>
-        </div>
-        <input type="text" id="address" class="form-select" placeholder="Endereço Completo">
+    <div id="cartItems" style="padding:20px; flex-grow:1; overflow-y:auto;"></div>
+    <div style="padding:20px; background:#f8fafc;">
+        <input type="text" id="address" class="form-select" placeholder="Endereço">
         <select id="paymentMethod" class="form-select">
-            <option value="" disabled selected>Forma de Pagamento</option>
             <option value="PIX">PIX</option>
+            <option value="Cartão">Cartão</option>
             <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão">Cartão de Crédito/Débito</option>
         </select>
-        <div style="display:flex; justify-content:space-between; margin:15px 0; font-weight:700; font-size:1.2rem;">
+        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
             <span>Total:</span>
             <span id="total-price">R$ 0,00</span>
         </div>
-        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Enviar para WhatsApp</button>
+        <button class="checkout-btn" onclick="sendWhatsAppOrder()">Pedir no WhatsApp</button>
     </div>
 </div>
 
-<a href="https://wa.me/556993060469" class="fab-whatsapp" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-</a>
-
 <script>
     const inventory = [
+        // SERVIÇOS
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
-        { name: "Carga de Gás", price: 200, cat: "serviço" },
+        // ELÉTRICA
         { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "elétrica" },
-        { name: "Capacitor Duplo 40UF", price: 36, cat: "elétrica" },
-        { name: "Capacitor Duplo 35UF", price: 36, cat: "elétrica" },
-        { name: "Capacitor Duplo 30UF", price: 36, cat: "elétrica" },
         { name: "Contactor 18A", price: 53.50, cat: "elétrica" },
-        { name: "Contactor 25A", price: 135.00, cat: "elétrica" },
-        { name: "Sensor Degelo AC 05k", price: 10, cat: "elétrica" },
-        { name: "Controle Ar Universal", price: 80, cat: "elétrica" },
+        // INSTALAÇÃO
         { name: "Gás R-22 Lata 1kg", price: 130, cat: "instalação" },
         { name: "Tubulação de Cobre (kg)", price: 165, cat: "instalação" },
-        { name: "Suporte L Condensadora 47cm", price: 27, cat: "instalação" },
-        { name: "Polipex 1/4", price: 3.99, cat: "instalação" },
-        { name: "Polipex 3/8", price: 4.90, cat: "instalação" },
-        { name: "Polipex 1/2", price: 5.90, cat: "instalação" },
-        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, cat: "instalação" },
-        { name: "Fita Isolante 18mm x 10m", price: 6.90, cat: "instalação" },
-        { name: "Fita De PVC", price: 3.99, cat: "instalação" },
-        { name: "Bucha Plástica 0,8 C", price: 0.20, cat: "fixação" },
-        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" },
-        { name: "Bucha Plástica 0,12 C", price: 0.60, cat: "fixação" },
-        { name: "Parafuso Cônico", price: 0.35, cat: "fixação" },
-        { name: "Parafuso Sextavado", price: 1.50, cat: "fixação" }
+        // FIXAÇÃO
+        { name: "Parafuso Sextavado", price: 1.50, cat: "fixação" },
+        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
+    let cart = [];
     let currentCategory = "";
+
+    // MAPEAMENTO DAS SUAS FOTOS
+    const photoMap = {
+        'serviço': 'Seção%20de%20Serviços.png',
+        'elétrica': 'Peças%20Elétricas.png',
+        'instalação': 'Materiais%20de%20Instalação.png',
+        'fixação': 'Materiais%20de%20Instalação.png' // Usei a 4ª foto como fallback aqui
+    };
 
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
         grid.innerHTML = "";
+        
         const filtered = inventory.filter(i => {
             const matchesSearch = i.name.toLowerCase().includes(term.toLowerCase());
             const matchesCat = currentCategory === "" || i.cat === currentCategory;
             return matchesSearch && matchesCat;
         });
+
         filtered.forEach(item => {
+            const imgPath = photoMap[item.cat] || 'imagemprincipal.png';
+            
             grid.innerHTML += `
                 <div class="card">
-                    <div>
+                    <div class="card-img" style="background-image: url('${imgPath}')"></div>
+                    <div class="card-body">
                         <h3>${item.name}</h3>
                         <div class="price">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                        <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">Adicionar</button>
                     </div>
-                    <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">Adicionar</button>
                 </div>`;
         });
     }
 
+    // LOGICA DO CARRINHO
     function addToCart(name, price) {
         let item = cart.find(p => p.name === name);
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
-        saveAndRender();
-        showFeedback();
+        updateCartUI();
     }
 
-    function saveAndRender() {
-        localStorage.setItem('maisFrioCart', JSON.stringify(cart));
-        renderCart();
-    }
-
-    function renderCart() {
+    function updateCartUI() {
         const cartDiv = document.getElementById("cartItems");
         const totalSpan = document.getElementById("total-price");
-        const sched = document.getElementById("service-scheduling");
-        let total = 0, count = 0, hasService = false;
+        const countSpan = document.getElementById("cart-count");
+        let total = 0, count = 0;
 
-        cartDiv.innerHTML = cart.length === 0 ? '<p style="text-align:center;color:#999;padding:20px;">Carrinho vazio.</p>' : '';
+        cartDiv.innerHTML = "";
         cart.forEach(item => {
             total += item.price * item.qty;
             count += item.qty;
-            const original = inventory.find(i => i.name === item.name);
-            if(original && original.cat === 'serviço') hasService = true;
-            cartDiv.innerHTML += `
-                <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
-                    <div style="font-size:0.85rem;"><strong>${item.name}</strong><br>R$ ${item.price.toFixed(2)} x ${item.qty}</div>
-                    <div style="display:flex; gap:5px;">
-                        <button onclick="changeQty('${item.name}', -1)" style="padding:4px 8px; cursor:pointer;">-</button>
-                        <button onclick="changeQty('${item.name}', 1)" style="padding:4px 8px; cursor:pointer; background:var(--primary); color:white; border:none; border-radius:4px;">+</button>
-                    </div>
-                </div>`;
+            cartDiv.innerHTML += `<p style="font-size:0.9rem; margin-bottom:5px;">${item.qty}x ${item.name} - R$ ${(item.price * item.qty).toFixed(2)}</p>`;
         });
 
-        document.getElementById("cart-count").innerText = count;
         totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        sched.style.display = hasService ? "block" : "none";
-    }
-
-    function changeQty(name, amt) {
-        let item = cart.find(p => p.name === name);
-        if(item) {
-            item.qty += amt;
-            if(item.qty <= 0) cart = cart.filter(p => p.name !== name);
-            saveAndRender();
-        }
+        countSpan.innerText = count;
     }
 
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
-        const pay = document.getElementById("paymentMethod").value;
-        const date = document.getElementById("serviceDate").value;
-        const time = document.getElementById("serviceTime").value;
-        const schedVisible = document.getElementById("service-scheduling").style.display === "block";
+        if (cart.length === 0 || !addr) return alert("Adicione itens e o endereço!");
 
-        if (cart.length === 0) return alert("Adicione itens!");
-        if (!addr) return alert("Informe o endereço!");
-        if (!pay) return alert("Escolha o pagamento!");
-
-        let msg = "*NOVO PEDIDO - MAIS FRIO CLIMATIZAÇÃO* ❄️\n\n";
-        let total = 0;
-        cart.forEach(i => {
-            msg += `• ${i.name} (x${i.qty}) - R$ ${(i.price * i.qty).toFixed(2)}\n`;
-            total += i.price * i.qty;
-        });
-
-        if(schedVisible && date) msg += `\n📅 *AGENDAMENTO:* ${date.split('-').reverse().join('/')} (${time})`;
-        msg += `\n📍 *ENDEREÇO:* ${addr}\n💳 *PAGAMENTO:* ${pay}\n💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*`;
-        if(pay === "PIX") msg += `\n🔑 *Chave PIX:* 59874260220`;
-
+        let msg = "*NOVO PEDIDO - MAIS FRIO*\n\n";
+        cart.forEach(i => msg += `• ${i.name} (x${i.qty})\n`);
+        msg += `\n📍 *Endereço:* ${addr}`;
+        
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
     }
 
     function setFilter(c) {
         currentCategory = c;
         document.querySelectorAll('.filter-btn').forEach(b => {
-            const btnText = b.innerText.toLowerCase();
-            b.classList.toggle('active', btnText.includes(c) || (c==='' && btnText==='tudo'));
+            b.classList.toggle('active', b.innerText.toLowerCase().includes(c) || (c==='' && b.innerText==='Tudo'));
         });
         renderItems();
     }
 
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
-    function showFeedback() {
-        const t = document.getElementById('toast');
-        t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 2500);
-        const btn = document.getElementById('header-cart-btn');
-        btn.classList.add('bump');
-        setTimeout(() => btn.classList.remove('bump'), 300);
-    }
 
     renderItems();
-    renderCart();
 </script>
-
 </body>
 </html>
