@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mais Frio Climatização | Catálogo Completo</title>
+    <title>Mais Frio Climatização | Profissional</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,118 +13,143 @@
             --primary: #0a192f;
             --secondary: #007aff;
             --accent: #25d366;
-            --bg: #f5f5f7;
-            --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --spring-soft: cubic-bezier(0.23, 1, 0.32, 1);
+            --spring-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: var(--bg); color: var(--primary); overflow-x: hidden; }
         body.modal-open { overflow: hidden; position: fixed; width: 100%; }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- ANIMAÇÕES PROFISSIONAIS --- */
+        @keyframes revealItem {
+            0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        /* --- HEADER & HERO --- */
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* --- HEADER --- */
         header { 
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; }
+        .logo { font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px; }
         .logo span { color: var(--secondary); }
         
         .btn-cart-top { 
-            background: var(--primary); color: white; padding: 10px 22px; border-radius: 50px; 
+            background: var(--primary); color: white; padding: 10px 20px; border-radius: 14px; 
             cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700;
+            transition: all 0.3s var(--spring-soft);
         }
+        .btn-cart-top:active { transform: scale(0.9); }
 
+        /* --- HERO --- */
         .hero { 
-            background: linear-gradient(135deg, #0a192f 0%, #061121 100%); 
-            color: white; padding: 50px 6% 70px; text-align: center;
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%); 
+            color: white; padding: 60px 6% 80px; text-align: center;
             border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
         }
-        .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 20px; line-height: 1.1; }
+        .hero h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; letter-spacing: -1px; }
         
         .search-area { 
-            background: white; border-radius: 15px; padding: 5px 15px; 
+            background: rgba(255, 255, 255, 1); border-radius: 18px; padding: 5px 15px; 
             width: 100%; max-width: 500px; display: flex; align-items: center; 
-            margin: 0 auto 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            margin: 0 auto 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
         }
-        .search-area input { width: 100%; padding: 12px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: #333; }
+        .search-area:focus-within { transform: translateY(-3px); box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+        .search-area input { width: 100%; padding: 14px; border: none; outline: none; font-size: 1rem; font-weight: 600; background: transparent; }
 
-        .tabs { display: flex; gap: 10px; justify-content: center; overflow-x: auto; padding-bottom: 5px; }
-        .tab { padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 50px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; color: white; border: 1px solid rgba(255,255,255,0.2); transition: 0.3s; }
-        .tab.active { background: white; color: var(--primary); transform: scale(1.05); }
+        .tabs { display: flex; gap: 10px; justify-content: center; overflow-x: auto; padding: 5px; scrollbar-width: none; }
+        .tab { padding: 10px 24px; background: rgba(255,255,255,0.08); border-radius: 12px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; color: white; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s var(--spring-soft); }
+        .tab.active { background: white; color: var(--primary); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
-        /* --- GRID --- */
-        .container { padding: 30px 5% 120px; max-width: 1300px; margin: auto; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; } }
+        /* --- GRID & CARDS --- */
+        .container { padding: 40px 5% 150px; max-width: 1400px; margin: auto; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; } }
 
         .card { 
-            background: white; border-radius: 20px; overflow: hidden; display: flex; 
-            flex-direction: column; transition: 0.4s var(--spring); box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            animation: fadeInUp 0.5s ease backwards;
+            background: var(--card-bg); border-radius: 24px; overflow: hidden; display: flex; 
+            flex-direction: column; transition: all 0.5s var(--spring-soft); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.03);
+            opacity: 0; animation: revealItem 0.6s var(--spring-soft) forwards;
         }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
 
-        .img-box { width: 100%; height: 150px; position: relative; display: flex; align-items: center; justify-content: center; padding: 10px; background: #fff; }
-        .img-box img { max-width: 80%; max-height: 80%; object-fit: contain; }
+        .img-box { width: 100%; height: 180px; position: relative; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .img-box img { max-width: 90%; max-height: 90%; object-fit: contain; transition: transform 0.5s var(--spring-soft); }
+        .card:hover .img-box img { transform: scale(1.1); }
         
-        .badge { position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 50px; font-size: 0.5rem; font-weight: 800; color: white; text-transform: uppercase; z-index: 5; }
+        .badge { position: absolute; top: 15px; left: 15px; padding: 6px 12px; border-radius: 10px; font-size: 0.6rem; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 0.5px; z-index: 5; }
         .badge.peca { background: var(--secondary); }
-        .badge.servico { background: #28cd41; }
+        .badge.servico { background: var(--accent); }
 
-        .card-body { padding: 12px; text-align: center; flex: 1; display: flex; flex-direction: column; }
-        .card h3 { font-size: 0.8rem; font-weight: 700; min-height: 34px; margin-bottom: 5px; color: var(--primary); line-height: 1.2; }
-        .price { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-bottom: 10px; display: block; }
+        .card-body { padding: 18px; text-align: left; flex: 1; display: flex; flex-direction: column; }
+        .card h3 { font-size: 0.9rem; font-weight: 700; min-height: 40px; margin-bottom: 8px; color: var(--primary); line-height: 1.3; }
+        .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); margin-bottom: 15px; display: block; }
         
-        .btn-add { width: 100%; background: #f0f2f5; padding: 10px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 0.75rem; }
-        .btn-add:active { transform: scale(0.95); background: var(--primary); color: white; }
+        .btn-add { width: 100%; background: #f1f5f9; padding: 14px; border-radius: 14px; border: none; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 0.8rem; color: var(--primary); }
+        .btn-add:hover { background: var(--primary); color: white; }
+        .btn-add:active { transform: scale(0.95); }
 
-        /* --- CARRINHO LATERAL --- */
-        .overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.4); backdrop-filter: blur(8px); z-index: 1900; opacity: 0; visibility: hidden; transition: 0.3s; }
-        .overlay.active { opacity: 1; visibility: visible; }
-
+        /* --- CARRINHO --- */
         #sideCart { 
-            position: fixed; right: -100%; top: 0; width: 90%; max-width: 400px; height: 100%; 
-            background: white; z-index: 2000; transition: 0.5s var(--spring); 
-            display: flex; flex-direction: column; 
+            position: fixed; right: -100%; top: 0; width: 92%; max-width: 420px; height: 100%; 
+            background: white; z-index: 2000; transition: transform 0.6s var(--spring-soft); 
+            display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(0,0,0,0.1);
         }
+        #sideCart.open { transform: translateX(-100%); right: -100%; /* Ajuste para animação fluida */ }
+        /* Simplificando o movimento do carrinho */
         #sideCart.open { right: 0; }
-        
-        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
+
+        .cart-header { padding: 25px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
         
         .cart-item { 
-            background: #f8fafc; padding: 12px; border-radius: 15px; margin-bottom: 10px; 
+            background: #f8fafc; padding: 15px; border-radius: 18px; margin-bottom: 12px; 
             display: flex; justify-content: space-between; align-items: center;
+            animation: revealItem 0.4s var(--spring-soft);
         }
 
-        .cart-footer { padding: 20px; border-top: 1px solid #eee; background: white; }
-        .premium-input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; outline: none; }
-        
-        /* FIX: Animação e estilo do PIX */
+        .cart-footer { padding: 25px; border-top: 1px solid #f1f5f9; background: white; }
+        .premium-input { width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #f1f5f9; margin-bottom: 12px; font-weight: 600; outline: none; transition: 0.3s; }
+        .premium-input:focus { border-color: var(--secondary); background: #fff; }
+
         #pix-info { 
-            display:none; background:#e6ffed; padding:12px; border-radius:12px; 
-            text-align:center; margin-bottom:12px; border: 2px dashed #28cd41; 
-            cursor: pointer; animation: fadeInUp 0.4s var(--spring);
+            display:none; background:#f0fdf4; padding:18px; border-radius:18px; 
+            text-align:center; margin-bottom:15px; border: 2px dashed var(--accent); 
+            cursor: pointer; transition: 0.3s; animation: revealItem 0.4s var(--spring-soft);
         }
+        #pix-info:hover { background: #dcfce7; }
 
-        .btn-finish { width: 100%; padding: 16px; background: #28cd41; color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-finish { 
+            width: 100%; padding: 18px; background: var(--accent); color: white; border: none; 
+            border-radius: 16px; font-weight: 800; cursor: pointer; display: flex; 
+            align-items: center; justify-content: center; gap: 10px; transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+        }
+        .btn-finish:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(37, 211, 102, 0.3); }
 
         /* BARRA FLUTUANTE */
         .cart-bar {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 400px; background: var(--primary); color: white;
-            padding: 15px 20px; border-radius: 20px; display: flex; justify-content: space-between;
-            align-items: center; z-index: 900; transition: 0.4s var(--spring); visibility: hidden; opacity: 0;
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(150%);
+            width: 90%; max-width: 450px; background: var(--primary); color: white;
+            padding: 18px 25px; border-radius: 22px; display: flex; justify-content: space-between;
+            align-items: center; z-index: 900; transition: 0.6s var(--spring-soft);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); cursor: pointer;
         }
-        .cart-bar.active { visibility: visible; opacity: 1; bottom: 30px; }
+        .cart-bar.active { transform: translateX(-50%) translateY(0); }
 
-        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 12px 30px; border-radius: 50px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 700; }
+        #toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--primary); color: white; padding: 15px 30px; border-radius: 16px; z-index: 3000; transition: 0.5s var(--spring-soft); font-weight: 700; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
         #toast.active { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
@@ -138,9 +163,10 @@
 </header>
 
 <section class="hero">
-    <h1>Peças & Serviços</h1>
+    <h1>Excelência em Climatização</h1>
     <div class="search-area">
-        <input type="text" id="searchInput" placeholder="O que você precisa?" onkeyup="render()">
+        <i class="fas fa-search" style="color: #cbd5e1; margin-left: 5px;"></i>
+        <input type="text" id="searchInput" placeholder="Buscar peça ou serviço..." onkeyup="render()">
     </div>
     <div class="tabs">
         <div class="tab active" id="tab-all" onclick="filter('all')">Todos</div>
@@ -154,46 +180,49 @@
 </main>
 
 <div class="cart-bar" id="cartSummaryBar" onclick="toggleCart()">
-    <span id="cart-count-bar" style="background:rgba(255,255,255,0.2); padding:5px 12px; border-radius:8px; font-weight:800;">0</span>
-    <span style="font-weight:700;">Ver Carrinho</span>
-    <span id="cart-total-bar" style="font-weight:800;">R$ 0,00</span>
+    <div style="display:flex; align-items:center; gap:12px">
+        <span id="cart-count-bar" style="background:rgba(255,255,255,0.15); padding:6px 14px; border-radius:10px; font-weight:800;">0</span>
+        <span style="font-weight:700; font-size:0.9rem">Ver Itens</span>
+    </div>
+    <span id="cart-total-bar" style="font-weight:800; font-size:1.1rem">R$ 0,00</span>
 </div>
 
 <div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
 
 <div id="sideCart">
     <div class="cart-header">
-        <h2 style="font-size: 1.1rem; font-weight: 800;">Meu Carrinho</h2>
-        <i class="fas fa-times" onclick="toggleCart()" style="cursor:pointer; opacity: 0.3;"></i>
+        <h2 style="font-weight: 800; letter-spacing: -0.5px;">Carrinho</h2>
+        <div onclick="toggleCart()" style="width: 40px; height: 40px; background: #f1f5f9; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+            <i class="fas fa-times" style="opacity: 0.5;"></i>
+        </div>
     </div>
     <div class="cart-items" id="cart-list"></div>
     <div class="cart-footer">
-        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega">
+        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de entrega completo">
         <select id="userPay" class="premium-input" onchange="checkPix()">
-            <option value="Pix">Pagar com Pix</option>
-            <option value="Cartão">Cartão de Crédito/Débito</option>
+            <option value="Pix">Pagar com Pix (CNPJ)</option>
+            <option value="Cartão">Cartão na Entrega</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
         
         <div id="pix-info" onclick="copyPix()">
-            <small style="color:#157347">Clique p/ copiar o CNPJ Pix:</small><br>
-            <strong style="color:#157347; font-size:1.1rem">59874260220</strong>
+            <small style="color: #157347; font-weight: 700; text-transform: uppercase; font-size: 0.6rem;">Toque para copiar o Pix</small><br>
+            <strong style="color: #157347; font-size: 1.2rem;">59874260220</strong>
         </div>
 
-        <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-            <span style="font-weight: 600; opacity: 0.5;">Total:</span>
-            <span id="cart-total-side" style="font-weight: 800; font-size: 1.3rem;">R$ 0,00</span>
+        <div style="display: flex; justify-content: space-between; margin: 15px 0 20px;">
+            <span style="font-weight: 600; color: #94a3b8;">Total do Pedido</span>
+            <span id="cart-total-side" style="font-weight: 800; font-size: 1.4rem;">R$ 0,00</span>
         </div>
         <button onclick="sendOrder()" class="btn-finish">
-            <i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP
+            <i class="fab fa-whatsapp" style="font-size: 1.2rem;"></i> FINALIZAR PEDIDO
         </button>
     </div>
 </div>
 
-<div id="toast">✅ Adicionado ao carrinho!</div>
+<div id="toast">Item adicionado com sucesso!</div>
 
 <script>
-    // LISTA COMPLETA RESTAURADA (35 ITENS)
     const inventory = [
         { name: "Mão de Obra Instalação (Ar Novo)", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
         { name: "Mão de Obra Instalação (Ar Usado)", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
@@ -232,7 +261,7 @@
         { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('cart_mf_vfinal')) || [];
+    let cart = JSON.parse(localStorage.getItem('cart_mf_v5')) || [];
     let currentFilter = 'all';
 
     function render() {
@@ -240,20 +269,23 @@
         const term = document.getElementById('searchInput').value.toLowerCase();
         grid.innerHTML = "";
         
-        inventory.filter(i => i.name.toLowerCase().includes(term) && (currentFilter === 'all' || i.cat === currentFilter))
-        .forEach((item, idx) => {
-            grid.innerHTML += `
-                <div class="card" style="animation-delay: ${idx*0.03}s">
-                    <div class="img-box">
-                        <div class="badge ${item.cat}">${item.cat}</div>
-                        <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
-                    </div>
-                    <div class="card-body">
-                        <h3>${item.name}</h3>
-                        <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
-                        <button class="btn-add" onclick="add('${item.name}', ${item.price})">ADICIONAR</button>
-                    </div>
+        const filtered = inventory.filter(i => i.name.toLowerCase().includes(term) && (currentFilter === 'all' || i.cat === currentFilter));
+        
+        filtered.forEach((item, idx) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.style.animationDelay = `${idx * 0.05}s`;
+            card.innerHTML = `
+                <div class="img-box">
+                    <div class="badge ${item.cat}">${item.cat}</div>
+                    <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
+                </div>
+                <div class="card-body">
+                    <h3>${item.name}</h3>
+                    <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+                    <button class="btn-add" onclick="add('${item.name}', ${item.price})">Adicionar</button>
                 </div>`;
+            grid.appendChild(card);
         });
     }
 
@@ -263,11 +295,11 @@
         save();
         const t = document.getElementById('toast');
         t.classList.add('active');
-        setTimeout(() => t.classList.remove('active'), 2000);
+        setTimeout(() => t.classList.remove('active'), 2500);
     }
 
     function save() {
-        localStorage.setItem('cart_mf_vfinal', JSON.stringify(cart));
+        localStorage.setItem('cart_mf_v5', JSON.stringify(cart));
         updateUI();
     }
 
@@ -279,11 +311,11 @@
             tot += item.p * item.q;
             count += item.q;
             list.innerHTML += `<div class="cart-item">
-                <div><div style="font-weight:700; font-size:0.8rem">${item.n}</div><div style="color:var(--secondary); font-weight:800">R$ ${(item.p*item.q).toFixed(2).replace('.',',')}</div></div>
+                <div><div style="font-weight:700; font-size:0.85rem">${item.n}</div><div style="color:var(--secondary); font-weight:800; margin-top:4px">R$ ${(item.p*item.q).toFixed(2).replace('.',',')}</div></div>
                 <div style="display:flex; align-items:center; gap:10px">
-                    <button onclick="changeQty(${idx},-1)" style="width:25px; border-radius:5px; border:1px solid #ddd; background:#fff">-</button>
+                    <button onclick="changeQty(${idx},-1)" style="width:28px; height:28px; border-radius:8px; border:1px solid #e2e8f0; background:#fff; cursor:pointer">-</button>
                     <span style="font-weight:800">${item.q}</span>
-                    <button onclick="changeQty(${idx},1)" style="width:25px; border-radius:5px; border:1px solid #ddd; background:#fff">+</button>
+                    <button onclick="changeQty(${idx},1)" style="width:28px; height:28px; border-radius:8px; border:1px solid #e2e8f0; background:#fff; cursor:pointer">+</button>
                 </div></div>`;
         });
         const val = "R$ " + tot.toFixed(2).replace('.',',');
@@ -301,21 +333,28 @@
     }
 
     function toggleCart() {
-        document.getElementById('sideCart').classList.toggle('open');
-        document.getElementById('cartOverlay').classList.toggle('active');
+        const cartEl = document.getElementById('sideCart');
+        const overlay = document.getElementById('cartOverlay');
+        cartEl.classList.toggle('open');
+        overlay.classList.toggle('active');
         document.body.classList.toggle('modal-open');
-        // CORREÇÃO: Verifica o Pix ao abrir
-        checkPix();
+        if(cartEl.classList.contains('open')) checkPix();
     }
 
     function checkPix() {
         const isPix = document.getElementById('userPay').value === 'Pix';
-        document.getElementById('pix-info').style.display = isPix ? 'block' : 'none';
+        const pixBox = document.getElementById('pix-info');
+        pixBox.style.display = isPix ? 'block' : 'none';
     }
 
     function copyPix() {
         navigator.clipboard.writeText("59874260220");
-        alert("Chave Pix Copiada!");
+        const pixBox = document.getElementById('pix-info');
+        pixBox.style.transform = "scale(0.95)";
+        setTimeout(() => {
+            pixBox.style.transform = "scale(1)";
+            alert("Chave Pix copiada!");
+        }, 100);
     }
 
     function filter(c) {
@@ -327,7 +366,7 @@
 
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
-        if(!ad || cart.length === 0) return alert("Adicione o endereço!");
+        if(!ad || cart.length === 0) return alert("Por favor, informe o endereço!");
         let m = `*PEDIDO MAIS FRIO*\n\n`;
         cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
         m += `\n*Pagamento:* ${document.getElementById('userPay').value}\n*Total:* ${document.getElementById('cart-total-side').innerText}\n*Endereço:* ${ad}`;
