@@ -135,7 +135,6 @@
 
         footer { background: #07162c; color: #94a3b8; padding: 40px 5%; text-align: center; font-size: 0.9rem; }
 
-        /* CARRINHO */
         .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; box-shadow: -10px 0 30px rgba(0,0,0,0.1); transition: 0.4s; display: flex; flex-direction: column; }
         .cart-panel.open { right: 0; }
         .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
@@ -151,7 +150,6 @@
         .form-select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; }
         .checkout-btn { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
 
-        /* ESTILO AGENDAMENTO */
         .sched-box { background: #fff; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 15px; }
         .sched-box label { font-size: 0.75rem; font-weight: 700; color: var(--primary); display: block; margin-bottom: 5px; text-transform: uppercase; }
 
@@ -239,16 +237,23 @@
 </div>
 
 <script>
+    // LISTA COMPLETA RECUPERADA
     const inventory = [
         { name: "Instalação Ar Novo", price: 400, cat: "serviço" },
         { name: "Instalação Ar Usado", price: 250, cat: "serviço" },
         { name: "Manutenção Preventiva", price: 150, cat: "serviço" },
         { name: "Capacitor Duplo 25+2.5UF", price: 30, cat: "elétrica" },
+        { name: "Capacitor Duplo 30+2.5UF", price: 35, cat: "elétrica" },
+        { name: "Capacitor Duplo 35+2.5UF", price: 38, cat: "elétrica" },
         { name: "Contactor 18A", price: 53.50, cat: "elétrica" },
+        { name: "Contactor 25A", price: 65.00, cat: "elétrica" },
         { name: "Tubulação de Cobre (kg)", price: 165, cat: "instalação" },
         { name: "Gás R-22 Lata 1kg", price: 130, cat: "instalação" },
+        { name: "Gás R-410A Lata 800g", price: 110, cat: "instalação" },
         { name: "Parafuso Sextavado", price: 1.50, cat: "fixação" },
-        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" }
+        { name: "Bucha Plástica 0,10 C", price: 0.50, cat: "fixação" },
+        { name: "Bucha Plástica 0,08 C", price: 0.30, cat: "fixação" },
+        { name: "Suporte Ar Split 7-12k", price: 45, cat: "instalação" }
     ];
 
     const itemPhotos = {
@@ -266,7 +271,8 @@
         'fixação': 'Materiais%20de%20Instalação.png'
     };
 
-    let cart = [];
+    // CARREGA CARRINHO SALVO OU COMEÇA VAZIO
+    let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
     let currentCategory = "";
 
     function renderItems(term = "") {
@@ -307,6 +313,9 @@
     }
 
     function updateCartUI() {
+        // SALVA NO STORAGE SEMPRE QUE MUDA
+        localStorage.setItem('maisFrioCart', JSON.stringify(cart));
+
         const cartDiv = document.getElementById("cartItems");
         const totalSpan = document.getElementById("total-price");
         const countSpan = document.getElementById("cart-count");
@@ -320,7 +329,6 @@
             total += item.price * item.qty;
             count += item.qty;
             
-            // Verifica se o item no carrinho é um serviço para mostrar agendamento
             const original = inventory.find(i => i.name === item.name);
             if(original && original.cat === 'serviço') hasService = true;
 
@@ -340,8 +348,6 @@
 
         totalSpan.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         countSpan.innerText = count;
-        
-        // Mostra ou esconde o agendamento
         schedDiv.style.display = hasService ? "block" : "none";
     }
 
@@ -367,6 +373,9 @@
         msg += `\n📍 *Endereço:* ${addr}\n💳 *Pagamento:* ${pay}`;
         
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
+        
+        // OPCIONAL: Limpa o carrinho após o pedido
+        // cart = []; updateCartUI();
     }
 
     function setFilter(c) {
@@ -381,7 +390,9 @@
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
 
+    // RENDERIZAÇÃO INICIAL
     renderItems();
+    updateCartUI(); // Atualiza com o que tiver no localStorage
 </script>
 </body>
 </html>
