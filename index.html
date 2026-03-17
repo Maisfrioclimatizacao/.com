@@ -16,95 +16,75 @@
             --bg-light: #f8fafc;
             --text-dark: #1e293b;
             --white: #ffffff;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; overflow-x: hidden; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
 
-        /* TOAST */
-        #toast {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            background: var(--primary); color: white; padding: 12px 25px;
-            border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            z-index: 3000; transition: 0.5s; font-weight: 600; display: flex; align-items: center; gap: 10px;
-        }
-        #toast.show { top: 20px; }
-
-        .top-bar { background: #061731; color: white; font-size: 0.75rem; padding: 8px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .status-dot { height: 8px; width: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; background: var(--accent); }
-
+        /* HEADER & HERO */
         header { background: var(--white); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.05); }
         .logo { font-weight: 700; color: var(--primary); font-size: 1.2rem; }
-
         .hero { background: linear-gradient(135deg, var(--primary) 0%, #1e40af 100%); color: white; padding: 40px 5%; text-align: center; }
         .search-box { background: white; border-radius: 15px; display: flex; align-items: center; padding: 5px 20px; max-width: 600px; margin: 20px auto; }
         .search-box input { border: none; padding: 12px; width: 100%; outline: none; font-size: 16px; }
 
+        /* GRID DE PRODUTOS */
         .container { padding: 30px 5%; max-width: 1200px; margin: auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        
-        .card { background: var(--white); border-radius: 15px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
-        .card-img { width: 100%; height: 160px; background-size: cover; background-position: center; background-color: #f1f5f9; }
-        .btn-add { width: 100%; padding: 10px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; border-radius: 8px; transition: 0.2s; }
-        .btn-add:hover { background: var(--primary); color: white; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .card { background: var(--white); border-radius: 15px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; }
+        .card-img { width: 100%; height: 160px; background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #fff; padding: 10px; }
+        .btn-add { width: 100%; padding: 10px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; border-radius: 8px; }
 
-        /* CARRINHO PROFISSIONAL */
-        .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s cubic-bezier(0.7, 0, 0.3, 1); display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
+        /* SEÇÃO DE DICAS ESTILO PRINT */
+        .section-title { text-align: center; color: var(--primary); margin: 40px 0 20px; font-weight: 700; font-size: 1.5rem; }
+        .tips-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 50px; }
+        .tip-card { 
+            background: #ebf5ff; 
+            padding: 25px; 
+            border-radius: 15px; 
+            border-left: 6px solid var(--secondary);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .tip-card h3 { color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .tip-card p { font-size: 0.9rem; line-height: 1.5; color: #475569; }
+
+        /* HORÁRIO DE ATENDIMENTO ESTILO PRINT */
+        .schedule-container { 
+            background: var(--white); 
+            max-width: 600px; 
+            margin: 0 auto 50px; 
+            padding: 30px; 
+            border-radius: 20px; 
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .schedule-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+        .schedule-row:last-child { border-bottom: none; }
+        .day { font-weight: 600; color: var(--primary); }
+        .hours { color: var(--secondary); font-weight: 700; }
+
+        /* CARRINHO */
+        .cart-panel { position: fixed; right: -100%; top: 0; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; transition: 0.4s; display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
         .cart-panel.open { right: 0; }
-        
-        .cart-header { padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: var(--bg-light); }
-        .cart-items-container { padding: 15px; flex-grow: 1; overflow-y: auto; }
-
-        .cart-item-row { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px; background: #fff; border-radius: 12px; 
-            margin-bottom: 10px; border: 1px solid #f1f5f9; box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-        
-        .item-info { flex: 1; padding-right: 10px; }
-        .item-name { font-size: 0.85rem; font-weight: 600; color: var(--primary); display: block; }
-        .item-price { font-size: 0.8rem; color: var(--secondary); font-weight: 700; }
-
-        .qty-wrapper { display: flex; align-items: center; background: #f1f5f9; border-radius: 50px; padding: 4px 8px; gap: 10px; }
-        .btn-qty { 
-            width: 28px; height: 28px; border-radius: 50%; border: none; 
-            background: var(--primary); color: white; cursor: pointer; 
-            display: flex; align-items: center; justify-content: center; font-size: 0.8rem; transition: 0.2s;
-        }
-        .btn-qty:active { transform: scale(0.9); }
-        .qty-num { font-weight: 700; font-size: 0.9rem; min-width: 20px; text-align: center; }
-
-        .cart-footer { padding: 20px; background: var(--bg-light); border-top: 1px solid #eee; }
-        .cart-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; }
-
-        .btn-checkout { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 1rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
-
-        /* DICAS */
-        .tips-section { margin-top: 40px; border-top: 1px solid #eee; padding-top: 30px; }
-        .tip-card { background: #eef6ff; padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--secondary); }
+        .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #f1f5f9; }
+        .qty-wrapper { display: flex; align-items: center; background: #f1f5f9; border-radius: 50px; padding: 5px 10px; gap: 15px; }
+        .btn-qty { width: 25px; height: 25px; border-radius: 50%; border: none; background: var(--primary); color: white; cursor: pointer; }
+        .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid #eee; }
 
         @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; } }
     </style>
 </head>
 <body>
 
-<div id="toast"><i class="fas fa-check-circle"></i> <span id="toast-msg">Item adicionado</span></div>
-
-<div class="top-bar">
-    <div><span class="status-dot"></span> Aberto - Médici/RO</div>
-    <div>(69) 9306-0469</div>
-</div>
-
 <header>
     <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
-    <button onclick="toggleCart()" style="background:var(--primary); color:white; border:none; padding:10px 18px; border-radius:50px; cursor:pointer; font-weight:600;">
+    <button onclick="toggleCart()" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:50px; cursor:pointer;">
         <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
     </button>
 </header>
 
 <section class="hero">
-    <h2 style="font-size: 1.4rem;">Peças e Serviços</h2>
+    <h2>Peças e Serviços</h2>
     <div class="search-box">
         <input type="text" id="searchInput" placeholder="O que você procura?" onkeyup="filterItems()">
     </div>
@@ -113,86 +93,84 @@
 <main class="container">
     <div class="grid" id="main-grid"></div>
 
-    <div class="tips-section">
-        <h3 style="margin-bottom:15px; color:var(--primary);">Dicas de Manutenção</h3>
+    <h2 class="section-title">Dicas do Especialista</h2>
+    <div class="tips-container">
         <div class="tip-card">
-            <strong>Limpeza Mensal:</strong> Lavar os filtros evita que o ar force o motor e economiza energia.
+            <h3><i class="fas fa-bolt"></i> Economize Energia</h3>
+            <p>Mantenha os filtros limpos! Filtro sujo faz o compressor trabalhar o dobro e aumenta sua conta de luz em até 30%.</p>
         </div>
         <div class="tip-card">
-            <strong>Capacitores:</strong> Se o seu ar demora a ligar, o capacitor pode estar fraco. Troque antes que queime o compressor.
+            <h3><i class="fas fa-tint-slash"></i> Evite Vazamentos</h3>
+            <p>Se o seu ar está pingando dentro de casa, o dreno pode estar entupido por falta de manutenção preventiva.</p>
+        </div>
+        <div class="tip-card">
+            <h3><i class="fas fa-shield-alt"></i> Vida Útil</h3>
+            <p>Uma carga de gás correta e capacitores novos evitam que o motor do seu ar condicionado queime prematuramente.</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Horário de Atendimento</h2>
+    <div class="schedule-container">
+        <div class="schedule-row">
+            <span class="day">Segunda a Sexta</span>
+            <span class="hours">08:00 – 18:00</span>
+        </div>
+        <div class="schedule-row">
+            <span class="day">Sábado</span>
+            <span class="hours">08:00 – 12:00</span>
+        </div>
+        <div class="schedule-row">
+            <span class="day">Domingo</span>
+            <span class="hours" style="color: #ef4444;">Fechado</span>
         </div>
     </div>
 </main>
 
 <div id="cartPreview" class="cart-panel">
-    <div class="cart-header">
-        <h3 style="color:var(--primary);">Meus Itens</h3>
-        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer; color:var(--primary);">&times;</button>
+    <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between;">
+        <h3>Seu Pedido</h3>
+        <button onclick="toggleCart()" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">&times;</button>
     </div>
-    
-    <div id="cartItems" class="cart-items-container">
-        </div>
-    
+    <div id="cartItems" style="flex-grow:1; overflow-y:auto;"></div>
     <div class="cart-footer">
-        <input type="text" id="address" class="cart-input" placeholder="Endereço de entrega">
-        
-        <select id="paymentMethod" class="cart-input" onchange="checkPix()">
-            <option value="Pix">Pagar com Pix</option>
-            <option value="Cartão">Cartão de Crédito</option>
-            <option value="Dinheiro">Dinheiro</option>
-        </select>
-
-        <div id="pix-area" style="background:#fff; padding:10px; border-radius:8px; margin-bottom:15px; border:1px dashed var(--accent); display:none; text-align:center;">
-            <small style="color:#666;">Chave Pix (CNPJ):</small>
-            <div style="font-weight:700; color:var(--primary); margin:5px 0;">59.874.260/0001-22</div>
-            <button onclick="copyPix()" style="background:var(--secondary); color:white; border:none; padding:5px 10px; border-radius:4px; font-size:0.7rem; cursor:pointer;">Copiar Chave</button>
-        </div>
-
-        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px; font-size:1.1rem; color:var(--primary);">
+        <input type="text" id="address" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;" placeholder="Endereço de entrega">
+        <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:15px;">
             <span>Total:</span> <span id="total-price">R$ 0,00</span>
         </div>
-        
-        <button onclick="sendWhatsAppOrder()" class="btn-checkout">
-            <i class="fab fa-whatsapp"></i> ENVIAR PEDIDO
+        <button onclick="sendWhatsAppOrder()" style="width:100%; padding:15px; background:var(--accent); color:white; border:none; border-radius:10px; font-weight:700; cursor:pointer;">
+            FINALIZAR NO WHATSAPP
         </button>
     </div>
 </div>
 
 <script>
     const inventory = [
-        { name: "Instalação Ar Novo", price: 400 },
-        { name: "Instalação Ar Usado", price: 250 },
-        { name: "Manutenção Preventiva", price: 150 },
-        { name: "Carga de Gás", price: 200 },
-        { name: "Capacitor Duplo 25+2.5UF", price: 30 },
-        { name: "Capacitor Duplo 30UF", price: 36 },
-        { name: "Capacitor Duplo 35UF", price: 36 },
-        { name: "Capacitor Duplo 40UF", price: 36 },
-        { name: "Capacitor Ventilador 1.0UF", price: 8.50 },
-        { name: "Capacitor Ventilador 1.5UF", price: 8.50 },
-        { name: "Capacitor Ventilador 2.5UF", price: 8.50 },
-        { name: "Capacitor Ventilador 3.0UF", price: 8.50 },
-        { name: "Contactor 18A", price: 53.50 },
-        { name: "Contactor 25A", price: 135.00 },
-        { name: "Sensor Degelo AC 05k", price: 10 },
-        { name: "Controle Ar Universal", price: 80 },
-        { name: "Gás R32 (13kg)", price: 1150.00 },
-        { name: "Gás R-22 Lata 1kg", price: 130 },
-        { name: "Gás R-410A Lata 800g", price: 110 },
-        { name: "Tubulação de Cobre (kg)", price: 165 },
-        { name: "Suporte L Condensadora 47cm", price: 27 },
-        { name: "Válvula de Serviço 1/4", price: 36.50 },
-        { name: "Válvula de Serviço 3/8", price: 55.99 },
-        { name: "Válvula de Serviço 1/2", price: 62.99 },
-        { name: "Polipex 1/4", price: 3.99 },
-        { name: "Polipex 3/8", price: 4.90 },
-        { name: "Polipex 1/2", price: 5.90 },
-        { name: "Fita De PVC", price: 3.99 },
-        { name: "Bucha Plástica 0,8 C", price: 0.20 },
-        { name: "Bucha Plástica 0,10 C", price: 0.50 },
-        { name: "Bucha Plástica 0,12 C", price: 0.60 },
-        { name: "Parafuso Cônico", price: 0.35 },
-        { name: "Parafuso Sextavado", price: 1.50 }
+        { name: "Instalação Ar Novo", price: 400, img: "Seção de Serviços.png" },
+        { name: "Instalação Ar Usado", price: 250, img: "Seção de Serviços.png" },
+        { name: "Manutenção Preventiva", price: 150, img: "ManutencaoPreventiva.png" },
+        { name: "Carga de Gás", price: 200, img: "CargadeGas.png" },
+        { name: "Capacitor Duplo 25+2.5UF", price: 30, img: "CapacitorDuplo25+2.5UF.png" },
+        { name: "Capacitor Duplo 30UF", price: 36, img: "CapacitorDuplo25+2.5UF.png" },
+        { name: "Capacitor Duplo 35UF", price: 36, img: "CapacitorDuplo25+2.5UF.png" },
+        { name: "Capacitor Duplo 40UF", price: 36, img: "CapacitorDuplo25+2.5UF.png" },
+        { name: "Capacitor Ventilador 1.0UF", price: 8.50, img: "capacitordeventilador.png" },
+        { name: "Capacitor Ventilador 1.5UF", price: 8.50, img: "capacitordeventilador.png" },
+        { name: "Capacitor Ventilador 2.5UF", price: 8.50, img: "capacitordeventilador.png" },
+        { name: "Capacitor Ventilador 3.0UF", price: 8.50, img: "capacitordeventilador.png" },
+        { name: "Contactor 18A", price: 53.50, img: "Contactor18A.png" },
+        { name: "Contactor 25A", price: 135.00, img: "Contactor25A.png" },
+        { name: "Sensor Degelo AC 05k", price: 10, img: "SensorDegeloAC05k.png" },
+        { name: "Controle Ar Universal", price: 80, img: "ControlArUniversal.png" },
+        { name: "Gás R32 (13kg)", price: 1150.00, img: "gasr3213kg.png" },
+        { name: "Gás R-22 Lata 1kg", price: 130, img: "GasR-22Lata1kg.png" },
+        { name: "Gás R-410A Lata 800g", price: 110, img: "GásR-410ALata800g.png" },
+        { name: "Tubulação de Cobre (kg)", price: 165, img: "TubulaçãodeCobre(kg).png" },
+        { name: "Suporte L Condensadora 47cm", price: 27, img: "SuporteLCondensadora47cm.png" },
+        { name: "Válvula de Serviço 1/4", price: 36.50, img: "valvuladeservicio.png" },
+        { name: "Polipex 1/4", price: 3.99, img: "Polipex.png" },
+        { name: "Fita De PVC", price: 3.99, img: "FitaDePVC.png" },
+        { name: "Bucha Plástica 0,12 C", price: 0.60, img: "BuchaPlástic0,12C.png" },
+        { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png" }
     ];
 
     let cart = [];
@@ -203,10 +181,10 @@
         inventory.filter(i => i.name.toLowerCase().includes(term.toLowerCase())).forEach(item => {
             grid.innerHTML += `
                 <div class="card">
-                    <div class="card-img" style="background-image: url('${item.name.replace(/ /g, '%20')}.png')"></div>
-                    <div style="padding:12px;">
-                        <div style="font-size:0.8rem; font-weight:600; min-height:35px;">${item.name}</div>
-                        <div style="color:var(--primary); font-weight:700; margin:8px 0;">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+                    <div class="card-img" style="background-image: url('${item.img}')"></div>
+                    <div style="padding:15px;">
+                        <div style="font-size:0.85rem; font-weight:600; min-height:40px;">${item.name}</div>
+                        <div style="color:var(--primary); font-weight:700; margin:10px 0;">R$ ${item.price.toFixed(2).replace('.',',')}</div>
                         <button class="btn-add" onclick="addToCart('${item.name}', ${item.price})">ADICIONAR</button>
                     </div>
                 </div>`;
@@ -217,7 +195,6 @@
         let item = cart.find(p => p.name === name);
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
         updateCart();
-        showToast(name);
     }
 
     function changeQty(name, delta) {
@@ -231,51 +208,35 @@
 
     function updateCart() {
         let total = 0, count = 0;
-        const container = document.getElementById("cartItems");
-        container.innerHTML = cart.map(i => {
+        document.getElementById("cartItems").innerHTML = cart.map(i => {
             total += i.price * i.qty; count += i.qty;
             return `
                 <div class="cart-item-row">
-                    <div class="item-info">
-                        <span class="item-name">${i.name}</span>
-                        <span class="item-price">R$ ${(i.price * i.qty).toFixed(2).replace('.',',')}</span>
+                    <div>
+                        <div style="font-size:0.8rem; font-weight:600;">${i.name}</div>
+                        <div style="color:var(--secondary);">R$ ${(i.price * i.qty).toFixed(2).replace('.',',')}</div>
                     </div>
                     <div class="qty-wrapper">
-                        <button class="btn-qty" onclick="changeQty('${i.name}', -1)"><i class="fas fa-minus"></i></button>
-                        <span class="qty-num">${i.qty}</span>
-                        <button class="btn-qty" onclick="changeQty('${i.name}', 1)"><i class="fas fa-plus"></i></button>
+                        <button class="btn-qty" onclick="changeQty('${i.name}', -1)">-</button>
+                        <span style="font-weight:700;">${i.qty}</span>
+                        <button class="btn-qty" onclick="changeQty('${i.name}', 1)">+</button>
                     </div>
                 </div>`;
         }).join('');
-        
         document.getElementById("total-price").innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
         document.getElementById("cart-count").innerText = count;
     }
 
-    function showToast(name) {
-        const toast = document.getElementById('toast');
-        document.getElementById('toast-msg').innerText = "Adicionado ao carrinho";
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
-    function checkPix() { document.getElementById('pix-area').style.display = (document.getElementById('paymentMethod').value === 'Pix') ? 'block' : 'none'; }
-    function copyPix() { navigator.clipboard.writeText("59874260220"); alert("Chave Pix Copiada!"); }
 
     function sendWhatsAppOrder() {
         const addr = document.getElementById("address").value;
-        if (!addr) return alert("Informe seu endereço!");
+        if (!addr) return alert("Informe o endereço!");
         if (cart.length === 0) return alert("Carrinho vazio!");
-        
         let msg = `*NOVO PEDIDO - MAIS FRIO*\n\n`;
-        cart.forEach(i => msg += `• ${i.name} (x${i.qty}) - R$ ${(i.price*i.qty).toFixed(2)}\n`);
-        msg += `\n*Total:* ${document.getElementById("total-price").innerText}`;
-        msg += `\n*Endereço:* ${addr}`;
-        msg += `\n*Pagamento:* ${document.getElementById("paymentMethod").value}`;
-        if(document.getElementById("paymentMethod").value === "Pix") msg += `\n*Chave Pix:* 59874260220`;
-
+        cart.forEach(i => msg += `• ${i.name} (x${i.qty})\n`);
+        msg += `\n*Total:* ${document.getElementById("total-price").innerText}\n*Endereço:* ${addr}`;
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
     }
 
