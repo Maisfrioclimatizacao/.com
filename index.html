@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mais Frio Climatização | Profissional</title>
+    <title>Mais Frio Climatização | Catálogo Profissional</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -55,8 +55,8 @@
         .search-area input { width: 100%; padding: 12px; border: none; outline: none; font-size: 1rem; font-weight: 600; }
 
         .tabs { display: flex; gap: 8px; justify-content: center; overflow-x: auto; padding: 5px; scrollbar-width: none; }
-        .tab { padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; color: white; border: 1px solid rgba(255,255,255,0.1); }
-        .tab.active { background: white; color: var(--primary); }
+        .tab { padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; color: white; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .tab.active { background: white; color: var(--primary); transform: scale(1.05); }
 
         /* --- GRID --- */
         .container { padding: 25px 4% 140px; }
@@ -79,10 +79,10 @@
         .card h3 { font-size: 0.8rem; font-weight: 700; min-height: 38px; margin-bottom: 4px; color: var(--primary); }
         .price { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; display: block; }
         
-        .btn-add { width: 100%; background: #f1f5f9; padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; font-size: 0.75rem; }
-        .btn-add:active { transform: scale(0.95); background: var(--primary); color: white; }
+        .btn-add { width: 100%; background: #f1f5f9; padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; font-size: 0.75rem; transition: 0.2s; }
+        .btn-add:active { transform: scale(0.92); background: var(--primary); color: white; }
 
-        /* --- CORREÇÃO DO CARRINHO (SISTEMA DE SLIDE DIREITO) --- */
+        /* --- CARRINHO FIX --- */
         .overlay { 
             position: fixed; inset: 0; background: rgba(10, 25, 47, 0.5); 
             backdrop-filter: blur(4px); z-index: 1900; opacity: 0; visibility: hidden; transition: 0.4s; 
@@ -92,11 +92,11 @@
         #sideCart { 
             position: fixed; top: 0; right: 0; width: 88%; max-width: 380px; height: 100%; 
             background: white; z-index: 2000; 
-            transform: translateX(100%); /* Começa fora da tela à direita */
+            transform: translateX(100%); 
             transition: transform 0.5s var(--spring); 
             display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,0.2);
         }
-        #sideCart.open { transform: translateX(0); /* Entra para a posição original */ }
+        #sideCart.open { transform: translateX(0); }
         
         .cart-header { padding: 20px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
         .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
@@ -115,7 +115,8 @@
             text-align:center; margin-bottom:12px; border: 2px dashed var(--accent); cursor: pointer;
         }
 
-        .btn-finish { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-finish { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
+        .btn-finish:active { transform: scale(0.96); }
 
         /* BARRA BOTTOM */
         .cart-bar {
@@ -233,7 +234,7 @@
         { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('cart_mf_v6')) || [];
+    let cart = JSON.parse(localStorage.getItem('cart_mf_v7')) || [];
     let currentFilter = 'all';
 
     function render() {
@@ -268,7 +269,7 @@
     }
 
     function save() {
-        localStorage.setItem('cart_mf_v6', JSON.stringify(cart));
+        localStorage.setItem('cart_mf_v7', JSON.stringify(cart));
         updateUI();
     }
 
@@ -317,7 +318,7 @@
 
     function copyPix() {
         navigator.clipboard.writeText("59874260220");
-        alert("Chave Pix Copiada!");
+        alert("CNPJ Pix Copiado!");
     }
 
     function filter(c) {
@@ -327,12 +328,31 @@
         render();
     }
 
+    // --- FUNÇÃO DE ENVIO ATUALIZADA ---
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
-        if(!ad || cart.length === 0) return alert("Adicione itens e o endereço!");
-        let m = `*PEDIDO MAIS FRIO*\n\n`;
+        const payMethod = document.getElementById('userPay').value;
+        const pixKey = "59874260220";
+
+        if(!ad || cart.length === 0) return alert("Adicione itens e informe o endereço!");
+        
+        let m = `*NOVO PEDIDO - MAIS FRIO*\n`;
+        m += `━━━━━━━━━━━━━━━━━━\n\n`;
+        
         cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
-        m += `\n*Pagamento:* ${document.getElementById('userPay').value}\n*Total:* ${document.getElementById('cart-total-side').innerText}\n*Endereço:* ${ad}`;
+        
+        m += `\n━━━━━━━━━━━━━━━━━━\n`;
+        m += `*Pagamento:* ${payMethod}\n`;
+        
+        // Se for Pix, adiciona a chave na mensagem
+        if(payMethod === "Pix") {
+            m += `*Chave Pix (CNPJ):* ${pixKey}\n`;
+        }
+        
+        m += `*Total:* ${document.getElementById('cart-total-side').innerText}\n`;
+        m += `*Endereço:* ${ad}\n\n`;
+        m += `_Aguardando sua confirmação!_`;
+
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
 
