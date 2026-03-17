@@ -21,7 +21,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background: var(--bg-light); color: var(--text-dark); overflow-x: hidden; }
 
-        /* NOTIFICAÇÃO TOAST (O QUE ESTAVA FALTANDO) */
+        /* TOAST */
         #toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             background: var(--primary); color: white; padding: 12px 25px;
@@ -31,7 +31,7 @@
         }
         #toast.show { top: 20px; }
 
-        /* ANIMAÇÕES DE ENTRADA */
+        /* ANIMAÇÕES */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -53,7 +53,7 @@
         .btn-add { width: 100%; padding: 10px; border: none; background: #f1f5f9; color: var(--primary); font-weight: 700; cursor: pointer; border-radius: 8px; transition: 0.2s; }
         .btn-add:hover { background: var(--primary); color: white; }
 
-        /* DICAS E HORÁRIO (VISUAL DAS FOTOS) */
+        /* DICAS E HORÁRIO */
         .section-title { text-align: center; color: var(--primary); margin: 40px 0 20px; font-weight: 700; }
         .tips-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .tip-card { background: #ebf5ff; padding: 25px; border-radius: 15px; border-left: 6px solid var(--secondary); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
@@ -178,7 +178,8 @@
         { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png" }
     ];
 
-    let cart = [];
+    // MEMÓRIA DO CARRINHO (LocalStorage)
+    let cart = JSON.parse(localStorage.getItem('maisFrioCart')) || [];
 
     function renderItems(term = "") {
         const grid = document.getElementById('main-grid');
@@ -199,15 +200,8 @@
     function addToCart(name, price) {
         let item = cart.find(p => p.name === name);
         if (item) item.qty++; else cart.push({ name, price, qty: 1 });
-        updateCart();
+        saveAndUpdate();
         showToast(name);
-    }
-
-    function showToast(name) {
-        const toast = document.getElementById('toast');
-        document.getElementById('toast-msg').innerText = `${name} adicionado!`;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2500);
     }
 
     function changeQty(name, delta) {
@@ -216,6 +210,12 @@
             item.qty += delta;
             if (item.qty <= 0) cart = cart.filter(p => p.name !== name);
         }
+        saveAndUpdate();
+    }
+
+    function saveAndUpdate() {
+        // Salva os dados no navegador
+        localStorage.setItem('maisFrioCart', JSON.stringify(cart));
         updateCart();
     }
 
@@ -240,6 +240,13 @@
         document.getElementById("cart-count").innerText = count;
     }
 
+    function showToast(name) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-msg').innerText = `${name} adicionado!`;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
     function toggleCart() { document.getElementById("cartPreview").classList.toggle("open"); }
     function filterItems() { renderItems(document.getElementById('searchInput').value); }
     function checkPix() { document.getElementById('pix-area').style.display = (document.getElementById('paymentMethod').value === 'Pix') ? 'block' : 'none'; }
@@ -259,9 +266,14 @@
         if (pay === "Pix") msg += `\n*Pix Chave:* 59874260220`;
 
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
+        
+        // Limpa o carrinho após enviar o pedido para não duplicar
+        cart = [];
+        saveAndUpdate();
     }
 
     renderItems();
+    updateCart(); // Carrega o que já estava salvo ao abrir o site
     checkPix();
 </script>
 </body>
