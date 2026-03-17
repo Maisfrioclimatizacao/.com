@@ -269,11 +269,16 @@
     ];
 
     const itemPhotos = {
+        "Manutenção Preventiva": "ManutencaoPreventiva.png",
+        "Carga de Gás": "CargadeGas.png",
+        "Contactor 25A": "Contactor25A.png",
+        "Controle Ar Universal": "ControlArUniversal.png",
+        "Fita Isolante 10mm x 0,5m": "FitaIsolante18mmx10m.png", // Mesma imagem
+        "Fita Isolante 18mm x 10m": "FitaIsolante18mmx10m.png",
         "Bucha Plástica 0,8 C": "BuchaPlástica0,8C.png",
         "Bucha Plástica 0,10 C": "BuchaPlástica0,10C.png",
         "Bucha Plástica 0,12 C": "BuchaPlástic0,12C.png",
         "Fita De PVC": "FitaDePVC.png",
-        "Fita Isolante 18mm x 10m": "FitaIsolante18mmx10m.png",
         "Parafuso Cônico": "ParafusoCônico.png",
         "Polipex 1/4": "Polipex.png",
         "Polipex 3/8": "Polipex.png",
@@ -380,7 +385,8 @@
         const pay = document.getElementById("paymentMethod").value;
         const date = document.getElementById("serviceDate").value;
         const time = document.getElementById("serviceTime").value;
-        const isSchedVisible = schedDivIsVisible();
+        const schedDiv = document.getElementById("service-scheduling");
+        const isSchedVisible = (schedDiv.style.display === "block");
 
         if (cart.length === 0) return alert("Adicione produtos ao carrinho.");
         if (!addr) return alert("Por favor, informe seu endereço.");
@@ -398,8 +404,6 @@
 
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(msg)}`);
     }
-
-    function schedDivIsVisible() { return document.getElementById("service-scheduling").style.display === "block"; }
 
     function setFilter(c) {
         currentCategory = c;
