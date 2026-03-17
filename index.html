@@ -27,6 +27,12 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes pop {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
         /* --- UI COMPONENTS --- */
         header { 
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -87,9 +93,9 @@
         .price { font-size: 1.2rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; display: block; }
         
         .btn-add { width: 100%; background: #f0f2f5; padding: 12px; border-radius: 15px; border: none; font-weight: 800; cursor: pointer; transition: var(--transition); font-size: 0.8rem; }
-        .btn-add:hover { background: var(--primary); color: white; }
+        .btn-add:active { transform: scale(0.95); }
 
-        /* --- BARRA FLUTUANTE (BOTTOM BAR) --- */
+        /* --- BARRA FLUTUANTE --- */
         .cart-bar {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             width: 92%; max-width: 450px; background: var(--primary); color: white;
@@ -97,23 +103,29 @@
             align-items: center; z-index: 900; box-shadow: 0 20px 30px rgba(0,0,0,0.3);
             cursor: pointer; transition: var(--transition); visibility: hidden; opacity: 0;
         }
-        .cart-bar.active { visibility: visible; opacity: 1; bottom: 30px; }
+        .cart-bar.active { visibility: visible; opacity: 1; bottom: 30px; animation: pop 0.4s var(--spring); }
 
         /* --- SIDE CARRINHO --- */
-        .overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.4); backdrop-filter: blur(8px); z-index: 1900; display: none; }
-        .overlay.active { display: block; }
+        .overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.4); backdrop-filter: blur(8px); z-index: 1900; opacity: 0; visibility: hidden; transition: 0.3s; }
+        .overlay.active { opacity: 1; visibility: visible; }
 
         #sideCart { position: fixed; right: -100%; top: 0; width: 90%; max-width: 420px; height: 100%; background: white; z-index: 2000; transition: 0.5s var(--spring); display: flex; flex-direction: column; }
         #sideCart.open { right: 0; }
-        .cart-header { padding: 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
-        .cart-item { background: #f8fafc; padding: 15px; border-radius: 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* ANIMAÇÃO PIX INFO */
+        #pix-info { 
+            display:none; background:#e6ffed; padding:15px; border-radius:15px; 
+            text-align:center; margin-bottom:15px; border: 2px dashed #28cd41; 
+            cursor: pointer; animation: fadeInUp 0.4s var(--spring);
+        }
 
-        .cart-footer { padding: 25px; border-top: 1px solid #eee; }
-        .premium-input { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; outline: none; }
+        .cart-footer { padding: 25px; border-top: 1px solid #eee; background: white; }
+        .premium-input { width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; outline: none; transition: 0.3s; }
+        .premium-input:focus { border-color: var(--secondary); }
+
         .btn-finish { width: 100%; padding: 18px; background: #28cd41; color: white; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); }
+        .btn-finish:hover { filter: brightness(1.1); transform: scale(1.02); }
 
-        /* WHATSAPP FLOAT */
         .whatsapp-float { position: fixed; width: 55px; height: 55px; bottom: 100px; right: 20px; background-color: var(--accent); color: #FFF; border-radius: 50px; text-align: center; font-size: 28px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); z-index: 800; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: var(--transition); }
 
         #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 15px 35px; border-radius: 50px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 800; }
@@ -173,9 +185,13 @@
             <option value="Cartão">Cartão de Crédito/Débito</option>
             <option value="Dinheiro">Dinheiro</option>
         </select>
-        <div id="pix-info" style="display:none; background:#e6ffed; padding:12px; border-radius:12px; text-align:center; margin-bottom:10px; border: 1px dashed #28cd41;" onclick="copyPix()">
-            <small>Clique p/ copiar o CNPJ Pix:</small><br><strong>59874260220</strong>
+        
+        <div id="pix-info" onclick="copyPix()">
+            <small style="color: #157347;">Clique p/ copiar o CNPJ Pix:</small><br>
+            <strong style="color: #157347; font-size: 1.2rem;">59874260220</strong>
+            <div style="font-size: 0.7rem; color: #157347; margin-top: 5px;">(Toque para copiar)</div>
         </div>
+
         <div style="display: flex; justify-content: space-between; margin: 15px 0;">
             <span style="font-weight: 600; opacity: 0.6;">Total:</span>
             <span id="cart-total-side" style="font-weight: 800; font-size: 1.5rem;">R$ 0,00</span>
@@ -189,6 +205,7 @@
 <div id="toast">✅ Adicionado ao carrinho!</div>
 
 <script>
+    // Inventário Omitido aqui para brevidade (use o mesmo da versão anterior)
     const inventory = [
         { name: "Mão de Obra Instalação (Ar Novo)", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
         { name: "Mão de Obra Instalação (Ar Usado)", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
@@ -227,39 +244,24 @@
         { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('cart_mf_vfinal')) || [];
+    let cart = JSON.parse(localStorage.getItem('cart_mf_vfinal_v2')) || [];
     let currentFilter = 'all';
 
-    function removeAccents(str) {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    }
+    function removeAccents(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
 
     function render() {
         const grid = document.getElementById('grid');
         const term = removeAccents(document.getElementById('searchInput').value);
         grid.innerHTML = "";
-        
-        const filtered = inventory.filter(item => {
-            return removeAccents(item.name).includes(term) && (currentFilter === 'all' || item.cat === currentFilter);
-        });
-        
+        const filtered = inventory.filter(item => removeAccents(item.name).includes(term) && (currentFilter === 'all' || item.cat === currentFilter));
         filtered.forEach((item, index) => {
             const card = document.createElement('div');
             card.className = "card";
             card.style.animationDelay = `${index * 0.03}s`;
             const note = item.cat === 'servico' ? '<span class="service-note">* Somente Mão de Obra</span>' : '';
-
-            card.innerHTML = `
-                <div class="img-box">
-                    <div class="badge ${item.cat}">${item.cat}</div>
-                    <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
-                </div>
-                <div class="card-body">
-                    <h3>${item.name}</h3>
-                    ${note}
-                    <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
-                    <button class="btn-add" onclick="add('${item.name}', ${item.price})">ADICIONAR</button>
-                </div>`;
+            card.innerHTML = `<div class="img-box"><div class="badge ${item.cat}">${item.cat}</div><img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'"></div>
+                <div class="card-body"><h3>${item.name}</h3>${note}<div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+                <button class="btn-add" onclick="add('${item.name}', ${item.price})">ADICIONAR</button></div>`;
             grid.appendChild(card);
         });
     }
@@ -272,42 +274,31 @@
     }
 
     function save() {
-        localStorage.setItem('cart_mf_vfinal', JSON.stringify(cart));
+        localStorage.setItem('cart_mf_vfinal_v2', JSON.stringify(cart));
         updateUI();
     }
 
     function updateUI() {
         const list = document.getElementById('cart-list');
         const summaryBar = document.getElementById('cartSummaryBar');
-        let tot = 0;
-        let count = 0;
+        let tot = 0, count = 0;
         list.innerHTML = "";
-        
         cart.forEach((item, idx) => {
             tot += item.p * item.q;
             count += item.q;
-            list.innerHTML += `
-                <div class="cart-item">
-                    <div>
-                        <div style="font-weight:700; font-size:0.85rem;">${item.n}</div>
-                        <div style="color:var(--secondary); font-weight:800; margin-top:3px;">R$ ${(item.p * item.q).toFixed(2).replace('.',',')}</div>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:10px">
-                        <button onclick="changeQty(${idx}, -1)" style="width:26px; height:26px; border-radius:6px; border:1px solid #ddd; background:white;">-</button>
-                        <span style="font-weight:800;">${item.q}</span>
-                        <button onclick="changeQty(${idx}, 1)" style="width:26px; height:26px; border-radius:6px; border:1px solid #ddd; background:white;">+</button>
-                    </div>
-                </div>`;
+            list.innerHTML += `<div class="cart-item"><div><div style="font-weight:700; font-size:0.85rem;">${item.n}</div>
+                <div style="color:var(--secondary); font-weight:800; margin-top:3px;">R$ ${(item.p * item.q).toFixed(2).replace('.',',')}</div></div>
+                <div style="display:flex; align-items:center; gap:10px">
+                <button onclick="changeQty(${idx}, -1)" style="width:26px; height:26px; border-radius:6px; border:1px solid #ddd; background:white;">-</button>
+                <span style="font-weight:800;">${item.q}</span>
+                <button onclick="changeQty(${idx}, 1)" style="width:26px; height:26px; border-radius:6px; border:1px solid #ddd; background:white;">+</button></div></div>`;
         });
-
         const totalStr = "R$ " + tot.toFixed(2).replace('.',',');
         document.getElementById('cart-total-side').innerText = totalStr;
         document.getElementById('cart-total-bar').innerText = totalStr;
         document.getElementById('cart-count-top').innerText = count;
         document.getElementById('cart-count-bar').innerText = count;
-        
-        if(count > 0) summaryBar.classList.add('active');
-        else summaryBar.classList.remove('active');
+        if(count > 0) { summaryBar.classList.add('active'); } else { summaryBar.classList.remove('active'); }
     }
 
     function changeQty(idx, val) {
@@ -324,9 +315,16 @@
     }
 
     function toggleCart() {
-        document.getElementById('sideCart').classList.toggle('open');
-        document.getElementById('cartOverlay').classList.toggle('active');
+        const side = document.getElementById('sideCart');
+        const over = document.getElementById('cartOverlay');
+        side.classList.toggle('open');
+        over.classList.toggle('active');
         document.body.classList.toggle('modal-open');
+        
+        // CORREÇÃO: Verifica o Pix toda vez que o carrinho abre
+        if(side.classList.contains('open')) {
+            checkPix();
+        }
     }
 
     function showToast() {
@@ -336,24 +334,27 @@
     }
 
     function checkPix() {
-        document.getElementById('pix-info').style.display = (document.getElementById('userPay').value === 'Pix') ? 'block' : 'none';
+        const isPix = document.getElementById('userPay').value === 'Pix';
+        const info = document.getElementById('pix-info');
+        info.style.display = isPix ? 'block' : 'none';
     }
 
     function copyPix() {
         navigator.clipboard.writeText("59874260220");
-        alert("CNPJ Pix Copiado!");
+        const info = document.getElementById('pix-info');
+        info.style.background = "#d1e7dd";
+        setTimeout(() => info.style.background = "#e6ffed", 500);
+        alert("Chave Pix Copiada!");
     }
 
     function sendOrder() {
         const ad = document.getElementById('userAddr').value;
         const pay = document.getElementById('userPay').value;
-        if(!ad || cart.length === 0) return alert("Preencha os dados do pedido!");
-
+        if(!ad || cart.length === 0) return alert("Preencha o endereço de entrega!");
         let m = `*PEDIDO MAIS FRIO CLIMATIZAÇÃO*\n\n`;
         cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
         m += `\n*Pagamento:* ${pay}\n*Total:* ${document.getElementById('cart-total-side').innerText}\n*Endereço:* ${ad}\n`;
         if(pay === 'Pix') m += `\n*PIX CNPJ:* 59874260220`;
-
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
     }
 
