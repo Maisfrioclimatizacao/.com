@@ -111,11 +111,6 @@
             font-weight: 800; cursor: pointer; font-size: 0.75rem; transition: all 0.3s;
             position: relative; overflow: hidden;
         }
-        .btn-add::after {
-            content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
-            background: rgba(255,255,255,0.2); border-radius: 50%; transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s;
-        }
-        .btn-add:active::after { width: 300px; height: 300px; }
         .btn-add:hover { background: var(--primary); color: white; }
         .btn-add:active { transform: scale(0.92); }
 
@@ -148,6 +143,9 @@
         .premium-input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; outline: none; font-size: 0.9rem; transition: 0.3s; }
         .premium-input:focus { border-color: var(--secondary); }
         
+        #addr-container { transition: 0.4s var(--spring); overflow: hidden; }
+        #addr-container.hidden { height: 0; opacity: 0; margin: 0; pointer-events: none; }
+
         #pix-info { 
             display:none; background:#f0fdf4; padding:15px; border-radius:12px; 
             text-align:center; margin-bottom:12px; border: 2px dashed var(--accent); cursor: pointer;
@@ -212,7 +210,16 @@
     </div>
     <div class="cart-items" id="cart-list"></div>
     <div class="cart-footer">
-        <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega">
+        
+        <select id="deliveryType" class="premium-input" onchange="toggleAddressField()">
+            <option value="Entregar">Entregar no Endereço</option>
+            <option value="Buscar">Retirar na Loja</option>
+        </select>
+
+        <div id="addr-container">
+            <input type="text" id="userAddr" class="premium-input" placeholder="Endereço Completo">
+        </div>
+
         <select id="userPay" class="premium-input" onchange="checkPix()">
             <option value="Pix">Pagar com Pix</option>
             <option value="Cartão">Cartão na Entrega</option>
@@ -352,6 +359,16 @@
         if(side.classList.contains('open')) checkPix();
     }
 
+    function toggleAddressField() {
+        const type = document.getElementById('deliveryType').value;
+        const container = document.getElementById('addr-container');
+        if(type === 'Buscar') {
+            container.classList.add('hidden');
+        } else {
+            container.classList.remove('hidden');
+        }
+    }
+
     function checkPix() {
         const isPix = document.getElementById('userPay').value === 'Pix';
         document.getElementById('pix-info').style.display = isPix ? 'block' : 'none';
@@ -370,20 +387,27 @@
     }
 
     function sendOrder() {
+        const delType = document.getElementById('deliveryType').value;
         const ad = document.getElementById('userAddr').value;
         const payMethod = document.getElementById('userPay').value;
         const pixKey = "59874260220";
 
-        if(!ad || cart.length === 0) return alert("Adicione itens e informe o endereço!");
+        // Validação: se for entrega, exige endereço. Se for retirar, não.
+        if(delType === 'Entregar' && !ad) return alert("Por favor, informe o endereço de entrega!");
+        if(cart.length === 0) return alert("Seu carrinho está vazio!");
         
         let m = `*NOVO PEDIDO - MAIS FRIO*\n`;
         m += `━━━━━━━━━━━━━━━━━━\n\n`;
         cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
         m += `\n━━━━━━━━━━━━━━━━━━\n`;
+        
+        m += `*Tipo:* ${delType === 'Buscar' ? '🏠 Retirar na Loja' : '🚚 Entrega'}\n`;
+        if(delType === 'Entregar') m += `*Endereço:* ${ad}\n`;
+        
         m += `*Pagamento:* ${payMethod}\n`;
         if(payMethod === "Pix") m += `*Chave Pix (CNPJ):* ${pixKey}\n`;
-        m += `*Total:* ${document.getElementById('cart-total-side').innerText}\n`;
-        m += `*Endereço:* ${ad}\n\n`;
+        
+        m += `*Total:* ${document.getElementById('cart-total-side').innerText}\n\n`;
         m += `_Aguardando sua confirmação!_`;
 
         window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
