@@ -21,25 +21,25 @@
         body { background: var(--bg); color: var(--primary); overflow-x: hidden; width: 100%; }
         body.modal-open { overflow: hidden; height: 100vh; }
 
-        /* --- ANIMAÇÕES --- */
+        /* --- ANIMAÇÕES RESTAURADAS --- */
         @keyframes reveal {
-            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            from { opacity: 0; transform: translateY(25px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         @keyframes pulse-soft {
             0% { transform: translate(-50%, 0) scale(1); }
-            50% { transform: translate(-50%, -5px) scale(1.02); }
+            50% { transform: translate(-50%, -6px) scale(1.03); }
             100% { transform: translate(-50%, 0) scale(1); }
         }
 
         /* --- HEADER & HERO --- */
         header { 
-            background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1rem; text-transform: uppercase; }
+        .logo { font-weight: 800; font-size: 1rem; text-transform: uppercase; letter-spacing: -0.5px; }
         .logo span { color: var(--secondary); }
         
         .btn-cart-top { 
@@ -47,13 +47,14 @@
             cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700;
             transition: 0.3s var(--spring);
         }
+        .btn-cart-top:active { transform: scale(0.9); }
 
         .hero { 
             background: linear-gradient(135deg, #0a192f 0%, #112240 100%); 
             color: white; padding: 40px 6% 60px; text-align: center;
             border-bottom-left-radius: 35px; border-bottom-right-radius: 35px;
         }
-        .hero h1 { animation: reveal 0.8s var(--spring); margin-bottom: 20px; }
+        .hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; animation: reveal 0.8s var(--spring); }
         
         .search-area { 
             background: white; border-radius: 15px; padding: 4px 15px; 
@@ -61,11 +62,11 @@
             margin: 0 auto 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.2);
             animation: reveal 1s var(--spring) backwards;
         }
-        .search-area input { width: 100%; padding: 12px; border: none; outline: none; font-size: 1rem; color: var(--primary); font-weight: 600; }
+        .search-area input { width: 100%; padding: 12px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: var(--primary); }
 
         .tabs { display: flex; gap: 8px; justify-content: center; overflow-x: auto; padding: 5px; animation: reveal 1.2s var(--spring) backwards; }
-        .tab { padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; color: white; transition: 0.4s; }
-        .tab.active { background: white; color: var(--primary); transform: scale(1.1); }
+        .tab { padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; color: white; transition: 0.4s; border: 1px solid transparent; }
+        .tab.active { background: white; color: var(--primary); transform: scale(1.1); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
 
         /* --- GRID & CARDS --- */
         .container { padding: 25px 4% 140px; }
@@ -75,10 +76,13 @@
         .card { 
             background: white; border-radius: 20px; overflow: hidden; display: flex; 
             flex-direction: column; transition: 0.4s var(--spring); box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            animation: reveal 0.6s var(--spring) backwards;
+            animation: reveal 0.7s var(--spring) backwards;
         }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        
         .img-box { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; padding: 15px; position: relative; }
-        .img-box img { max-width: 85%; max-height: 85%; object-fit: contain; }
+        .img-box img { max-width: 85%; max-height: 85%; object-fit: contain; transition: 0.5s var(--spring); }
+        .card:hover .img-box img { transform: scale(1.1); }
         
         .badge { position: absolute; top: 10px; left: 10px; padding: 4px 8px; border-radius: 8px; font-size: 0.5rem; font-weight: 800; color: white; text-transform: uppercase; z-index: 5; }
         .badge.peca { background: var(--secondary); }
@@ -86,12 +90,14 @@
 
         .card-body { padding: 12px; flex: 1; display: flex; flex-direction: column; }
         .card h3 { font-size: 0.8rem; font-weight: 700; min-height: 38px; margin-bottom: 4px; }
-        .price { font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; }
+        .price { font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; transition: 0.3s; }
+        .card:hover .price { color: var(--secondary); }
         
-        .btn-add { width: 100%; background: #f1f5f9; padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-add { width: 100%; background: #f1f5f9; padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 0.75rem; }
         .btn-add:hover { background: var(--primary); color: white; }
+        .btn-add:active { transform: scale(0.92); }
 
-        /* --- BARRA BOTTOM --- */
+        /* --- BARRA BOTTOM (CENTRALIZADA + PULSE) --- */
         .cart-bar {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%) translateY(150px);
             width: 90%; max-width: 420px; background: var(--primary); color: white;
@@ -103,29 +109,31 @@
         
         .bar-count { justify-self: start; }
         .bar-label { justify-self: center; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
-        .bar-total { justify-self: end; font-weight: 800; }
+        .bar-total { justify-self: end; font-weight: 800; font-size: 0.95rem; }
         .pill { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 8px; font-weight: 800; }
 
-        /* --- CARRINHO --- */
-        .overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.5); backdrop-filter: blur(4px); z-index: 1900; opacity: 0; visibility: hidden; transition: 0.4s; }
+        /* --- CARRINHO SIDEBAR --- */
+        .overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.4); backdrop-filter: blur(4px); z-index: 1900; opacity: 0; visibility: hidden; transition: 0.4s; }
         .overlay.active { opacity: 1; visibility: visible; }
 
-        #sideCart { position: fixed; top: 0; right: 0; width: 88%; max-width: 380px; height: 100%; background: white; z-index: 2000; transform: translateX(100%); transition: 0.6s var(--spring); display: flex; flex-direction: column; }
+        #sideCart { position: fixed; top: 0; right: 0; width: 88%; max-width: 380px; height: 100%; background: white; z-index: 2000; transform: translateX(100%); transition: 0.6s var(--spring); display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
         #sideCart.open { transform: translateX(0); }
         .cart-header { padding: 20px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
         .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
         .cart-item { background: #f8fafc; padding: 12px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; animation: reveal 0.4s var(--spring) backwards; }
 
-        .cart-footer { padding: 20px; border-top: 1px solid #f1f5f9; }
-        .premium-input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; outline: none; }
-        
+        .cart-footer { padding: 20px; border-top: 1px solid #f1f5f9; background: white; }
+        .premium-input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; outline: none; transition: 0.3s; }
+        .premium-input:focus { border-color: var(--secondary); }
+
         #addr-container { transition: 0.5s var(--spring); overflow: hidden; }
         #addr-container.hidden { height: 0; opacity: 0; margin: 0; pointer-events: none; }
 
-        #pix-info { display:none; background:#f0fdf4; padding:15px; border-radius:12px; text-align:center; margin-bottom:12px; border: 2px dashed var(--accent); }
-        .btn-finish { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #pix-info { display:none; background:#f0fdf4; padding:15px; border-radius:12px; text-align:center; margin-bottom:12px; border: 2px dashed var(--accent); animation: reveal 0.3s var(--spring); }
+        .btn-finish { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
+        .btn-finish:active { transform: scale(0.96); }
 
-        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--primary); color: white; padding: 12px 25px; border-radius: 12px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 700; }
+        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--primary); color: white; padding: 12px 25px; border-radius: 12px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 700; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         #toast.active { transform: translateX(-50%) translateY(0); }
     </style>
 </head>
@@ -165,7 +173,7 @@
 <div id="sideCart">
     <div class="cart-header">
         <h2 style="font-size: 1.1rem; font-weight: 800;">Meu Carrinho</h2>
-        <div onclick="toggleCart()" style="cursor: pointer; padding: 10px;"><i class="fas fa-times"></i></div>
+        <div onclick="toggleCart()" style="cursor: pointer; padding: 10px; opacity: 0.5;"><i class="fas fa-times"></i></div>
     </div>
     <div class="cart-items" id="cart-list"></div>
     <div class="cart-footer">
@@ -201,7 +209,7 @@
     </div>
 </div>
 
-<div id="toast">✅ Adicionado!</div>
+<div id="toast">✅ Adicionado ao carrinho!</div>
 
 <script>
     const inventory = [
@@ -242,10 +250,10 @@
         { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('cart_mf_v10')) || [];
+    let cart = JSON.parse(localStorage.getItem('cart_mf_v11')) || [];
     let currentFilter = 'all';
 
-    // FUNÇÃO QUE NORMALIZA O TEXTO (REMOVE ACENTOS)
+    // NORMALIZAÇÃO DE BUSCA (REMOVE ACENTOS)
     function normalizeStr(str) {
         return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     }
@@ -286,7 +294,7 @@
     }
 
     function save() {
-        localStorage.setItem('cart_mf_v10', JSON.stringify(cart));
+        localStorage.setItem('cart_mf_v11', JSON.stringify(cart));
         updateUI();
     }
 
@@ -298,11 +306,11 @@
             tot += item.p * item.q;
             count += item.q;
             list.innerHTML += `<div class="cart-item" style="animation-delay: ${idx*0.1}s">
-                <div><div style="font-weight:700; font-size:0.8rem">${item.n}</div><div style="color:var(--secondary); font-weight:800">R$ ${(item.p*item.q).toFixed(2).replace('.',',')}</div></div>
+                <div><div style="font-weight:700; font-size:0.85rem">${item.n}</div><div style="color:var(--secondary); font-weight:800">R$ ${(item.p*item.q).toFixed(2).replace('.',',')}</div></div>
                 <div style="display:flex; align-items:center; gap:10px">
-                    <button onclick="changeQty(${idx},-1)" style="width:28px; height:28px; border-radius:8px; border:1px solid #ddd; background:#fff;">-</button>
+                    <button onclick="changeQty(${idx},-1)" style="width:30px; height:30px; border-radius:8px; border:1px solid #ddd; background:#fff; font-weight:bold;">-</button>
                     <span style="font-weight:800">${item.q}</span>
-                    <button onclick="changeQty(${idx},1)" style="width:28px; height:28px; border-radius:8px; border:1px solid #ddd; background:#fff;">+</button>
+                    <button onclick="changeQty(${idx},1)" style="width:30px; height:30px; border-radius:8px; border:1px solid #ddd; background:#fff; font-weight:bold;">+</button>
                 </div></div>`;
         });
         const val = "R$ " + tot.toFixed(2).replace('.',',');
@@ -356,7 +364,7 @@
         if(delType === 'Entregar' && !ad) return alert("Por favor, informe o endereço!");
         if(cart.length === 0) return alert("Seu carrinho está vazio!");
         
-        let m = `*PEDIDO - MAIS FRIO*\n━━━━━━━━━━━━━━━━━━\n\n`;
+        let m = `*NOVO PEDIDO - MAIS FRIO*\n━━━━━━━━━━━━━━━━━━\n\n`;
         cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
         m += `\n━━━━━━━━━━━━━━━━━━\n`;
         m += `*Tipo:* ${delType === 'Buscar' ? '🏠 Retirar na Loja' : '🚚 Entrega'}\n`;
