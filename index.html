@@ -135,7 +135,77 @@
 </head>
 <body>
 
-<!-- EVERYTHING ABOVE IS IDENTICAL -->
+<header>
+    <div class="logo">MAIS FRIO <span>CLIMATIZAÇÃO</span></div>
+    <div class="btn-cart-top" onclick="toggleCart()">
+        <i class="fas fa-shopping-basket"></i> <span id="cart-count-top">0</span>
+    </div>
+</header>
+
+<section class="hero">
+    <h1>Peças & Serviços</h1>
+    <div class="search-area">
+        <input type="text" id="searchInput" placeholder="O que você precisa?" onkeyup="render()">
+    </div>
+    <div class="tabs">
+        <div class="tab active" id="tab-all" onclick="filter('all')">Todos</div>
+        <div class="tab" id="tab-servico" onclick="filter('servico')">Serviços</div>
+        <div class="tab" id="tab-peca" onclick="filter('peca')">Peças</div>
+    </div>
+</section>
+
+<main class="container">
+    <div class="grid" id="grid"></div>
+</main>
+
+<div class="cart-bar" id="cartSummaryBar" onclick="toggleCart()">
+    <div class="bar-count"><span class="pill" id="cart-count-bar">0</span></div>
+    <div class="bar-label">Ver Carrinho</div>
+    <div class="bar-total"><span id="cart-total-bar">R$ 0,00</span></div>
+</div>
+
+<div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<div id="sideCart">
+    <div class="cart-header">
+        <h2 style="font-size: 1.1rem; font-weight: 800;">Meu Carrinho</h2>
+        <div onclick="toggleCart()" style="cursor: pointer; padding: 10px; opacity: 0.5;"><i class="fas fa-times"></i></div>
+    </div>
+    <div class="cart-items" id="cart-list"></div>
+    <div class="cart-footer">
+        
+        <select id="deliveryType" class="premium-input" onchange="toggleAddressField()">
+            <option value="Entregar">Entregar no Endereço</option>
+            <option value="Buscar">Retirar na Loja</option>
+        </select>
+
+        <div id="addr-container">
+            <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega Completo">
+        </div>
+
+        <select id="userPay" class="premium-input" onchange="checkPix()">
+            <option value="Pix">Pagar com Pix</option>
+            <option value="Cartão">Cartão na Entrega</option>
+            <option value="Dinheiro">Dinheiro</option>
+        </select>
+        
+        <div id="pix-info" onclick="copyPix()" style="cursor: pointer;">
+            <small style="color: #157347; font-weight: 700;">Clique p/ copiar o CNPJ Pix:</small><br>
+            <strong style="color: #157347; font-size: 1.1rem;">59874260220</strong><br>
+            <small>(Toque para copiar)</small>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; margin: 15px 0;">
+            <span style="font-weight: 600; opacity: 0.5;">Total:</span>
+            <span id="cart-total-side" style="font-weight: 800; font-size: 1.3rem;">R$ 0,00</span>
+        </div>
+        <button onclick="sendOrder()" class="btn-finish">
+            <i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP
+        </button>
+    </div>
+</div>
+
+<div id="toast">✅ Adicionado ao carrinho!</div>
 
 <script>
     const inventory = [
@@ -155,9 +225,6 @@
         { name: "Contactor 25A", price: 135.00, img: "Contactor25A.png", cat: "peca" },
         { name: "Sensor Degelo AC 05k", price: 10.00, img: "SensorDegeloAC05k.png", cat: "peca" },
         { name: "Controle Ar Universal", price: 80.00, img: "ControlArUniversal.png", cat: "peca" },
-
-        { name: "Serra Copo", price: 125.00, img: "serracopo.png", cat: "peca" },
-
         { name: "Gás R32 (13kg)", price: 1150.00, img: "gasr3213kg.png", cat: "peca" },
         { name: "Gás R-22 Lata 1kg", price: 130.00, img: "GasR-22Lata1kg.png", cat: "peca" },
         { name: "Gás R-410A Lata 800g", price: 110.00, img: "GásR-410ALata800g.png", cat: "peca" },
@@ -176,8 +243,145 @@
         { name: "Bucha Plástica 0,10 C", price: 0.50, img: "BuchaPlástica0,10C.png", cat: "peca" },
         { name: "Bucha Plástica 0,12 C", price: 0.60, img: "BuchaPlástic0,12C.png", cat: "peca" },
         { name: "Parafuso Cônico", price: 0.35, img: "ParafusoCônico.png", cat: "peca" },
-        { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" }
+        { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" },
+        { name: "Serra Copo", price: 125.00, img: "serracopo.png", cat: "peca" }
     ];
+
+    let cart = JSON.parse(localStorage.getItem('cart_mf_v12')) || [];
+    let currentFilter = 'all';
+
+    function normalizeStr(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
+    function render() {
+        const grid = document.getElementById('grid');
+        const term = normalizeStr(document.getElementById('searchInput').value);
+        grid.innerHTML = "";
+        
+        inventory.filter(i => {
+            const nameMatch = normalizeStr(i.name).includes(term);
+            const catMatch = currentFilter === 'all' || i.cat === currentFilter;
+            return nameMatch && catMatch;
+        })
+        .forEach((item, idx) => {
+            grid.innerHTML += `
+                <div class="card" style="animation-delay: ${idx*0.05}s">
+                    <div class="img-box">
+                        <div class="badge ${item.cat}">${item.cat}</div>
+                        <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
+                    </div>
+                    <div class="card-body">
+                        <h3>${item.name}</h3>
+                        <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+                        <button class="btn-add" onclick="add('${item.name}', ${item.price})">Adicionar</button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    function add(n, p) {
+        let x = cart.find(i => i.n === n);
+        if(x) x.q++; else cart.push({n, p, q:1});
+        save();
+        const t = document.getElementById('toast');
+        t.classList.add('active');
+        setTimeout(() => t.classList.remove('active'), 2000);
+    }
+
+    function save() {
+        localStorage.setItem('cart_mf_v12', JSON.stringify(cart));
+        updateUI();
+    }
+
+    function updateUI() {
+        const list = document.getElementById('cart-list');
+        let tot = 0, count = 0;
+        list.innerHTML = "";
+        cart.forEach((item, idx) => {
+            tot += item.p * item.q;
+            count += item.q;
+            list.innerHTML += `
+                <div class="cart-item" style="animation-delay: ${idx*0.1}s">
+                    <div><div style="font-weight:700; font-size:0.85rem">${item.n}</div><div style="color:var(--secondary); font-weight:800">R$ ${(item.p*item.q).toFixed(2).replace('.',',')}</div></div>
+                    <div style="display:flex; align-items:center; gap:10px">
+                        <button onclick="changeQty(${idx},-1)" style="width:30px; height:30px; border-radius:8px; border:1px solid #ddd; background:#fff; font-weight:bold;">-</button>
+                        <span style="font-weight:800">${item.q}</span>
+                        <button onclick="changeQty(${idx},1)" style="width:30px; height:30px; border-radius:8px; border:1px solid #ddd; background:#fff; font-weight:bold;">+</button>
+                    </div>
+                </div>`;
+        });
+        const val = "R$ " + tot.toFixed(2).replace('.',',');
+        document.getElementById('cart-total-side').innerText = val;
+        document.getElementById('cart-total-bar').innerText = val;
+        document.getElementById('cart-count-top').innerText = count;
+        document.getElementById('cart-count-bar').innerText = count;
+        document.getElementById('cartSummaryBar').classList.toggle('active', count > 0);
+    }
+
+    function changeQty(idx, v) {
+        cart[idx].q += v;
+        if(cart[idx].q <= 0) cart.splice(idx, 1);
+        save();
+    }
+
+    function toggleCart() {
+        const sideCart = document.getElementById('sideCart');
+        const isOpen = sideCart.classList.contains('open');
+        
+        sideCart.classList.toggle('open');
+        document.getElementById('cartOverlay').classList.toggle('active');
+        document.body.classList.toggle('modal-open');
+
+        if(!isOpen) {
+            checkPix(); 
+            toggleAddressField(); 
+        }
+    }
+
+    function toggleAddressField() {
+        const type = document.getElementById('deliveryType').value;
+        const container = document.getElementById('addr-container');
+        if(type === 'Buscar') container.classList.add('hidden');
+        else container.classList.remove('hidden');
+    }
+
+    function checkPix() {
+        const isPix = document.getElementById('userPay').value === 'Pix';
+        document.getElementById('pix-info').style.display = isPix ? 'block' : 'none';
+    }
+
+    function copyPix() {
+        navigator.clipboard.writeText("59874260220");
+        alert("CNPJ Pix Copiado!");
+    }
+
+    function filter(c) {
+        currentFilter = c;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('tab-'+c).classList.add('active');
+        render();
+    }
+
+    function sendOrder() {
+        const delType = document.getElementById('deliveryType').value;
+        const ad = document.getElementById('userAddr').value;
+        const payMethod = document.getElementById('userPay').value;
+        if(delType === 'Entregar' && !ad) return alert("Por favor, informe o endereço!");
+        if(cart.length === 0) return alert("Seu carrinho está vazio!");
+        
+        let m = `*NOVO PEDIDO - MAIS FRIO*\n━━━━━━━━━━━━━━━━━━\n\n`;
+        cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
+        m += `\n━━━━━━━━━━━━━━━━━━\n`;
+        m += `*Tipo:* ${delType === 'Buscar' ? '🏠 Retirar na Loja' : '🚚 Entrega'}\n`;
+        if(delType === 'Entregar') m += `*Endereço:* ${ad}\n`;
+        m += `*Pagamento:* ${payMethod}\n`;
+        m += `*Total:* ${document.getElementById('cart-total-side').innerText}`;
+
+        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
+    }
+
+    window.onload = () => { render(); updateUI(); };
 </script>
 </body>
 </html>
