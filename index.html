@@ -21,7 +21,6 @@
         body { background: var(--bg); color: var(--primary); overflow-x: hidden; width: 100%; }
         body.modal-open { overflow: hidden; height: 100vh; }
 
-        /* --- ANIMAÇÕES --- */
         @keyframes reveal {
             from { opacity: 0; transform: translateY(25px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
@@ -33,104 +32,49 @@
             100% { transform: translate(-50%, 0) scale(1); }
         }
 
-        /* --- HEADER & HERO --- */
         header { 
-            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);
             padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; 
             position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .logo { font-weight: 800; font-size: 1rem; text-transform: uppercase; letter-spacing: -0.5px; }
+        .logo { font-weight: 800; font-size: 1rem; text-transform: uppercase; }
         .logo span { color: var(--secondary); }
         
         .btn-cart-top { 
             background: var(--primary); color: white; padding: 8px 16px; border-radius: 12px; 
             cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: 700;
-            transition: 0.3s var(--spring);
         }
-        .btn-cart-top:active { transform: scale(0.9); }
 
         .hero { 
             background: linear-gradient(135deg, #0a192f 0%, #112240 100%); 
             color: white; padding: 40px 6% 60px; text-align: center;
             border-bottom-left-radius: 35px; border-bottom-right-radius: 35px;
         }
-        .hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; animation: reveal 0.8s var(--spring); }
-        
+        .hero h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; }
+
         .search-area { 
             background: white; border-radius: 15px; padding: 4px 15px; 
             width: 100%; max-width: 450px; display: flex; align-items: center; 
-            margin: 0 auto 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            animation: reveal 1s var(--spring) backwards;
+            margin: 0 auto 25px;
         }
-        .search-area input { width: 100%; padding: 12px; border: none; outline: none; font-size: 1rem; font-weight: 600; color: var(--primary); }
+        .search-area input { width: 100%; padding: 12px; border: none; outline: none; }
 
-        .tabs { display: flex; gap: 8px; justify-content: center; overflow-x: auto; padding: 5px; animation: reveal 1.2s var(--spring) backwards; }
-        .tab { padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 12px; font-size: 0.8rem; font-weight: 700; cursor: pointer; color: white; transition: 0.4s; border: 1px solid transparent; }
-        .tab.active { background: white; color: var(--primary); transform: scale(1.1); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+        .tabs { display: flex; gap: 8px; justify-content: center; }
+        .tab { padding: 10px 20px; background: rgba(255,255,255,0.1); border-radius: 12px; color: white; cursor: pointer; }
+        .tab.active { background: white; color: var(--primary); }
 
-        /* --- GRID & CARDS --- */
         .container { padding: 25px 4% 140px; }
         .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        @media (min-width: 768px) { .grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; } }
 
-        .card { 
-            background: white; border-radius: 20px; overflow: hidden; display: flex; 
-            flex-direction: column; transition: 0.4s var(--spring); box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            animation: reveal 0.7s var(--spring) backwards;
-        }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
-        
-        .img-box { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; padding: 15px; position: relative; }
-        .img-box img { max-width: 85%; max-height: 85%; object-fit: contain; transition: 0.5s var(--spring); }
-        
-        .badge { position: absolute; top: 10px; left: 10px; padding: 4px 8px; border-radius: 8px; font-size: 0.5rem; font-weight: 800; color: white; text-transform: uppercase; z-index: 5; }
-        .badge.peca { background: var(--secondary); }
-        .badge.servico { background: var(--accent); }
+        .card { background: white; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
+        .img-box { width: 100%; height: 140px; display: flex; align-items: center; justify-content: center; }
+        .img-box img { max-width: 85%; max-height: 85%; object-fit: contain; }
 
-        .card-body { padding: 12px; flex: 1; display: flex; flex-direction: column; }
-        .card h3 { font-size: 0.8rem; font-weight: 700; min-height: 38px; margin-bottom: 4px; }
-        .price { font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; }
-        
-        .btn-add { width: 100%; background: #f1f5f9; padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 0.75rem; }
-        .btn-add:hover { background: var(--primary); color: white; }
+        .card-body { padding: 12px; }
+        .card h3 { font-size: 0.8rem; font-weight: 700; }
+        .price { font-size: 1.1rem; font-weight: 800; }
 
-        /* --- BARRA BOTTOM --- */
-        .cart-bar {
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%) translateY(150px);
-            width: 90%; max-width: 420px; background: var(--primary); color: white;
-            padding: 14px 20px; border-radius: 20px; z-index: 900; transition: 0.6s var(--spring);
-            display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3); cursor: pointer;
-        }
-        .cart-bar.active { transform: translateX(-50%) translateY(0); animation: pulse-soft 3s infinite ease-in-out; }
-        
-        .bar-count { justify-self: start; }
-        .bar-label { justify-self: center; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
-        .bar-total { justify-self: end; font-weight: 800; font-size: 0.95rem; }
-        .pill { background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 8px; font-weight: 800; }
-
-        /* --- CARRINHO SIDEBAR --- */
-        .overlay { position: fixed; inset: 0; background: rgba(10, 25, 47, 0.4); backdrop-filter: blur(4px); z-index: 1900; opacity: 0; visibility: hidden; transition: 0.4s; }
-        .overlay.active { opacity: 1; visibility: visible; }
-
-        #sideCart { position: fixed; top: 0; right: 0; width: 88%; max-width: 380px; height: 100%; background: white; z-index: 2000; transform: translateX(100%); transition: 0.6s var(--spring); display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
-        #sideCart.open { transform: translateX(0); }
-        .cart-header { padding: 20px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
-        .cart-item { background: #f8fafc; padding: 12px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; animation: reveal 0.4s var(--spring) backwards; }
-
-        .cart-footer { padding: 20px; border-top: 1px solid #f1f5f9; background: white; }
-        .premium-input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #f1f5f9; margin-bottom: 10px; font-weight: 600; outline: none; transition: 0.3s; }
-        .premium-input:focus { border-color: var(--secondary); }
-
-        #addr-container { transition: 0.5s var(--spring); overflow: hidden; }
-        #addr-container.hidden { height: 0; opacity: 0; margin: 0; pointer-events: none; }
-
-        #pix-info { display:none; background:#f0fdf4; padding:15px; border-radius:12px; text-align:center; margin-bottom:12px; border: 2px dashed var(--accent); animation: reveal 0.3s var(--spring); }
-        .btn-finish { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
-
-        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--primary); color: white; padding: 12px 25px; border-radius: 12px; z-index: 3000; transition: 0.5s var(--spring); font-weight: 700; }
-        #toast.active { transform: translateX(-50%) translateY(0); }
+        .btn-add { width: 100%; background: #f1f5f9; padding: 12px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -148,9 +92,9 @@
         <input type="text" id="searchInput" placeholder="O que você precisa?" onkeyup="render()">
     </div>
     <div class="tabs">
-        <div class="tab active" id="tab-all" onclick="filter('all')">Todos</div>
-        <div class="tab" id="tab-servico" onclick="filter('servico')">Serviços</div>
-        <div class="tab" id="tab-peca" onclick="filter('peca')">Peças</div>
+        <div class="tab active" onclick="filter('all')">Todos</div>
+        <div class="tab" onclick="filter('servico')">Serviços</div>
+        <div class="tab" onclick="filter('peca')">Peças</div>
     </div>
 </section>
 
@@ -158,228 +102,52 @@
     <div class="grid" id="grid"></div>
 </main>
 
-<div class="cart-bar" id="cartSummaryBar" onclick="toggleCart()">
-    <div class="bar-count"><span class="pill" id="cart-count-bar">0</span></div>
-    <div class="bar-label">Ver Carrinho</div>
-    <div class="bar-total"><span id="cart-total-bar">R$ 0,00</span></div>
-</div>
-
-<div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
-
-<div id="sideCart">
-    <div class="cart-header">
-        <h2 style="font-size: 1.1rem; font-weight: 800;">Meu Carrinho</h2>
-        <div onclick="toggleCart()" style="cursor: pointer; padding: 10px; opacity: 0.5;"><i class="fas fa-times"></i></div>
-    </div>
-    <div class="cart-items" id="cart-list"></div>
-    <div class="cart-footer">
-        
-        <select id="deliveryType" class="premium-input" onchange="toggleAddressField()">
-            <option value="Entregar">Entregar no Endereço</option>
-            <option value="Buscar">Retirar na Loja</option>
-        </select>
-
-        <div id="addr-container">
-            <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de Entrega Completo">
-        </div>
-
-        <select id="userPay" class="premium-input" onchange="checkPix()">
-            <option value="Pix">Pagar com Pix</option>
-            <option value="Cartão">Cartão na Entrega</option>
-            <option value="Dinheiro">Dinheiro</option>
-        </select>
-        
-        <div id="pix-info" onclick="copyPix()" style="cursor: pointer;">
-            <small style="color: #157347; font-weight: 700;">Clique p/ copiar o CNPJ Pix:</small><br>
-            <strong style="color: #157347; font-size: 1.1rem;">59874260220</strong><br>
-            <small>(Toque para copiar)</small>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; margin: 15px 0;">
-            <span style="font-weight: 600; opacity: 0.5;">Total:</span>
-            <span id="cart-total-side" style="font-weight: 800; font-size: 1.3rem;">R$ 0,00</span>
-        </div>
-        <button onclick="sendOrder()" class="btn-finish">
-            <i class="fab fa-whatsapp"></i> FINALIZAR NO WHATSAPP
-        </button>
-    </div>
-</div>
-
-<div id="toast">✅ Adicionado ao carrinho!</div>
-
 <script>
-    const inventory = [
-        { name: "Mão de Obra Instalação (Ar Novo)", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
-        { name: "Mão de Obra Instalação (Ar Usado)", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
-        { name: "Limpeza + Higienização Completa", price: 150.00, img: "ManutencaoPreventiva.png", cat: "servico" },
-        { name: "Carga de Gás (Mão de Obra + Gás)", price: 200.00, img: "CargadeGas.png", cat: "servico" },
-        { name: "Capacitor Duplo 25+2.5UF", price: 30.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
-        { name: "Capacitor Duplo 30UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
-        { name: "Capacitor Duplo 35UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
-        { name: "Capacitor Duplo 40UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
-        { name: "Capacitor Ventilador 1.0UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca" },
-        { name: "Capacitor Ventilador 1.5UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca" },
-        { name: "Capacitor Ventilador 2.5UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca" },
-        { name: "Capacitor Ventilador 3.0UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca" },
-        { name: "Contactor 18A", price: 53.50, img: "Contactor18A.png", cat: "peca" },
-        { name: "Contactor 25A", price: 135.00, img: "Contactor25A.png", cat: "peca" },
-        { name: "Sensor Degelo AC 05k", price: 10.00, img: "SensorDegeloAC05k.png", cat: "peca" },
-        { name: "Controle Ar Universal", price: 80.00, img: "ControlArUniversal.png", cat: "peca" },
-        { name: "Gás R32 (13kg)", price: 1150.00, img: "gasr3213kg.png", cat: "peca" },
-        { name: "Gás R-22 Lata 1kg", price: 130.00, img: "GasR-22Lata1kg.png", cat: "peca" },
-        { name: "Gás R-410A Lata 800g", price: 110.00, img: "GásR-410ALata800g.png", cat: "peca" },
-        { name: "Tubulação de Cobre (kg)", price: 165.00, img: "TubulaçãodeCobre(kg).png", cat: "peca" },
-        { name: "Suporte L Condensadora 47cm", price: 27.00, img: "SuporteLCondensadora47cm.png", cat: "peca" },
-        { name: "Válvula de Serviço 1/4", price: 36.50, img: "valvuladeservicio.png", cat: "peca" },
-        { name: "Válvula de Serviço 3/8", price: 55.99, img: "valvuladeservicio.png", cat: "peca" },
-        { name: "Válvula de Serviço 1/2", price: 62.99, img: "valvuladeservicio.png", cat: "peca" },
-        { name: "Polipex 1/4", price: 3.99, img: "Polipex.png", cat: "peca" },
-        { name: "Polipex 3/8", price: 4.90, img: "Polipex.png", cat: "peca" },
-        { name: "Polipex 1/2", price: 5.90, img: "Polipex.png", cat: "peca" },
-        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, img: "FitaIsolante18mmx10m.png", cat: "peca" },
-        { name: "Fita Isolante 18mm x 10m", price: 6.90, img: "FitaIsolante18mmx10m.png", cat: "peca" },
-        { name: "Fita De PVC", price: 3.99, img: "FitaDePVC.png", cat: "peca" },
-        { name: "Bucha Plástica 0,8 C", price: 0.20, img: "BuchaPlástica0,8C.png", cat: "peca" },
-        { name: "Bucha Plástica 0,10 C", price: 0.50, img: "BuchaPlástica0,10C.png", cat: "peca" },
-        { name: "Bucha Plástica 0,12 C", price: 0.60, img: "BuchaPlástic0,12C.png", cat: "peca" },
-        { name: "Parafuso Cônico", price: 0.35, img: "ParafusoCônico.png", cat: "peca" },
-        { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" }
-    ];
+const inventory = [
+    { name: "Mão de Obra Instalação (Ar Novo)", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
+    { name: "Mão de Obra Instalação (Ar Usado)", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
+    { name: "Limpeza + Higienização Completa", price: 150.00, img: "ManutencaoPreventiva.png", cat: "servico" },
+    { name: "Carga de Gás (Mão de Obra + Gás)", price: 200.00, img: "CargadeGas.png", cat: "servico" },
 
-    let cart = JSON.parse(localStorage.getItem('cart_mf_v12')) || [];
-    let currentFilter = 'all';
+    { name: "Capacitor Duplo 25+2.5UF", price: 30.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
+    { name: "Controle Ar Universal", price: 80.00, img: "ControlArUniversal.png", cat: "peca" },
 
-    function normalizeStr(str) {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    }
+    { name: "Serra Copo", price: 125.00, img: "serracopo.png", cat: "peca" }
+];
 
-    function render() {
-        const grid = document.getElementById('grid');
-        const term = normalizeStr(document.getElementById('searchInput').value);
-        grid.innerHTML = "";
-        
-        inventory.filter(i => {
-            const nameMatch = normalizeStr(i.name).includes(term);
-            const catMatch = currentFilter === 'all' || i.cat === currentFilter;
-            return nameMatch && catMatch;
-        })
-        .forEach((item, idx) => {
-            grid.innerHTML += `
-                <div class="card" style="animation-delay: ${idx*0.05}s">
-                    <div class="img-box">
-                        <div class="badge ${item.cat}">${item.cat}</div>
-                        <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
-                    </div>
-                    <div class="card-body">
-                        <h3>${item.name}</h3>
-                        <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
-                        <button class="btn-add" onclick="add('${item.name}', ${item.price})">Adicionar</button>
-                    </div>
-                </div>`;
-        });
-    }
+let cart = [];
+let currentFilter = 'all';
 
-    function add(n, p) {
-        let x = cart.find(i => i.n === n);
-        if(x) x.q++; else cart.push({n, p, q:1});
-        save();
-        const t = document.getElementById('toast');
-        t.classList.add('active');
-        setTimeout(() => t.classList.remove('active'), 2000);
-    }
+function render() {
+    const grid = document.getElementById('grid');
+    const term = document.getElementById('searchInput').value.toLowerCase();
+    grid.innerHTML = "";
 
-    function save() {
-        localStorage.setItem('cart_mf_v12', JSON.stringify(cart));
-        updateUI();
-    }
+    inventory.filter(i => {
+        return (currentFilter === 'all' || i.cat === currentFilter) &&
+               i.name.toLowerCase().includes(term);
+    }).forEach(item => {
+        grid.innerHTML += `
+        <div class="card">
+            <div class="img-box">
+                <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
+            </div>
+            <div class="card-body">
+                <h3>${item.name}</h3>
+                <div class="price">R$ ${item.price.toFixed(2).replace('.',',')}</div>
+                <button class="btn-add">Adicionar</button>
+            </div>
+        </div>`;
+    });
+}
 
-    function updateUI() {
-        const list = document.getElementById('cart-list');
-        let tot = 0, count = 0;
-        list.innerHTML = "";
-        cart.forEach((item, idx) => {
-            tot += item.p * item.q;
-            count += item.q;
-            list.innerHTML += `<div class="cart-item" style="animation-delay: ${idx*0.1}s">
-                <div><div style="font-weight:700; font-size:0.85rem">${item.n}</div><div style="color:var(--secondary); font-weight:800">R$ ${(item.p*item.q).toFixed(2).replace('.',',')}</div></div>
-                <div style="display:flex; align-items:center; gap:10px">
-                    <button onclick="changeQty(${idx},-1)" style="width:30px; height:30px; border-radius:8px; border:1px solid #ddd; background:#fff; font-weight:bold;">-</button>
-                    <span style="font-weight:800">${item.q}</span>
-                    <button onclick="changeQty(${idx},1)" style="width:30px; height:30px; border-radius:8px; border:1px solid #ddd; background:#fff; font-weight:bold;">+</button>
-                </div></div>`;
-        });
-        const val = "R$ " + tot.toFixed(2).replace('.',',');
-        document.getElementById('cart-total-side').innerText = val;
-        document.getElementById('cart-total-bar').innerText = val;
-        document.getElementById('cart-count-top').innerText = count;
-        document.getElementById('cart-count-bar').innerText = count;
-        document.getElementById('cartSummaryBar').classList.toggle('active', count > 0);
-    }
+function filter(c) {
+    currentFilter = c;
+    render();
+}
 
-    function changeQty(idx, v) {
-        cart[idx].q += v;
-        if(cart[idx].q <= 0) cart.splice(idx, 1);
-        save();
-    }
-
-    // CORREÇÃO: Chama checkPix() e toggleAddressField() sempre que abre o carrinho
-    function toggleCart() {
-        const sideCart = document.getElementById('sideCart');
-        const isOpen = sideCart.classList.contains('open');
-        
-        sideCart.classList.toggle('open');
-        document.getElementById('cartOverlay').classList.toggle('active');
-        document.body.classList.toggle('modal-open');
-
-        if(!isOpen) {
-            checkPix(); // Verifica se o Pix deve aparecer
-            toggleAddressField(); // Verifica se o endereço deve aparecer
-        }
-    }
-
-    function toggleAddressField() {
-        const type = document.getElementById('deliveryType').value;
-        const container = document.getElementById('addr-container');
-        if(type === 'Buscar') container.classList.add('hidden');
-        else container.classList.remove('hidden');
-    }
-
-    function checkPix() {
-        const isPix = document.getElementById('userPay').value === 'Pix';
-        document.getElementById('pix-info').style.display = isPix ? 'block' : 'none';
-    }
-
-    function copyPix() {
-        navigator.clipboard.writeText("59874260220");
-        alert("CNPJ Pix Copiado!");
-    }
-
-    function filter(c) {
-        currentFilter = c;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById('tab-'+c).classList.add('active');
-        render();
-    }
-
-    function sendOrder() {
-        const delType = document.getElementById('deliveryType').value;
-        const ad = document.getElementById('userAddr').value;
-        const payMethod = document.getElementById('userPay').value;
-        if(delType === 'Entregar' && !ad) return alert("Por favor, informe o endereço!");
-        if(cart.length === 0) return alert("Seu carrinho está vazio!");
-        
-        let m = `*NOVO PEDIDO - MAIS FRIO*\n━━━━━━━━━━━━━━━━━━\n\n`;
-        cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
-        m += `\n━━━━━━━━━━━━━━━━━━\n`;
-        m += `*Tipo:* ${delType === 'Buscar' ? '🏠 Retirar na Loja' : '🚚 Entrega'}\n`;
-        if(delType === 'Entregar') m += `*Endereço:* ${ad}\n`;
-        m += `*Pagamento:* ${payMethod}\n`;
-        m += `*Total:* ${document.getElementById('cart-total-side').innerText}`;
-
-        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
-    }
-
-    window.onload = () => { render(); updateUI(); };
+window.onload = render;
 </script>
+
 </body>
 </html>
