@@ -306,22 +306,24 @@
         
         .img-box { 
             width: 100%; 
-            height: 148px; 
+            height: 160px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            padding: 18px; 
+            padding: 14px; 
             position: relative;
-            background: var(--bg);
+            background: #ffffff;
         }
         .img-box img { 
-            max-width: 80%; 
-            max-height: 80%; 
+            max-width: 92%; 
+            max-height: 92%; 
+            width: 100%;
+            height: 100%;
             object-fit: contain; 
             transition: 0.5s var(--spring);
-            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12));
+            mix-blend-mode: multiply;
         }
-        .card:hover .img-box img { transform: scale(1.08); }
+        .card:hover .img-box img { transform: scale(1.1); }
         
         .badge { 
             position: absolute; 
