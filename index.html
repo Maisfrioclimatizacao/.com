@@ -703,12 +703,10 @@
     <div class="cart-items" id="cart-list"></div>
     <div class="cart-footer">
         
-        <select id="deliveryType" class="premium-input" onchange="toggleAddressField()">
-            <option value="Entregar">🚚 Entregar no Endereço</option>
-            <option value="Buscar">🏠 Retirar na Loja</option>
-        </select>
-
-        <div id="addr-container">
+        <div style="background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 10px; font-size: 0.88rem; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 8px;">
+            🏠 Retirada na Loja
+        </div>
+        <div id="addr-container" style="display:none;">
             <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de entrega completo">
         </div>
 
@@ -878,8 +876,7 @@
         document.body.classList.toggle('modal-open');
 
         if(!isOpen) {
-            checkPix(); 
-            toggleAddressField(); 
+            checkPix();
         }
     }
 
@@ -908,17 +905,13 @@
     }
 
     function sendOrder() {
-        const delType = document.getElementById('deliveryType').value;
-        const ad = document.getElementById('userAddr').value;
         const payMethod = document.getElementById('userPay').value;
-        if(delType === 'Entregar' && !ad) return alert("Por favor, informe o endereço!");
         if(cart.length === 0) return alert("Seu carrinho está vazio!");
         
         let m = `*NOVO PEDIDO - MAIS FRIO*\n━━━━━━━━━━━━━━━━━━\n\n`;
         cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
         m += `\n━━━━━━━━━━━━━━━━━━\n`;
-        m += `*Tipo:* ${delType === 'Buscar' ? '🏠 Retirar na Loja' : '🚚 Entrega'}\n`;
-        if(delType === 'Entregar') m += `*Endereço:* ${ad}\n`;
+        m += `*Tipo:* 🏠 Retirar na Loja\n`;
         m += `*Pagamento:* ${payMethod}\n`;
         m += `*Total:* ${document.getElementById('cart-total-side').innerText}`;
 
