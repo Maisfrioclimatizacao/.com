@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Mais Frio Climatização | Catálogo Profissional</title>
-    
+    <title>Mais Frio Climatização | Estoque & Manutenções</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -16,6 +16,10 @@
             --secondary-light: #e8f2ff;
             --accent: #00c853;
             --accent-dark: #009940;
+            --warn: #ff9500;
+            --warn-dark: #d97e00;
+            --danger: #ff3b30;
+            --danger-dark: #d6291f;
             --bg: #f4f6f9;
             --surface: #ffffff;
             --border: rgba(0,0,0,0.07);
@@ -27,11 +31,11 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { 
-            background: var(--bg); 
-            color: var(--primary); 
-            overflow-x: hidden; 
-            width: 100%; 
+        body {
+            background: var(--bg);
+            color: var(--primary);
+            overflow-x: hidden;
+            width: 100%;
             font-family: 'DM Sans', sans-serif;
         }
         body.modal-open { overflow: hidden; height: 100vh; }
@@ -40,38 +44,36 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        @keyframes pulse-soft {
-            0% { transform: translate(-50%, 0) scale(1); box-shadow: 0 12px 32px rgba(5,15,28,0.3); }
-            50% { transform: translate(-50%, -5px) scale(1.02); box-shadow: 0 20px 40px rgba(5,15,28,0.4); }
-            100% { transform: translate(-50%, 0) scale(1); box-shadow: 0 12px 32px rgba(5,15,28,0.3); }
-        }
-
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes pulseRed {
+            0% { box-shadow: 0 0 0 0 rgba(255,59,48,0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(255,59,48,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,59,48,0); }
+        }
 
         /* ── HEADER ── */
-        header { 
-            background: rgba(255,255,255,0.92); 
-            backdrop-filter: blur(20px); 
+        header {
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 0 5%;
             height: 64px;
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             border-bottom: 1px solid var(--border);
         }
 
-        .logo { 
+        .logo {
             font-family: 'Syne', sans-serif;
-            font-weight: 800; 
-            font-size: 1.05rem; 
+            font-weight: 800;
+            font-size: 1.05rem;
             letter-spacing: -0.5px;
             color: var(--primary);
             display: flex;
@@ -87,47 +89,51 @@
             font-size: 14px;
         }
         .logo span { color: var(--secondary); }
-        
-        .btn-cart-top { 
-            background: var(--primary); 
-            color: white; 
-            padding: 9px 18px; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
+
+        .btn-header {
+            background: var(--primary);
+            color: white;
+            padding: 9px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.82rem;
             transition: 0.25s var(--spring);
             border: none;
+            position: relative;
         }
-        .btn-cart-top:hover { background: var(--secondary); }
-        .btn-cart-top:active { transform: scale(0.93); }
+        .btn-header:hover { background: var(--secondary); }
+        .btn-header:active { transform: scale(0.93); }
 
-        .cart-badge {
-            background: var(--secondary);
+        .header-badge {
+            background: var(--danger);
             color: white;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 700;
-            width: 20px; height: 20px;
+            min-width: 18px; height: 18px;
+            padding: 0 4px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            transition: 0.3s var(--spring);
+            position: absolute;
+            top: -5px; right: -5px;
+            border: 2px solid white;
         }
+        .header-badge.hidden { display: none; }
 
         /* ── HERO ── */
-        .hero { 
+        .hero {
             background: var(--primary);
-            color: white; 
-            padding: 48px 6% 64px;
+            color: white;
+            padding: 40px 6% 56px;
             text-align: center;
-            border-bottom-left-radius: 32px; 
+            border-bottom-left-radius: 32px;
             border-bottom-right-radius: 32px;
             position: relative;
             overflow: hidden;
         }
-
         .hero::before {
             content: '';
             position: absolute;
@@ -144,7 +150,6 @@
             background: radial-gradient(circle, rgba(0,200,83,0.12) 0%, transparent 70%);
             pointer-events: none;
         }
-
         .hero-eyebrow {
             display: inline-flex;
             align-items: center;
@@ -161,324 +166,360 @@
             margin-bottom: 16px;
             animation: fadeUp 0.6s var(--spring) both;
         }
-        .hero-eyebrow-dot {
-            width: 6px; height: 6px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        .hero h1 { 
+        .hero-eyebrow-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+        .hero h1 {
             font-family: 'Syne', sans-serif;
-            font-size: 2.1rem; 
-            font-weight: 800; 
-            margin-bottom: 6px; 
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 6px;
             letter-spacing: -1px;
             line-height: 1.15;
             animation: fadeUp 0.7s var(--spring) 0.05s both;
         }
         .hero h1 span { color: var(--secondary); }
-
         .hero-sub {
             color: rgba(255,255,255,0.45);
             font-size: 0.9rem;
-            margin-bottom: 28px;
+            margin-bottom: 26px;
             animation: fadeUp 0.7s var(--spring) 0.1s both;
         }
-        
-        .search-area { 
-            background: white; 
-            border-radius: var(--radius-md);
-            padding: 4px 16px; 
-            width: 100%; 
-            max-width: 460px; 
-            display: flex; 
-            align-items: center; 
-            margin: 0 auto 28px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-            animation: fadeUp 0.8s var(--spring) 0.15s both;
-            border: 1.5px solid transparent;
-            transition: border-color 0.25s;
-        }
-        .search-area:focus-within {
-            border-color: var(--secondary);
-        }
-        .search-area i {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-right: 4px;
-        }
-        .search-area input { 
-            width: 100%; 
-            padding: 13px 8px; 
-            border: none; 
-            outline: none; 
-            font-size: 0.95rem; 
-            font-weight: 500; 
-            color: var(--primary);
-            font-family: 'DM Sans', sans-serif;
-            background: transparent;
-        }
-        .search-area input::placeholder { color: var(--text-muted); font-weight: 400; }
 
-        .tabs { 
-            display: flex; 
-            gap: 8px; 
-            justify-content: center; 
-            overflow-x: auto; 
+        .tabs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
             padding: 4px;
             animation: fadeUp 0.8s var(--spring) 0.2s both;
-            scrollbar-width: none;
         }
-        .tabs::-webkit-scrollbar { display: none; }
-        .tab { 
-            padding: 9px 20px; 
-            background: rgba(255,255,255,0.08); 
-            border-radius: 50px; 
-            font-size: 0.8rem; 
-            font-weight: 600; 
-            cursor: pointer; 
-            color: rgba(255,255,255,0.6); 
-            transition: 0.3s var(--spring); 
+        .tab {
+            padding: 10px 24px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            color: rgba(255,255,255,0.6);
+            transition: 0.3s var(--spring);
             border: 1px solid rgba(255,255,255,0.1);
             white-space: nowrap;
             font-family: 'DM Sans', sans-serif;
+            display: flex; align-items: center; gap: 7px;
         }
-        .tab.active { 
-            background: white; 
-            color: var(--primary); 
+        .tab.active {
+            background: white;
+            color: var(--primary);
             border-color: white;
             box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
-        /* ── STATS BAR ── */
         .stats-bar {
             display: flex;
             justify-content: center;
-            gap: 24px;
-            margin: 20px auto 0;
+            gap: 10px;
+            margin: 24px auto 0;
+            flex-wrap: wrap;
             animation: fadeUp 0.9s var(--spring) 0.25s both;
         }
-        .stat-item {
+        .stat-pill {
             display: flex;
             align-items: center;
-            gap: 6px;
-            color: rgba(255,255,255,0.5);
-            font-size: 0.75rem;
-            font-weight: 500;
+            gap: 7px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 14px;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.85);
         }
-        .stat-item i { color: var(--accent); font-size: 0.7rem; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .dot.green { background: var(--accent); }
+        .dot.orange { background: var(--warn); }
+        .dot.red { background: var(--danger); }
 
-        /* ── GRID & CARDS ── */
-        .container { padding: 28px 4% 150px; }
+        /* ── LAYOUT ── */
+        .container { padding: 28px 4% 90px; max-width: 1200px; margin: 0 auto; }
+        .view { display: none; }
+        .view.active { display: block; }
 
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
         .section-label {
-            font-size: 0.72rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+            color: var(--primary);
+        }
+        .section-label small {
+            display: block;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
             color: var(--text-muted);
-            margin-bottom: 16px;
+            margin-top: 2px;
         }
 
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 14px; 
+        .search-area {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 2px 14px;
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            border: 1.5px solid var(--border);
+            transition: border-color 0.25s;
+        }
+        .search-area:focus-within { border-color: var(--secondary); }
+        .search-area i { color: var(--text-muted); font-size: 0.9rem; margin-right: 4px; }
+        .search-area input {
+            width: 100%;
+            padding: 11px 6px;
+            border: none;
+            outline: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            color: var(--primary);
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 11px 20px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.25s var(--spring);
+            font-family: 'DM Sans', sans-serif;
+            white-space: nowrap;
+        }
+        .btn-primary:hover { background: var(--secondary); }
+        .btn-primary:active { transform: scale(0.95); }
+
+        /* ── STOCK GRID ── */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
         }
         @media (min-width: 600px) { .grid { grid-template-columns: repeat(3, 1fr); } }
         @media (min-width: 900px) { .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; } }
 
-        .card { 
-            background: var(--surface); 
-            border-radius: var(--radius-lg); 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column; 
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             transition: transform 0.35s var(--spring), box-shadow 0.35s var(--spring);
             box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.04);
             animation: reveal 0.5s var(--spring) backwards;
             border: 1px solid var(--border);
         }
-        .card:hover { 
-            transform: translateY(-6px); 
-            box-shadow: 0 4px 8px rgba(0,0,0,0.04), 0 20px 40px rgba(0,0,0,0.1);
-        }
-        
-        .img-box { 
-            width: 100%; 
-            height: 160px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 14px; 
+        .card:hover { transform: translateY(-4px); box-shadow: 0 4px 8px rgba(0,0,0,0.04), 0 16px 32px rgba(0,0,0,0.09); }
+
+        .img-box {
+            width: 100%;
+            height: 130px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px;
             position: relative;
             background: #ffffff;
         }
-        .img-box img { 
-            max-width: 92%; 
-            max-height: 92%; 
+        .img-box img {
+            max-width: 92%;
+            max-height: 92%;
             width: 100%;
             height: 100%;
-            object-fit: contain; 
-            transition: 0.5s var(--spring);
+            object-fit: contain;
             mix-blend-mode: multiply;
         }
-        .card:hover .img-box img { transform: scale(1.1); }
-        
-        .badge { 
-            position: absolute; 
-            top: 10px; 
-            left: 10px; 
-            padding: 4px 10px; 
-            border-radius: 50px; 
-            font-size: 0.6rem; 
-            font-weight: 700; 
-            color: white; 
-            text-transform: uppercase; 
+
+        .badge {
+            position: absolute;
+            top: 10px; left: 10px;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
             letter-spacing: 0.05em;
             z-index: 5;
         }
         .badge.peca { background: var(--secondary); }
         .badge.servico { background: var(--accent-dark); }
+        .badge.low { position: static; margin-bottom: 6px; align-self: flex-start; background: var(--danger); }
 
-        .card-body { 
-            padding: 14px 15px 15px; 
-            flex: 1; 
-            display: flex; 
+        .card-body {
+            padding: 14px 15px 15px;
+            flex: 1;
+            display: flex;
             flex-direction: column;
             border-top: 1px solid var(--border);
         }
-        .card h3 { 
-            font-size: 0.8rem; 
-            font-weight: 600; 
-            min-height: 36px; 
-            margin-bottom: 10px; 
-            line-height: 1.45;
+        .card h3 { font-size: 0.8rem; font-weight: 600; min-height: 34px; margin-bottom: 8px; line-height: 1.4; color: var(--primary); }
+
+        .price-row { display: flex; align-items: baseline; gap: 4px; margin-bottom: 10px; color: var(--text-muted); }
+        .price-currency { font-size: 0.65rem; font-weight: 600; }
+        .price { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.3px; }
+
+        .stock-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 6px 8px;
+        }
+        .stock-label { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
+        .stock-qty-box { display: flex; align-items: center; gap: 6px; }
+        .qty-btn-sm {
+            width: 24px; height: 24px;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+            background: white;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+            transition: 0.2s;
             color: var(--primary);
         }
+        .qty-btn-sm:hover { background: var(--primary); color: white; border-color: var(--primary); }
+        .stock-num { font-weight: 800; font-size: 0.9rem; min-width: 18px; text-align: center; color: var(--primary); }
+        .stock-num.zero { color: var(--danger); }
+        .stock-num.low { color: var(--warn-dark); }
 
-        .price-row {
+        /* ── APPOINTMENTS ── */
+        .appt-list { display: flex; flex-direction: column; gap: 12px; }
+
+        .appt-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            padding: 16px 18px;
             display: flex;
-            align-items: baseline;
-            gap: 4px;
-            margin-bottom: 14px;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.04);
+            animation: reveal 0.4s var(--spring) backwards;
+            border-left: 4px solid var(--accent);
         }
-        .price-currency { 
-            font-size: 0.7rem; 
-            font-weight: 600; 
+        .appt-card.orange { border-left-color: var(--warn); }
+        .appt-card.red { border-left-color: var(--danger); animation: reveal 0.4s var(--spring) backwards, pulseRed 2.5s infinite; }
+
+        .appt-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+        .appt-client { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: var(--primary); }
+        .appt-unit { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            white-space: nowrap;
+            color: white;
+        }
+        .status-pill.green { background: var(--accent-dark); }
+        .status-pill.orange { background: var(--warn-dark); }
+        .status-pill.red { background: var(--danger-dark); }
+
+        .appt-dates {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+            font-size: 0.8rem;
             color: var(--text-muted);
         }
-        .price { 
-            font-size: 1.2rem; 
-            font-weight: 700; 
-            color: var(--primary);
-            letter-spacing: -0.5px;
-        }
-        
-        .btn-add { 
-            width: 100%; 
-            background: var(--primary); 
-            color: white;
-            padding: 11px; 
-            border-radius: var(--radius-sm); 
-            border: none; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: 0.25s var(--spring); 
-            font-size: 0.78rem;
-            font-family: 'DM Sans', sans-serif;
-            letter-spacing: 0.01em;
-        }
-        .btn-add:hover { background: var(--secondary); transform: scale(1.02); }
-        .btn-add:active { transform: scale(0.96); }
+        .appt-dates b { color: var(--primary); font-weight: 700; }
 
-        /* ── CART BAR ── */
-        .cart-bar {
-            position: fixed; 
-            bottom: 24px; 
-            left: 50%; 
-            transform: translateX(-50%) translateY(150px);
-            width: 92%; 
-            max-width: 440px; 
-            background: var(--primary); 
-            color: white;
-            padding: 15px 20px; 
-            border-radius: var(--radius-lg); 
-            z-index: 900; 
-            transition: transform 0.6s var(--spring), box-shadow 0.6s var(--spring);
-            display: grid; 
-            grid-template-columns: 1fr 2fr 1fr; 
-            align-items: center;
+        .appt-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 2px; }
+        .btn-sm {
+            padding: 8px 14px;
+            border-radius: var(--radius-sm);
+            border: none;
+            font-weight: 700;
+            font-size: 0.75rem;
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; gap: 6px;
+            transition: 0.2s var(--spring);
+            font-family: 'DM Sans', sans-serif;
         }
-        .cart-bar.active { 
-            transform: translateX(-50%) translateY(0); 
-            animation: pulse-soft 3.5s infinite ease-in-out;
-        }
-        .bar-count { justify-self: start; }
-        .bar-label { 
-            justify-self: center; 
-            font-family: 'Syne', sans-serif;
-            font-weight: 700; 
-            font-size: 0.82rem; 
-            letter-spacing: 0.05em;
-        }
-        .bar-total { justify-self: end; font-weight: 700; font-size: 0.9rem; }
-        .pill { 
-            background: var(--secondary); 
-            padding: 5px 11px; 
-            border-radius: 50px; 
-            font-weight: 700; 
-            font-size: 0.8rem;
-        }
+        .btn-sm.done { background: var(--accent-dark); color: white; }
+        .btn-sm.done:hover { background: var(--accent); }
+        .btn-sm.whats { background: #25D366; color: white; }
+        .btn-sm.whats:hover { filter: brightness(1.08); }
+        .btn-sm.del { background: var(--bg); color: var(--danger); border: 1px solid var(--border); }
+        .btn-sm.del:hover { background: #ffe9e7; }
+        .btn-sm:active { transform: scale(0.95); }
 
-        /* ── SIDEBAR CART ── */
-        .overlay { 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(5,15,28,0.5); 
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            gap: 12px;
+            text-align: center;
+        }
+        .empty-state i { font-size: 2.5rem; opacity: 0.25; }
+
+        /* ── SIDE PANEL (new appointment) ── */
+        .overlay {
+            position: fixed; inset: 0;
+            background: rgba(5,15,28,0.5);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            z-index: 1900; 
-            opacity: 0; 
-            visibility: hidden; 
-            transition: 0.4s; 
+            z-index: 1900;
+            opacity: 0; visibility: hidden;
+            transition: 0.4s;
         }
         .overlay.active { opacity: 1; visibility: visible; }
 
-        #sideCart { 
-            position: fixed; 
-            top: 0; 
-            right: 0; 
-            width: 90%; 
-            max-width: 390px; 
-            height: 100%; 
-            background: white; 
-            z-index: 2000; 
-            transform: translateX(100%); 
-            transition: 0.55s var(--spring); 
-            display: flex; 
-            flex-direction: column;
+        #apptPanel {
+            position: fixed; top: 0; right: 0;
+            width: 90%; max-width: 400px; height: 100%;
+            background: white;
+            z-index: 2000;
+            transform: translateX(100%);
+            transition: 0.55s var(--spring);
+            display: flex; flex-direction: column;
             box-shadow: -20px 0 60px rgba(0,0,0,0.15);
         }
-        #sideCart.open { transform: translateX(0); }
+        #apptPanel.open { transform: translateX(0); }
 
-        .cart-header { 
-            padding: 20px 22px; 
-            border-bottom: 1px solid var(--border); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
+        .panel-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
             background: var(--primary);
             color: white;
         }
-        .cart-header h2 { 
-            font-family: 'Syne', sans-serif;
-            font-size: 1.05rem; 
-            font-weight: 700;
-        }
-        .cart-close-btn {
+        .panel-header h2 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; }
+        .panel-close {
             width: 32px; height: 32px;
             background: rgba(255,255,255,0.1);
             border-radius: 8px;
@@ -487,82 +528,20 @@
             transition: 0.2s;
             color: white;
         }
-        .cart-close-btn:hover { background: rgba(255,255,255,0.2); }
+        .panel-close:hover { background: rgba(255,255,255,0.2); }
 
-        .cart-items { 
-            flex: 1; 
-            overflow-y: auto; 
-            padding: 16px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border) transparent;
-        }
-        .cart-empty {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: var(--text-muted);
-            gap: 12px;
-        }
-        .cart-empty i { font-size: 2.5rem; opacity: 0.3; }
+        .panel-body { flex: 1; overflow-y: auto; padding: 20px 22px; }
 
-        .cart-item { 
-            background: var(--bg); 
-            padding: 13px 14px; 
-            border-radius: var(--radius-md); 
-            margin-bottom: 10px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            animation: reveal 0.4s var(--spring) backwards;
-            border: 1px solid var(--border);
-        }
-        .cart-item-name {
-            font-weight: 600; 
-            font-size: 0.82rem; 
-            color: var(--primary);
-            margin-bottom: 3px;
-            max-width: 160px;
-        }
-        .cart-item-price { 
-            color: var(--secondary); 
-            font-weight: 700; 
-            font-size: 0.85rem;
-        }
-        .qty-control {
-            display: flex; align-items: center; gap: 8px;
-        }
-        .qty-btn {
-            width: 28px; height: 28px; 
-            border-radius: 8px; 
-            border: 1px solid var(--border); 
-            background: white;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
-            transition: 0.2s;
-            color: var(--primary);
-        }
-        .qty-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-        .qty-num { font-weight: 700; font-size: 0.9rem; min-width: 16px; text-align: center; }
-
-        .cart-footer { 
-            padding: 18px 20px; 
-            border-top: 1px solid var(--border); 
-            background: white;
-        }
-
-        .premium-input { 
-            width: 100%; 
-            padding: 12px 14px; 
-            border-radius: var(--radius-sm); 
-            border: 1.5px solid var(--border); 
-            margin-bottom: 10px; 
-            font-weight: 500; 
+        .field-label { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; display: block; }
+        .premium-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            border: 1.5px solid var(--border);
+            margin-bottom: 16px;
+            font-weight: 500;
             font-size: 0.88rem;
-            outline: none; 
+            outline: none;
             transition: border-color 0.25s;
             color: var(--primary);
             font-family: 'DM Sans', sans-serif;
@@ -571,72 +550,45 @@
         }
         .premium-input:focus { border-color: var(--secondary); background: white; }
 
-        #addr-container { transition: 0.45s var(--spring); overflow: hidden; }
-        #addr-container.hidden { height: 0; opacity: 0; margin: 0; pointer-events: none; }
-
-        #pix-info { 
-            display: none; 
-            background: #f0fdf4; 
-            padding: 14px; 
-            border-radius: var(--radius-md); 
-            text-align: center; 
-            margin-bottom: 12px; 
-            border: 1.5px dashed var(--accent);
-            animation: reveal 0.3s var(--spring);
-        }
-
-        .total-row {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            margin: 14px 0;
-            padding: 14px;
-            background: var(--bg);
+        .next-preview {
+            background: var(--secondary-light);
+            border: 1.5px dashed var(--secondary);
             border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            font-size: 0.82rem;
+            color: var(--primary);
         }
-        .total-label { font-weight: 500; font-size: 0.85rem; color: var(--text-muted); }
-        .total-value { font-weight: 800; font-size: 1.3rem; color: var(--primary); letter-spacing: -0.5px; }
+        .next-preview b { display: block; font-size: 1rem; margin-top: 2px; }
 
-        .btn-finish { 
-            width: 100%; 
-            padding: 15px; 
-            background: var(--accent-dark); 
-            color: white; 
-            border: none; 
-            border-radius: var(--radius-md); 
-            font-weight: 700; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
+        .panel-footer { padding: 18px 20px; border-top: 1px solid var(--border); background: white; }
+        .btn-finish {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent-dark);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             transition: 0.25s var(--spring);
             font-family: 'DM Sans', sans-serif;
             font-size: 0.95rem;
-            letter-spacing: 0.02em;
         }
         .btn-finish:hover { background: #007a30; transform: scale(1.02); }
         .btn-finish:active { transform: scale(0.97); }
-        .btn-finish i { font-size: 1.1rem; }
 
         /* ── TOAST ── */
-        #toast { 
-            position: fixed; 
-            top: 80px; 
-            left: 50%; 
-            transform: translateX(-50%) translateY(-120px); 
-            background: var(--primary); 
-            color: white; 
-            padding: 12px 22px; 
-            border-radius: 50px; 
-            z-index: 3000; 
+        #toast {
+            position: fixed; top: 80px; left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            background: var(--primary); color: white;
+            padding: 12px 22px; border-radius: 50px;
+            z-index: 3000;
             transition: transform 0.5s var(--spring);
-            font-weight: 600; 
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: 600; font-size: 0.85rem;
+            display: flex; align-items: center; gap: 8px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.2);
             white-space: nowrap;
         }
@@ -651,152 +603,187 @@
         <div class="logo-icon"><i class="fas fa-snowflake"></i></div>
         MAIS FRIO <span>CLIMATIZAÇÃO</span>
     </div>
-    <div class="btn-cart-top" onclick="toggleCart()">
-        <i class="fas fa-bag-shopping"></i>
-        <div class="cart-badge" id="cart-count-top">0</div>
+    <div class="btn-header" onclick="switchView('appt')">
+        <i class="fas fa-calendar-check"></i>
+        Agendamentos
+        <div class="header-badge hidden" id="headerBadge">0</div>
     </div>
 </header>
 
 <section class="hero">
     <div class="hero-eyebrow">
         <div class="hero-eyebrow-dot"></div>
-        Catálogo Oficial
+        Painel Interno
     </div>
-    <h1>Peças & <span>Serviços</span><br>Profissionais</h1>
-    <p class="hero-sub">Tudo para seu ar-condicionado em um só lugar</p>
-
-    <div class="search-area">
-        <i class="fas fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Buscar peças ou serviços..." onkeyup="render()">
-    </div>
+    <h1>Estoque & <span>Manutenções</span></h1>
+    <p class="hero-sub">Controle de peças e retorno automático de 6 meses</p>
 
     <div class="tabs">
-        <div class="tab active" id="tab-all" onclick="filter('all')">Todos</div>
-        <div class="tab" id="tab-servico" onclick="filter('servico')">Serviços</div>
-        <div class="tab" id="tab-peca" onclick="filter('peca')">Peças</div>
+        <div class="tab active" id="tab-stock" onclick="switchView('stock')"><i class="fas fa-boxes-stacked"></i> Estoque</div>
+        <div class="tab" id="tab-appt" onclick="switchView('appt')"><i class="fas fa-calendar-check"></i> Agendamentos</div>
     </div>
 
-    <div class="stats-bar">
-        <div class="stat-item"><i class="fas fa-circle-check"></i> Entrega local</div>
-        <div class="stat-item"><i class="fas fa-circle-check"></i> Pagamento via Pix</div>
-        <div class="stat-item"><i class="fas fa-circle-check"></i> Garantia</div>
-    </div>
+    <div class="stats-bar" id="statsBar"></div>
 </section>
 
 <main class="container">
-    <div class="grid" id="grid"></div>
+
+    <!-- STOCK VIEW -->
+    <div class="view active" id="view-stock">
+        <div class="section-head">
+            <div class="section-label">Itens em estoque <small id="stockCountLabel"></small></div>
+            <div class="search-area">
+                <i class="fas fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Buscar peça ou serviço..." onkeyup="renderStock()">
+            </div>
+        </div>
+        <div class="grid" id="grid"></div>
+    </div>
+
+    <!-- APPOINTMENTS VIEW -->
+    <div class="view" id="view-appt">
+        <div class="section-head">
+            <div class="section-label">Próximas manutenções <small>6 meses após cada limpeza, calculado automaticamente</small></div>
+            <button class="btn-primary" onclick="openPanel()"><i class="fas fa-plus"></i> Novo agendamento</button>
+        </div>
+        <div class="appt-list" id="apptList"></div>
+    </div>
+
 </main>
 
-<div class="cart-bar" id="cartSummaryBar" onclick="toggleCart()">
-    <div class="bar-count"><span class="pill" id="cart-count-bar">0</span></div>
-    <div class="bar-label">Ver Carrinho</div>
-    <div class="bar-total"><span id="cart-total-bar">R$ 0,00</span></div>
-</div>
+<div class="overlay" id="panelOverlay" onclick="closePanel()"></div>
 
-<div class="overlay" id="cartOverlay" onclick="toggleCart()"></div>
-
-<div id="sideCart">
-    <div class="cart-header">
-        <h2>Meu Carrinho</h2>
-        <div class="cart-close-btn" onclick="toggleCart()"><i class="fas fa-xmark"></i></div>
+<div id="apptPanel">
+    <div class="panel-header">
+        <h2>Novo Agendamento</h2>
+        <div class="panel-close" onclick="closePanel()"><i class="fas fa-xmark"></i></div>
     </div>
-    <div class="cart-items" id="cart-list"></div>
-    <div class="cart-footer">
-        
-        <div style="background: var(--bg); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 10px; font-size: 0.88rem; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 8px;">
-            🏠 Retirada na Loja
-        </div>
-        <div id="addr-container" style="display:none;">
-            <input type="text" id="userAddr" class="premium-input" placeholder="Endereço de entrega completo">
+    <div class="panel-body">
+        <label class="field-label">Nome do cliente</label>
+        <input type="text" id="fClient" class="premium-input" placeholder="Ex: João Silva">
+
+        <label class="field-label">Telefone (WhatsApp)</label>
+        <input type="text" id="fPhone" class="premium-input" placeholder="Ex: 5569999999999">
+
+        <label class="field-label">Equipamento / Local</label>
+        <input type="text" id="fUnit" class="premium-input" placeholder="Ex: Split 12000 BTU - Sala">
+
+        <label class="field-label">Data da limpeza realizada</label>
+        <input type="date" id="fLast" class="premium-input" onchange="updatePreview()">
+
+        <div class="next-preview">
+            Próxima manutenção sugerida (+6 meses)
+            <b id="previewNext">—</b>
         </div>
 
-        <select id="userPay" class="premium-input" onchange="checkPix()">
-            <option value="Pix">Pix</option>
-            <option value="Cartão">Cartão na Entrega</option>
-            <option value="Dinheiro">Dinheiro</option>
-        </select>
-        
-        <div id="pix-info" onclick="copyPix()" style="cursor: pointer;">
-            <small style="color: #157347; font-weight: 700;">Clique para copiar o CNPJ Pix:</small><br>
-            <strong style="color: #157347; font-size: 1.15rem; letter-spacing: 1px;">59874260220</strong><br>
-            <small style="color:#157347; opacity:0.7;">(Toque para copiar)</small>
-        </div>
-
-        <div class="total-row">
-            <span class="total-label">Total do pedido</span>
-            <span class="total-value" id="cart-total-side">R$ 0,00</span>
-        </div>
-
-        <button onclick="sendOrder()" class="btn-finish">
-            <i class="fab fa-whatsapp"></i> Finalizar pelo WhatsApp
-        </button>
+        <label class="field-label">Observações (opcional)</label>
+        <input type="text" id="fNotes" class="premium-input" placeholder="Ex: Trocar capacitor na próxima visita">
+    </div>
+    <div class="panel-footer">
+        <button onclick="saveAppt()" class="btn-finish"><i class="fas fa-calendar-check"></i> Salvar agendamento</button>
     </div>
 </div>
 
-<div id="toast"><i class="fas fa-circle-check"></i> Adicionado ao carrinho!</div>
+<div id="toast"><i class="fas fa-circle-check"></i> <span id="toastMsg">Salvo!</span></div>
 
 <script>
-    const inventory = [
-        { name: "Mão de Obra Instalação (Ar Novo)", price: 400.00, img: "Seção de Serviços.png", cat: "servico" },
-        { name: "Mão de Obra Instalação (Ar Usado)", price: 250.00, img: "Seção de Serviços.png", cat: "servico" },
-        { name: "Limpeza + Higienização Completa", price: 150.00, img: "ManutencaoPreventiva.png", cat: "servico" },
-        { name: "Carga de Gás (Mão de Obra + Gás)", price: 200.00, img: "CargadeGas.png", cat: "servico" },
-        { name: "Capacitor Duplo 25+2.5UF", price: 30.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
-        { name: "Capacitor Duplo 30UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
-        { name: "Capacitor Duplo 35UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
-        { name: "Capacitor Duplo 40UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca" },
-        { name: "Capacitor Ventilador 1.0UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca" },
-        { name: "Capacitor Ventilador 1.5UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca" },
-        { name: "Capacitor Ventilador 2.5UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca" },
-        { name: "Capacitor Ventilador 3.0UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca" },
-        { name: "Contactor 18A", price: 53.50, img: "Contactor18A.png", cat: "peca" },
-        { name: "Contactor 25A", price: 135.00, img: "Contactor25A.png", cat: "peca" },
-        { name: "Sensor Degelo AC 05k", price: 10.00, img: "SensorDegeloAC05k.png", cat: "peca" },
-        { name: "Controle Ar Universal", price: 80.00, img: "ControlArUniversal.png", cat: "peca" },
-        { name: "Gás R32 (13kg)", price: 1150.00, img: "gasr3213kg.png", cat: "peca" },
-        { name: "Gás R-22 Lata 1kg", price: 130.00, img: "GasR-22Lata1kg.png", cat: "peca" },
-        { name: "Gás R-410A Lata 800g", price: 110.00, img: "GásR-410ALata800g.png", cat: "peca" },
-        { name: "Tubulação de Cobre (kg)", price: 165.00, img: "TubulaçãodeCobre(kg).png", cat: "peca" },
-        { name: "Suporte L Condensadora 47cm", price: 27.00, img: "SuporteLCondensadora47cm.png", cat: "peca" },
-        { name: "Válvula de Serviço 1/4", price: 36.50, img: "valvuladeservicio.png", cat: "peca" },
-        { name: "Válvula de Serviço 3/8", price: 55.99, img: "valvuladeservicio.png", cat: "peca" },
-        { name: "Válvula de Serviço 1/2", price: 62.99, img: "valvuladeservicio.png", cat: "peca" },
-        { name: "Polipex 1/4", price: 3.99, img: "Polipex.png", cat: "peca" },
-        { name: "Polipex 3/8", price: 4.90, img: "Polipex.png", cat: "peca" },
-        { name: "Polipex 1/2", price: 5.90, img: "Polipex.png", cat: "peca" },
-        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, img: "FitaIsolante18mmx10m.png", cat: "peca" },
-        { name: "Fita Isolante 18mm x 10m", price: 6.90, img: "FitaIsolante18mmx10m.png", cat: "peca" },
-        { name: "Fita De PVC", price: 3.99, img: "FitaDePVC.png", cat: "peca" },
-        { name: "Bucha Plástica 0,8 C", price: 0.20, img: "BuchaPlástica0,8C.png", cat: "peca" },
-        { name: "Bucha Plástica 0,10 C", price: 0.50, img: "BuchaPlástica0,10C.png", cat: "peca" },
-        { name: "Bucha Plástica 0,12 C", price: 0.60, img: "BuchaPlástic0,12C.png", cat: "peca" },
-        { name: "Parafuso Cônico", price: 0.35, img: "ParafusoCônico.png", cat: "peca" },
-        { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca" },
-        { name: "Serra Copo", price: 125.00, img: "serracopo.png", cat: "peca" }
+    const STOCK_KEY = 'mf_stock_v1';
+    const APPT_KEY = 'mf_appts_v1';
+    const ORANGE_THRESHOLD_DAYS = 30; // fica laranja quando faltam 30 dias ou menos
+    const BUSINESS_WHATS = '556993060469';
+
+    const baseInventory = [
+        { name: "Mão de Obra Instalação (Ar Novo)", price: 400.00, img: "Seção de Serviços.png", cat: "servico", stock: 999 },
+        { name: "Mão de Obra Instalação (Ar Usado)", price: 250.00, img: "Seção de Serviços.png", cat: "servico", stock: 999 },
+        { name: "Limpeza + Higienização Completa", price: 150.00, img: "ManutencaoPreventiva.png", cat: "servico", stock: 999 },
+        { name: "Carga de Gás (Mão de Obra + Gás)", price: 200.00, img: "CargadeGas.png", cat: "servico", stock: 999 },
+        { name: "Capacitor Duplo 25+2.5UF", price: 30.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca", stock: 12 },
+        { name: "Capacitor Duplo 30UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca", stock: 8 },
+        { name: "Capacitor Duplo 35UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca", stock: 8 },
+        { name: "Capacitor Duplo 40UF", price: 36.00, img: "CapacitorDuplo25+2.5UF.png", cat: "peca", stock: 6 },
+        { name: "Capacitor Ventilador 1.0UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca", stock: 15 },
+        { name: "Capacitor Ventilador 1.5UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca", stock: 15 },
+        { name: "Capacitor Ventilador 2.5UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca", stock: 15 },
+        { name: "Capacitor Ventilador 3.0UF", price: 8.50, img: "capacitordeventilador.png", cat: "peca", stock: 15 },
+        { name: "Contactor 18A", price: 53.50, img: "Contactor18A.png", cat: "peca", stock: 5 },
+        { name: "Contactor 25A", price: 135.00, img: "Contactor25A.png", cat: "peca", stock: 3 },
+        { name: "Sensor Degelo AC 05k", price: 10.00, img: "SensorDegeloAC05k.png", cat: "peca", stock: 10 },
+        { name: "Controle Ar Universal", price: 80.00, img: "ControlArUniversal.png", cat: "peca", stock: 7 },
+        { name: "Gás R32 (13kg)", price: 1150.00, img: "gasr3213kg.png", cat: "peca", stock: 2 },
+        { name: "Gás R-22 Lata 1kg", price: 130.00, img: "GasR-22Lata1kg.png", cat: "peca", stock: 4 },
+        { name: "Gás R-410A Lata 800g", price: 110.00, img: "GásR-410ALata800g.png", cat: "peca", stock: 4 },
+        { name: "Tubulação de Cobre (kg)", price: 165.00, img: "TubulaçãodeCobre(kg).png", cat: "peca", stock: 20 },
+        { name: "Suporte L Condensadora 47cm", price: 27.00, img: "SuporteLCondensadora47cm.png", cat: "peca", stock: 10 },
+        { name: "Válvula de Serviço 1/4", price: 36.50, img: "valvuladeservicio.png", cat: "peca", stock: 6 },
+        { name: "Válvula de Serviço 3/8", price: 55.99, img: "valvuladeservicio.png", cat: "peca", stock: 6 },
+        { name: "Válvula de Serviço 1/2", price: 62.99, img: "valvuladeservicio.png", cat: "peca", stock: 6 },
+        { name: "Polipex 1/4", price: 3.99, img: "Polipex.png", cat: "peca", stock: 30 },
+        { name: "Polipex 3/8", price: 4.90, img: "Polipex.png", cat: "peca", stock: 30 },
+        { name: "Polipex 1/2", price: 5.90, img: "Polipex.png", cat: "peca", stock: 30 },
+        { name: "Fita Isolante 10mm x 0,5m", price: 4.99, img: "FitaIsolante18mmx10m.png", cat: "peca", stock: 20 },
+        { name: "Fita Isolante 18mm x 10m", price: 6.90, img: "FitaIsolante18mmx10m.png", cat: "peca", stock: 20 },
+        { name: "Fita De PVC", price: 3.99, img: "FitaDePVC.png", cat: "peca", stock: 20 },
+        { name: "Bucha Plástica 0,8 C", price: 0.20, img: "BuchaPlástica0,8C.png", cat: "peca", stock: 100 },
+        { name: "Bucha Plástica 0,10 C", price: 0.50, img: "BuchaPlástica0,10C.png", cat: "peca", stock: 100 },
+        { name: "Bucha Plástica 0,12 C", price: 0.60, img: "BuchaPlástic0,12C.png", cat: "peca", stock: 100 },
+        { name: "Parafuso Cônico", price: 0.35, img: "ParafusoCônico.png", cat: "peca", stock: 200 },
+        { name: "Parafuso Sextavado", price: 1.50, img: "ParafusoSextavado.png", cat: "peca", stock: 200 },
+        { name: "Serra Copo", price: 125.00, img: "serracopo.png", cat: "peca", stock: 3 }
     ];
 
-    let cart = JSON.parse(localStorage.getItem('cart_mf_v12')) || [];
-    let currentFilter = 'all';
-
-    function normalizeStr(str) {
-        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    function loadStock() {
+        const saved = JSON.parse(localStorage.getItem(STOCK_KEY) || 'null');
+        if (saved && saved.length === baseInventory.length) {
+            return baseInventory.map((item, i) => ({ ...item, stock: saved[i] }));
+        }
+        return baseInventory.map(item => ({ ...item }));
+    }
+    function persistStock() {
+        localStorage.setItem(STOCK_KEY, JSON.stringify(inventory.map(i => i.stock)));
     }
 
-    function render() {
+    let inventory = loadStock();
+    let appointments = JSON.parse(localStorage.getItem(APPT_KEY) || '[]');
+
+    function normalizeStr(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+
+    function showToast(msg) {
+        document.getElementById('toastMsg').innerText = msg;
+        const t = document.getElementById('toast');
+        t.classList.add('active');
+        setTimeout(() => t.classList.remove('active'), 2200);
+    }
+
+    /* ---------- VIEW SWITCH ---------- */
+    function switchView(v) {
+        document.getElementById('view-stock').classList.toggle('active', v === 'stock');
+        document.getElementById('view-appt').classList.toggle('active', v === 'appt');
+        document.getElementById('tab-stock').classList.toggle('active', v === 'stock');
+        document.getElementById('tab-appt').classList.toggle('active', v === 'appt');
+        renderStats();
+    }
+
+    /* ---------- STOCK ---------- */
+    function renderStock() {
         const grid = document.getElementById('grid');
         const term = normalizeStr(document.getElementById('searchInput').value);
         grid.innerHTML = "";
-        
-        inventory.filter(i => {
-            const nameMatch = normalizeStr(i.name).includes(term);
-            const catMatch = currentFilter === 'all' || i.cat === currentFilter;
-            return nameMatch && catMatch;
-        })
-        .forEach((item, idx) => {
+
+        const filtered = inventory.filter(i => normalizeStr(i.name).includes(term));
+        document.getElementById('stockCountLabel').innerText = filtered.length + ' de ' + inventory.length + ' itens';
+
+        filtered.forEach((item, visibleIdx) => {
+            const idx = inventory.indexOf(item);
+            const isService = item.cat === 'servico';
+            let stockClass = '';
+            if (!isService) {
+                if (item.stock <= 0) stockClass = 'zero';
+                else if (item.stock <= 5) stockClass = 'low';
+            }
             grid.innerHTML += `
-                <div class="card" style="animation-delay: ${idx*0.04}s">
+                <div class="card" style="animation-delay: ${visibleIdx*0.03}s">
                     <div class="img-box">
-                        <div class="badge ${item.cat}">${item.cat === 'servico' ? 'Serviço' : 'Peça'}</div>
+                        <div class="badge ${item.cat}">${isService ? 'Serviço' : 'Peça'}</div>
                         <img src="${item.img}" onerror="this.src='https://cdn-icons-png.flaticon.com/512/952/952771.png'">
                     </div>
                     <div class="card-body">
@@ -805,120 +792,190 @@
                             <span class="price-currency">R$</span>
                             <span class="price">${item.price.toFixed(2).replace('.',',')}</span>
                         </div>
-                        <button class="btn-add" onclick="add('${item.name}', ${item.price})">
-                            <i class="fas fa-plus" style="font-size:0.75rem; margin-right:5px;"></i>Adicionar
-                        </button>
+                        ${isService ? `
+                        <div class="stock-row">
+                            <span class="stock-label">Sob demanda</span>
+                        </div>` : `
+                        <div class="stock-row">
+                            <span class="stock-label">Estoque</span>
+                            <div class="stock-qty-box">
+                                <button class="qty-btn-sm" onclick="changeStock(${idx},-1)">−</button>
+                                <span class="stock-num ${stockClass}">${item.stock}</span>
+                                <button class="qty-btn-sm" onclick="changeStock(${idx},1)">+</button>
+                            </div>
+                        </div>`}
                     </div>
                 </div>`;
         });
     }
 
-    function add(n, p) {
-        let x = cart.find(i => i.n === n);
-        if(x) x.q++; else cart.push({n, p, q:1});
-        save();
-        const t = document.getElementById('toast');
-        t.classList.add('active');
-        setTimeout(() => t.classList.remove('active'), 2000);
+    function changeStock(idx, delta) {
+        inventory[idx].stock = Math.max(0, inventory[idx].stock + delta);
+        persistStock();
+        renderStock();
     }
 
-    function save() {
-        localStorage.setItem('cart_mf_v12', JSON.stringify(cart));
-        updateUI();
+    /* ---------- DATE HELPERS ---------- */
+    function toDateOnly(d) { const x = new Date(d); x.setHours(0,0,0,0); return x; }
+    function addMonths(dateStr, months) {
+        const d = new Date(dateStr + 'T00:00:00');
+        d.setMonth(d.getMonth() + months);
+        return d;
+    }
+    function formatDate(d) {
+        return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+    function toISODate(d) {
+        const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+        return `${y}-${m}-${day}`;
+    }
+    function todayISO() { return toISODate(new Date()); }
+
+    function computeStatus(nextISO) {
+        const today = toDateOnly(new Date());
+        const next = toDateOnly(nextISO + 'T00:00:00');
+        const diffDays = Math.round((next - today) / 86400000);
+        if (diffDays <= 0) {
+            return { cls: 'red', label: diffDays === 0 ? 'Hoje' : `Atrasado ${Math.abs(diffDays)}d`, diffDays };
+        }
+        if (diffDays <= ORANGE_THRESHOLD_DAYS) {
+            return { cls: 'orange', label: `Faltam ${diffDays}d`, diffDays };
+        }
+        return { cls: 'green', label: `Faltam ${diffDays}d`, diffDays };
     }
 
-    function updateUI() {
-        const list = document.getElementById('cart-list');
-        let tot = 0, count = 0;
-        list.innerHTML = "";
+    /* ---------- APPOINTMENTS ---------- */
+    function persistAppts() { localStorage.setItem(APPT_KEY, JSON.stringify(appointments)); }
 
-        if(cart.length === 0) {
-            list.innerHTML = `<div class="cart-empty"><i class="fas fa-bag-shopping"></i><span>Seu carrinho está vazio</span></div>`;
+    function renderAppointments() {
+        const list = document.getElementById('apptList');
+        list.innerHTML = '';
+
+        if (appointments.length === 0) {
+            list.innerHTML = `<div class="empty-state"><i class="fas fa-calendar-check"></i><span>Nenhum agendamento ainda. Clique em "Novo agendamento" para começar.</span></div>`;
+            return;
         }
 
-        cart.forEach((item, idx) => {
-            tot += item.p * item.q;
-            count += item.q;
+        const sorted = [...appointments].sort((a,b) => new Date(a.next) - new Date(b.next));
+
+        sorted.forEach((appt, i) => {
+            const status = computeStatus(appt.next);
+            const lastFmt = formatDate(new Date(appt.last + 'T00:00:00'));
+            const nextFmt = formatDate(new Date(appt.next + 'T00:00:00'));
+            const statusIcon = status.cls === 'green' ? 'fa-circle-check' : (status.cls === 'orange' ? 'fa-triangle-exclamation' : 'fa-circle-exclamation');
+
             list.innerHTML += `
-                <div class="cart-item" style="animation-delay: ${idx*0.08}s">
-                    <div>
-                        <div class="cart-item-name">${item.n}</div>
-                        <div class="cart-item-price">R$ ${(item.p*item.q).toFixed(2).replace('.',',')}</div>
+                <div class="appt-card ${status.cls}" style="animation-delay:${i*0.04}s">
+                    <div class="appt-top">
+                        <div>
+                            <div class="appt-client">${appt.client}</div>
+                            <div class="appt-unit">${appt.unit || 'Equipamento não informado'}${appt.notes ? ' · ' + appt.notes : ''}</div>
+                        </div>
+                        <div class="status-pill ${status.cls}"><i class="fas ${statusIcon}"></i> ${status.label}</div>
                     </div>
-                    <div class="qty-control">
-                        <button class="qty-btn" onclick="changeQty(${idx},-1)">−</button>
-                        <span class="qty-num">${item.q}</span>
-                        <button class="qty-btn" onclick="changeQty(${idx},1)">+</button>
+                    <div class="appt-dates">
+                        <span>Última limpeza: <b>${lastFmt}</b></span>
+                        <span>Próxima: <b>${nextFmt}</b></span>
+                    </div>
+                    <div class="appt-actions">
+                        <button class="btn-sm done" onclick="completeAppt('${appt.id}')"><i class="fas fa-check"></i> Concluir manutenção</button>
+                        ${appt.phone ? `<button class="btn-sm whats" onclick="remindAppt('${appt.id}')"><i class="fab fa-whatsapp"></i> Lembrar cliente</button>` : ''}
+                        <button class="btn-sm del" onclick="deleteAppt('${appt.id}')"><i class="fas fa-trash"></i></button>
                     </div>
                 </div>`;
         });
-
-        const val = "R$ " + tot.toFixed(2).replace('.',',');
-        document.getElementById('cart-total-side').innerText = val;
-        document.getElementById('cart-total-bar').innerText = val;
-        document.getElementById('cart-count-top').innerText = count;
-        document.getElementById('cart-count-bar').innerText = count;
-        document.getElementById('cartSummaryBar').classList.toggle('active', count > 0);
     }
 
-    function changeQty(idx, v) {
-        cart[idx].q += v;
-        if(cart[idx].q <= 0) cart.splice(idx, 1);
-        save();
+    function renderStats() {
+        let g=0,o=0,r=0;
+        appointments.forEach(a => {
+            const s = computeStatus(a.next).cls;
+            if (s==='green') g++; else if(s==='orange') o++; else r++;
+        });
+        document.getElementById('statsBar').innerHTML = `
+            <div class="stat-pill"><span class="dot green"></span>${g} em dia</div>
+            <div class="stat-pill"><span class="dot orange"></span>${o} próximas</div>
+            <div class="stat-pill"><span class="dot red"></span>${r} atrasadas/hoje</div>`;
+        const badge = document.getElementById('headerBadge');
+        const urgent = o + r;
+        badge.innerText = urgent;
+        badge.classList.toggle('hidden', urgent === 0);
     }
 
-    function toggleCart() {
-        const sideCart = document.getElementById('sideCart');
-        const isOpen = sideCart.classList.contains('open');
-        
-        sideCart.classList.toggle('open');
-        document.getElementById('cartOverlay').classList.toggle('active');
-        document.body.classList.toggle('modal-open');
-
-        if(!isOpen) {
-            checkPix();
-        }
+    function completeAppt(id) {
+        const appt = appointments.find(a => a.id === id);
+        if (!appt) return;
+        appt.last = todayISO();
+        appt.next = toISODate(addMonths(appt.last, 6));
+        persistAppts();
+        renderAppointments();
+        renderStats();
+        showToast('Manutenção concluída — próxima em 6 meses!');
     }
 
-    function toggleAddressField() {
-        const type = document.getElementById('deliveryType').value;
-        const container = document.getElementById('addr-container');
-        if(type === 'Buscar') container.classList.add('hidden');
-        else container.classList.remove('hidden');
+    function deleteAppt(id) {
+        if (!confirm('Remover este agendamento?')) return;
+        appointments = appointments.filter(a => a.id !== id);
+        persistAppts();
+        renderAppointments();
+        renderStats();
     }
 
-    function checkPix() {
-        const isPix = document.getElementById('userPay').value === 'Pix';
-        document.getElementById('pix-info').style.display = isPix ? 'block' : 'none';
+    function remindAppt(id) {
+        const appt = appointments.find(a => a.id === id);
+        if (!appt) return;
+        const nextFmt = formatDate(new Date(appt.next + 'T00:00:00'));
+        const msg = `Olá ${appt.client}! Aqui é da Mais Frio Climatização. Passando para lembrar que a manutenção do seu ${appt.unit || 'ar-condicionado'} está prevista para ${nextFmt}. Podemos agendar um horário?`;
+        const phone = appt.phone.replace(/\D/g, '');
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
     }
 
-    function copyPix() {
-        navigator.clipboard.writeText("59874260220");
-        alert("CNPJ Pix Copiado!");
+    /* ---------- PANEL (new appointment) ---------- */
+    function openPanel() {
+        document.getElementById('apptPanel').classList.add('open');
+        document.getElementById('panelOverlay').classList.add('active');
+        document.body.classList.add('modal-open');
+        document.getElementById('fClient').value = '';
+        document.getElementById('fPhone').value = '';
+        document.getElementById('fUnit').value = '';
+        document.getElementById('fNotes').value = '';
+        document.getElementById('fLast').value = todayISO();
+        updatePreview();
+    }
+    function closePanel() {
+        document.getElementById('apptPanel').classList.remove('open');
+        document.getElementById('panelOverlay').classList.remove('active');
+        document.body.classList.remove('modal-open');
+    }
+    function updatePreview() {
+        const last = document.getElementById('fLast').value || todayISO();
+        const next = addMonths(last, 6);
+        document.getElementById('previewNext').innerText = formatDate(next);
     }
 
-    function filter(c) {
-        currentFilter = c;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById('tab-'+c).classList.add('active');
-        render();
+    function saveAppt() {
+        const client = document.getElementById('fClient').value.trim();
+        const phone = document.getElementById('fPhone').value.trim();
+        const unit = document.getElementById('fUnit').value.trim();
+        const notes = document.getElementById('fNotes').value.trim();
+        const last = document.getElementById('fLast').value || todayISO();
+
+        if (!client) { showToast('Informe o nome do cliente'); return; }
+
+        const next = toISODate(addMonths(last, 6));
+        appointments.push({ id: 'a' + Date.now(), client, phone, unit, notes, last, next });
+        persistAppts();
+        closePanel();
+        renderAppointments();
+        renderStats();
+        showToast('Agendamento salvo!');
     }
 
-    function sendOrder() {
-        const payMethod = document.getElementById('userPay').value;
-        if(cart.length === 0) return alert("Seu carrinho está vazio!");
-        
-        let m = `*NOVO PEDIDO - MAIS FRIO*\n━━━━━━━━━━━━━━━━━━\n\n`;
-        cart.forEach(i => m += `▪️ ${i.n} (x${i.q})\n`);
-        m += `\n━━━━━━━━━━━━━━━━━━\n`;
-        m += `*Tipo:* 🏠 Retirar na Loja\n`;
-        m += `*Pagamento:* ${payMethod}\n`;
-        m += `*Total:* ${document.getElementById('cart-total-side').innerText}`;
-
-        window.open(`https://wa.me/556993060469?text=${encodeURIComponent(m)}`);
-    }
-
-    window.onload = () => { render(); updateUI(); };
+    window.onload = () => {
+        renderStock();
+        renderAppointments();
+        renderStats();
+    };
 </script>
 </body>
 </html>
