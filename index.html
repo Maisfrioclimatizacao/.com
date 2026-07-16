@@ -189,6 +189,7 @@
             gap: 8px;
             justify-content: center;
             padding: 4px;
+            flex-wrap: wrap;
             animation: fadeUp 0.8s var(--spring) 0.2s both;
         }
         .tab {
@@ -409,10 +410,10 @@
         .stock-num.zero { color: var(--danger); }
         .stock-num.low { color: var(--warn-dark); }
 
-        /* ── APPOINTMENTS ── */
+        /* ── APPOINTMENTS / PAYMENTS LIST CARDS ── */
         .appt-list { display: flex; flex-direction: column; gap: 12px; }
 
-        .appt-card {
+        .appt-card, .pay-card {
             background: var(--surface);
             border-radius: var(--radius-lg);
             border: 1px solid var(--border);
@@ -475,6 +476,26 @@
         .btn-sm.del:hover { background: #ffe9e7; }
         .btn-sm:active { transform: scale(0.95); }
 
+        /* ── PAYMENT ITEMS BOX ── */
+        .pay-items {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+        }
+        .pay-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            color: var(--primary);
+        }
+        .pay-item-row span:first-child { font-weight: 600; }
+        .pay-item-row span:last-child { font-weight: 700; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+
         .empty-state {
             display: flex;
             flex-direction: column;
@@ -487,7 +508,7 @@
         }
         .empty-state i { font-size: 2.5rem; opacity: 0.25; }
 
-        /* ── SIDE PANEL (new appointment) ── */
+        /* ── SIDE PANEL (new appointment / new payment) ── */
         .overlay {
             position: fixed; inset: 0;
             background: rgba(5,15,28,0.5);
@@ -499,7 +520,7 @@
         }
         .overlay.active { opacity: 1; visibility: visible; }
 
-        #apptPanel {
+        #apptPanel, #paymentPanel {
             position: fixed; top: 0; right: 0;
             width: 90%; max-width: 400px; height: 100%;
             background: white;
@@ -509,7 +530,7 @@
             display: flex; flex-direction: column;
             box-shadow: -20px 0 60px rgba(0,0,0,0.15);
         }
-        #apptPanel.open { transform: translateX(0); }
+        #apptPanel.open, #paymentPanel.open { transform: translateX(0); }
 
         .panel-header {
             padding: 20px 22px;
@@ -547,8 +568,10 @@
             font-family: 'DM Sans', sans-serif;
             background: var(--bg);
             -webkit-appearance: none;
+            appearance: none;
         }
         .premium-input:focus { border-color: var(--secondary); background: white; }
+        select.premium-input { cursor: pointer; }
 
         .next-preview {
             background: var(--secondary-light);
@@ -616,11 +639,12 @@
         Painel Interno
     </div>
     <h1>Estoque & <span>Manutenções</span></h1>
-    <p class="hero-sub">Controle de peças e retorno automático de 6 meses</p>
+    <p class="hero-sub">Controle de peças, retorno automático de 6 meses e pagamentos</p>
 
     <div class="tabs">
         <div class="tab active" id="tab-stock" onclick="switchView('stock')"><i class="fas fa-boxes-stacked"></i> Estoque</div>
         <div class="tab" id="tab-appt" onclick="switchView('appt')"><i class="fas fa-calendar-check"></i> Agendamentos</div>
+        <div class="tab" id="tab-payments" onclick="switchView('payments')"><i class="fas fa-file-invoice-dollar"></i> Pagamentos</div>
     </div>
 
     <div class="stats-bar" id="statsBar"></div>
@@ -649,14 +673,29 @@
         <div class="appt-list" id="apptList"></div>
     </div>
 
+    <!-- PAYMENTS VIEW -->
+    <div class="view" id="view-payments">
+        <div class="section-head">
+            <div class="section-label">Pagamentos registrados <small id="paymentCountLabel"></small></div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <div class="search-area">
+                    <i class="fas fa-magnifying-glass"></i>
+                    <input type="text" id="paymentSearchInput" placeholder="Buscar cliente ou item..." onkeyup="renderPayments()">
+                </div>
+                <button class="btn-primary" onclick="openPaymentPanel()"><i class="fas fa-plus"></i> Novo pagamento</button>
+            </div>
+        </div>
+        <div class="appt-list" id="paymentList"></div>
+    </div>
+
 </main>
 
-<div class="overlay" id="panelOverlay" onclick="closePanel()"></div>
+<div class="overlay" id="panelOverlay" onclick="closeAllPanels()"></div>
 
 <div id="apptPanel">
     <div class="panel-header">
         <h2>Novo Agendamento</h2>
-        <div class="panel-close" onclick="closePanel()"><i class="fas fa-xmark"></i></div>
+        <div class="panel-close" onclick="closeAllPanels()"><i class="fas fa-xmark"></i></div>
     </div>
     <div class="panel-body">
         <label class="field-label">Nome do cliente</label>
@@ -684,11 +723,73 @@
     </div>
 </div>
 
+<div id="paymentPanel">
+    <div class="panel-header">
+        <h2>Novo Pagamento</h2>
+        <div class="panel-close" onclick="closeAllPanels()"><i class="fas fa-xmark"></i></div>
+    </div>
+    <div class="panel-body">
+        <label class="field-label">Nome do cliente</label>
+        <input type="text" id="fPayClient" class="premium-input" placeholder="Ex: João Silva">
+
+        <label class="field-label">Data do pagamento</label>
+        <input type="date" id="fPayDate" class="premium-input">
+
+        <label class="field-label">Telefone (opcional)</label>
+        <input type="text" id="fPayPhone" class="premium-input" placeholder="Ex: 5569999999999">
+
+        <label class="field-label">Peça / Serviço</label>
+        <select id="fPayItemSelect" class="premium-input" onchange="onItemSelectChange()"></select>
+
+        <div id="customItemFields" style="display:none;">
+            <label class="field-label">Descrição do item personalizado</label>
+            <input type="text" id="fPayCustomName" class="premium-input" placeholder="Ex: Deslocamento adicional">
+        </div>
+
+        <div style="display:flex; gap:10px;">
+            <div style="flex:1;">
+                <label class="field-label">Qtd</label>
+                <input type="number" id="fPayQty" class="premium-input" value="1" min="1">
+            </div>
+            <div style="flex:2;">
+                <label class="field-label">Preço unitário (R$)</label>
+                <input type="number" id="fPayPrice" class="premium-input" step="0.01" min="0">
+            </div>
+        </div>
+
+        <button type="button" class="btn-primary" style="width:100%; justify-content:center; margin-bottom:18px;" onclick="addPayItem()"><i class="fas fa-plus"></i> Adicionar item ao pagamento</button>
+
+        <label class="field-label">Itens adicionados</label>
+        <div id="payItemsList" class="pay-items" style="margin-bottom:16px;"></div>
+
+        <div class="next-preview">
+            Total do pagamento
+            <b id="payTotalDisplay">R$ 0,00</b>
+        </div>
+
+        <label class="field-label">Forma de pagamento</label>
+        <select id="fPayMethod" class="premium-input">
+            <option value="Pix">Pix</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de Débito">Cartão de Débito</option>
+            <option value="Cartão de Crédito">Cartão de Crédito</option>
+            <option value="Transferência">Transferência</option>
+        </select>
+
+        <label class="field-label">Observações (opcional)</label>
+        <input type="text" id="fPayNotes" class="premium-input" placeholder="Ex: Pagamento parcelado em 2x">
+    </div>
+    <div class="panel-footer">
+        <button onclick="savePayment()" class="btn-finish"><i class="fas fa-check"></i> Salvar pagamento</button>
+    </div>
+</div>
+
 <div id="toast"><i class="fas fa-circle-check"></i> <span id="toastMsg">Salvo!</span></div>
 
 <script>
     const STOCK_KEY = 'mf_stock_v1';
     const APPT_KEY = 'mf_appts_v1';
+    const PAYMENT_KEY = 'mf_payments_v1';
     const ORANGE_THRESHOLD_DAYS = 30; // fica laranja quando faltam 30 dias ou menos
     const BUSINESS_WHATS = '556993060469';
 
@@ -744,8 +845,12 @@
 
     let inventory = loadStock();
     let appointments = JSON.parse(localStorage.getItem(APPT_KEY) || '[]');
+    let payments = JSON.parse(localStorage.getItem(PAYMENT_KEY) || '[]');
+    let tempPayItems = [];
+    let currentView = 'stock';
 
     function normalizeStr(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+    function formatBRL(n) { return 'R$ ' + n.toFixed(2).replace('.', ','); }
 
     function showToast(msg) {
         document.getElementById('toastMsg').innerText = msg;
@@ -758,8 +863,11 @@
     function switchView(v) {
         document.getElementById('view-stock').classList.toggle('active', v === 'stock');
         document.getElementById('view-appt').classList.toggle('active', v === 'appt');
+        document.getElementById('view-payments').classList.toggle('active', v === 'payments');
         document.getElementById('tab-stock').classList.toggle('active', v === 'stock');
         document.getElementById('tab-appt').classList.toggle('active', v === 'appt');
+        document.getElementById('tab-payments').classList.toggle('active', v === 'payments');
+        currentView = v;
         renderStats();
     }
 
@@ -886,22 +994,6 @@
         });
     }
 
-    function renderStats() {
-        let g=0,o=0,r=0;
-        appointments.forEach(a => {
-            const s = computeStatus(a.next).cls;
-            if (s==='green') g++; else if(s==='orange') o++; else r++;
-        });
-        document.getElementById('statsBar').innerHTML = `
-            <div class="stat-pill"><span class="dot green"></span>${g} em dia</div>
-            <div class="stat-pill"><span class="dot orange"></span>${o} próximas</div>
-            <div class="stat-pill"><span class="dot red"></span>${r} atrasadas/hoje</div>`;
-        const badge = document.getElementById('headerBadge');
-        const urgent = o + r;
-        badge.innerText = urgent;
-        badge.classList.toggle('hidden', urgent === 0);
-    }
-
     function completeAppt(id) {
         const appt = appointments.find(a => a.id === id);
         if (!appt) return;
@@ -942,8 +1034,9 @@
         document.getElementById('fLast').value = todayISO();
         updatePreview();
     }
-    function closePanel() {
+    function closeAllPanels() {
         document.getElementById('apptPanel').classList.remove('open');
+        document.getElementById('paymentPanel').classList.remove('open');
         document.getElementById('panelOverlay').classList.remove('active');
         document.body.classList.remove('modal-open');
     }
@@ -965,15 +1058,264 @@
         const next = toISODate(addMonths(last, 6));
         appointments.push({ id: 'a' + Date.now(), client, phone, unit, notes, last, next });
         persistAppts();
-        closePanel();
+        closeAllPanels();
         renderAppointments();
         renderStats();
         showToast('Agendamento salvo!');
     }
 
+    /* ---------- PAYMENTS ---------- */
+    function persistPayments() { localStorage.setItem(PAYMENT_KEY, JSON.stringify(payments)); }
+
+    function methodColor(method) {
+        const map = {
+            'Pix': '#00c2a8',
+            'Dinheiro': '#00c853',
+            'Cartão de Débito': '#0071e3',
+            'Cartão de Crédito': '#3d5afe',
+            'Transferência': '#7a5cff'
+        };
+        return map[method] || '#0071e3';
+    }
+
+    function populateItemSelect() {
+        const sel = document.getElementById('fPayItemSelect');
+        let pecasHtml = '<optgroup label="Peças">';
+        let servicosHtml = '<optgroup label="Serviços">';
+        inventory.forEach((item, idx) => {
+            const opt = `<option value="${idx}">${item.name} — ${formatBRL(item.price)}</option>`;
+            if (item.cat === 'peca') pecasHtml += opt; else servicosHtml += opt;
+        });
+        pecasHtml += '</optgroup>';
+        servicosHtml += '</optgroup>';
+        sel.innerHTML = pecasHtml + servicosHtml + '<option value="custom">✎ Item personalizado...</option>';
+        onItemSelectChange();
+    }
+
+    function onItemSelectChange() {
+        const sel = document.getElementById('fPayItemSelect');
+        const customDiv = document.getElementById('customItemFields');
+        if (sel.value === 'custom') {
+            customDiv.style.display = 'block';
+            document.getElementById('fPayPrice').value = '';
+        } else {
+            customDiv.style.display = 'none';
+            const item = inventory[parseInt(sel.value)];
+            if (item) document.getElementById('fPayPrice').value = item.price.toFixed(2);
+        }
+    }
+
+    function addPayItem() {
+        const sel = document.getElementById('fPayItemSelect');
+        const qty = parseInt(document.getElementById('fPayQty').value) || 1;
+        const price = parseFloat(document.getElementById('fPayPrice').value);
+
+        if (isNaN(price) || price < 0) { showToast('Informe um preço válido'); return; }
+
+        let name;
+        if (sel.value === 'custom') {
+            name = document.getElementById('fPayCustomName').value.trim();
+            if (!name) { showToast('Informe o nome do item personalizado'); return; }
+        } else {
+            if (!sel.value) { showToast('Selecione um item'); return; }
+            name = inventory[parseInt(sel.value)].name;
+        }
+
+        tempPayItems.push({ name, qty, unitPrice: price });
+        renderTempItems();
+        document.getElementById('fPayQty').value = 1;
+        document.getElementById('fPayCustomName').value = '';
+    }
+
+    function removeTempItem(i) {
+        tempPayItems.splice(i, 1);
+        renderTempItems();
+    }
+
+    function renderTempItems() {
+        const box = document.getElementById('payItemsList');
+        if (tempPayItems.length === 0) {
+            box.innerHTML = '<div style="font-size:0.8rem;color:var(--text-muted);text-align:center;padding:6px;">Nenhum item adicionado ainda</div>';
+        } else {
+            box.innerHTML = tempPayItems.map((it, i) => `
+                <div class="pay-item-row">
+                    <span>${it.qty}x ${it.name}</span>
+                    <span>${formatBRL(it.unitPrice * it.qty)} <i class="fas fa-xmark" style="cursor:pointer;color:var(--danger);" onclick="removeTempItem(${i})"></i></span>
+                </div>`).join('');
+        }
+        const total = tempPayItems.reduce((s, it) => s + it.unitPrice * it.qty, 0);
+        document.getElementById('payTotalDisplay').innerText = formatBRL(total);
+    }
+
+    function openPaymentPanel() {
+        tempPayItems = [];
+        document.getElementById('fPayClient').value = '';
+        document.getElementById('fPayPhone').value = '';
+        document.getElementById('fPayDate').value = todayISO();
+        document.getElementById('fPayNotes').value = '';
+        document.getElementById('fPayQty').value = 1;
+        document.getElementById('fPayMethod').value = 'Pix';
+        document.getElementById('fPayCustomName').value = '';
+        populateItemSelect();
+        renderTempItems();
+        document.getElementById('paymentPanel').classList.add('open');
+        document.getElementById('panelOverlay').classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    function savePayment() {
+        const client = document.getElementById('fPayClient').value.trim();
+        const date = document.getElementById('fPayDate').value || todayISO();
+        const phone = document.getElementById('fPayPhone').value.trim();
+        const method = document.getElementById('fPayMethod').value;
+        const notes = document.getElementById('fPayNotes').value.trim();
+
+        if (!client) { showToast('Informe o nome do cliente'); return; }
+        if (tempPayItems.length === 0) { showToast('Adicione ao menos um item ao pagamento'); return; }
+
+        const total = tempPayItems.reduce((s, it) => s + it.unitPrice * it.qty, 0);
+        payments.push({
+            id: 'p' + Date.now(),
+            client, date, phone, method, notes,
+            items: [...tempPayItems],
+            total
+        });
+        persistPayments();
+        closeAllPanels();
+        renderPayments();
+        renderStats();
+        showToast('Pagamento registrado!');
+    }
+
+    function deletePayment(id) {
+        if (!confirm('Remover este pagamento?')) return;
+        payments = payments.filter(p => p.id !== id);
+        persistPayments();
+        renderPayments();
+        renderStats();
+    }
+
+    function copyPaymentInfo(id) {
+        const p = payments.find(x => x.id === id);
+        if (!p) return;
+        const dateFmt = formatDate(new Date(p.date + 'T00:00:00'));
+        let text = `Data: ${dateFmt}\nCliente: ${p.client}\n`;
+        if (p.phone) text += `Telefone: ${p.phone}\n`;
+        text += `Itens:\n`;
+        p.items.forEach(it => {
+            text += `- ${it.qty}x ${it.name} — ${formatBRL(it.unitPrice)} cada (Subtotal: ${formatBRL(it.unitPrice * it.qty)})\n`;
+        });
+        text += `Total: ${formatBRL(p.total)}\nForma de pagamento: ${p.method}\n`;
+        if (p.notes) text += `Observações: ${p.notes}\n`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text)
+                .then(() => showToast('Copiado! Cole na sua Nota Fiscal'))
+                .catch(() => showToast('Não foi possível copiar'));
+        } else {
+            showToast('Cópia não suportada neste navegador');
+        }
+    }
+
+    function renderPayments() {
+        const list = document.getElementById('paymentList');
+        const term = normalizeStr(document.getElementById('paymentSearchInput').value);
+        list.innerHTML = '';
+
+        const filtered = payments.filter(p =>
+            normalizeStr(p.client).includes(term) ||
+            p.items.some(it => normalizeStr(it.name).includes(term))
+        );
+        document.getElementById('paymentCountLabel').innerText = filtered.length + ' de ' + payments.length + ' pagamentos';
+
+        if (filtered.length === 0) {
+            list.innerHTML = `<div class="empty-state"><i class="fas fa-file-invoice-dollar"></i><span>Nenhum pagamento registrado ainda. Clique em "Novo pagamento" para começar.</span></div>`;
+            return;
+        }
+
+        const sorted = [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        sorted.forEach((p, i) => {
+            const color = methodColor(p.method);
+            const dateFmt = formatDate(new Date(p.date + 'T00:00:00'));
+            const itemsHtml = p.items.map(it => `
+                <div class="pay-item-row">
+                    <span>${it.qty}x ${it.name}</span>
+                    <span>${formatBRL(it.unitPrice * it.qty)}</span>
+                </div>`).join('');
+
+            list.innerHTML += `
+                <div class="pay-card" style="border-left-color:${color}; animation-delay:${i*0.04}s">
+                    <div class="appt-top">
+                        <div>
+                            <div class="appt-client">${p.client}</div>
+                            <div class="appt-unit">${dateFmt} · ${p.method}${p.phone ? ' · ' + p.phone : ''}</div>
+                        </div>
+                        <div class="status-pill" style="background:${color}">${formatBRL(p.total)}</div>
+                    </div>
+                    <div class="pay-items">${itemsHtml}</div>
+                    ${p.notes ? `<div class="appt-unit">Obs: ${p.notes}</div>` : ''}
+                    <div class="appt-actions">
+                        <button class="btn-sm done" onclick="copyPaymentInfo('${p.id}')"><i class="fas fa-copy"></i> Copiar p/ Nota Fiscal</button>
+                        <button class="btn-sm del" onclick="deletePayment('${p.id}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    /* ---------- STATS (context-aware per tab) ---------- */
+    function renderStats() {
+        const bar = document.getElementById('statsBar');
+
+        if (currentView === 'payments') {
+            const total = payments.reduce((s, p) => s + p.total, 0);
+            const now = new Date();
+            const monthTotal = payments
+                .filter(p => {
+                    const d = new Date(p.date + 'T00:00:00');
+                    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+                })
+                .reduce((s, p) => s + p.total, 0);
+            bar.innerHTML = `
+                <div class="stat-pill"><span class="dot green"></span>${formatBRL(total)} no total</div>
+                <div class="stat-pill"><span class="dot orange"></span>${formatBRL(monthTotal)} este mês</div>
+                <div class="stat-pill"><span class="dot red"></span>${payments.length} transações</div>`;
+        } else if (currentView === 'stock') {
+            const totalPecas = inventory.filter(i => i.cat === 'peca').length;
+            const lowStock = inventory.filter(i => i.cat === 'peca' && i.stock > 0 && i.stock <= 5).length;
+            const zeroStock = inventory.filter(i => i.cat === 'peca' && i.stock === 0).length;
+            bar.innerHTML = `
+                <div class="stat-pill"><span class="dot green"></span>${totalPecas} peças cadastradas</div>
+                <div class="stat-pill"><span class="dot orange"></span>${lowStock} com estoque baixo</div>
+                <div class="stat-pill"><span class="dot red"></span>${zeroStock} esgotadas</div>`;
+        } else {
+            let g = 0, o = 0, r = 0;
+            appointments.forEach(a => {
+                const s = computeStatus(a.next).cls;
+                if (s === 'green') g++; else if (s === 'orange') o++; else r++;
+            });
+            bar.innerHTML = `
+                <div class="stat-pill"><span class="dot green"></span>${g} em dia</div>
+                <div class="stat-pill"><span class="dot orange"></span>${o} próximas</div>
+                <div class="stat-pill"><span class="dot red"></span>${r} atrasadas/hoje</div>`;
+        }
+
+        // O selo do header sempre reflete manutenções urgentes, independente da aba ativa
+        const badge = document.getElementById('headerBadge');
+        let urgent = 0;
+        appointments.forEach(a => {
+            const s = computeStatus(a.next).cls;
+            if (s === 'orange' || s === 'red') urgent++;
+        });
+        badge.innerText = urgent;
+        badge.classList.toggle('hidden', urgent === 0);
+    }
+
     window.onload = () => {
         renderStock();
         renderAppointments();
+        populateItemSelect();
+        renderPayments();
         renderStats();
     };
 </script>
